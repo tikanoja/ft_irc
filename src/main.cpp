@@ -31,9 +31,10 @@ int main(int ac, char** av) {
 	std::string password(av[2]);
 
 	//start server
-	IRCServer server(port);
+	IRCServer server(port); // Set up listening socket in constructor?
 	//init server
-		//???
+		
+	
 	//listen
 		//
 
