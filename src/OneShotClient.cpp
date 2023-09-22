@@ -12,7 +12,7 @@
 #include <sys/socket.h> //socket(), connect(), struct sockaddr
 #include <netdb.h> //get- & freeaddrinfo(), gai_strerror()
 
-#define SERVER_ADDR "irc.server.net"
+#define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT "6667"
 #define MESSAGE "oh my god it worked\r\n"
 
@@ -26,7 +26,7 @@ int main (void) {
 	hints.ai_family = AF_UNSPEC; //set to IPv agnostic
 	hints.ai_socktype = SOCK_STREAM; // tcp bestttt
 
-	if (rv = getaddrinfo(SERVER_ADDR, SERVER_PORT, &hints, &servinfo)) { //resolve addr & port
+	if ((rv = getaddrinfo(SERVER_ADDR, SERVER_PORT, &hints, &servinfo))) { //resolve addr & port
 		std::cerr << "getaddrinfo: " << gai_strerror(rv) << std::endl;
 		return (1);
 	}
