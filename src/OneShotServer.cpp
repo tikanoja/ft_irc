@@ -55,7 +55,7 @@ int get_listener_socket(void) {
 			perror("socket");
 			continue ;
 		}
-		// fcntl(sockfd, F_SETFL, O_NONBLOCK);
+		fcntl(sockfd, F_SETFL, O_NONBLOCK);
 		if (bind(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
 			close(sockfd);
 			perror("server: bind");
@@ -110,6 +110,8 @@ int main (void) {
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
 		if (new_fd == -1) {
 			perror("accept");
+			//perror("accept");
+			// return 1;
 			continue;
 		}
 		else {
@@ -118,16 +120,29 @@ int main (void) {
 			break;
 		}
 	}
-
 	//we have a connection!
 	char buf[MAXDATASIZE];
-	int numbytes;
+	ssize_t numbytes;
 	if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1) {
 		perror("recv");
 		exit(1);
 	}
 	buf[numbytes] = '\0';
+
 	printf("server: received '%s'\n",buf);
+
+	std::string message = "Sever received the message";
+	char	*msg = strdup(message.c_str());
+	size_t	msg_len = strlen(msg);
+	std::cout << "Message length: " << msg_len << std::endl;
+	ssize_t total = 0;
+	ssize_t n_sent = 0;
+	while (total < static_cast<ssize_t>(msg_len) ){
+		if ( (n_sent = send( sockfd,  &(msg[total]), msg_len, 0 ) ) <= 0)
+			perror("send");
+		total += n_sent;
+		std::cout << "Sent: " << n_sent << "\tSent total:" << total << std::endl;
+}
 
 	close(sockfd);
 	close(new_fd);

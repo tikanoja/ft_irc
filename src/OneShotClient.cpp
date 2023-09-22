@@ -15,12 +15,15 @@
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT "6667"
 
+#define MAXDATASIZE 512
+
 #define WAIT 0
 
-int main (int ac, char** av) {
-	if (ac != 2) {
-		std::cout << "usage: " << av[0] << " hello" << std::endl;
-		return (1);
+int main ( int ac, char **av ) {
+	
+	if (ac != 2){
+		std::cout << "Provide a message to be sent to server" << std::endl;
+		return 1;
 	}
 
 	struct addrinfo hints, *servinfo, *p;
@@ -57,9 +60,30 @@ int main (int ac, char** av) {
 
 	//we have a connection!
 
-	std::string msg = av[1];
-	msg = msg + "\r\n";
-	send(sockfd, msg.c_str(), msg.size(), 0);
+
+	char	*msg = av[1];
+	size_t	msg_len = strlen(msg);
+	std::cout << "Message length: " << msg_len << std::endl;
+	ssize_t total = 0;
+	ssize_t n_sent = 0;
+	while ( total < static_cast<ssize_t>( msg_len ) ){
+		if ( (n_sent = send( sockfd, &(msg[total]), msg_len, 0 ) ) < 0 )
+			std::cerr << "Error: Sending data failed" << std::endl;
+		if ( n_sent == 0 )
+			std::cerr << "Error: Server closed connection" << std::endl;
+		total += n_sent;
+		std::cout << "Sent: " << n_sent << "\tSent total:" << total << std::endl;
+	}
+
+	char buf[MAXDATASIZE];
+	ssize_t numbytes;
+	if ((numbytes = recv(sockfd, buf, MAXDATASIZE - 1, 0)) == -1) {
+		perror("recv");
+		exit(1);
+	}
+	buf[numbytes] = '\0';
+	printf("Confirmed: '%s'\n", buf);
+
 
 	// if (WAIT) {
 	// 	// recv() from server
