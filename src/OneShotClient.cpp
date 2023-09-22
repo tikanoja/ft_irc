@@ -14,11 +14,15 @@
 
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT "6667"
-#define MESSAGE "oh my god it worked\r\n"
 
 #define WAIT 0
 
-int main (void) {
+int main (int ac, char** av) {
+	if (ac != 2) {
+		std::cout << "usage: " << av[0] << " hello" << std::endl;
+		return (1);
+	}
+
 	struct addrinfo hints, *servinfo, *p;
 	int sockfd, rv;
 
@@ -53,7 +57,7 @@ int main (void) {
 
 	//we have a connection!
 
-	std::string msg = MESSAGE;
+	std::string msg = av[1];
 	send(sockfd, msg.c_str(), msg.size(), 0);
 
 	// if (WAIT) {
