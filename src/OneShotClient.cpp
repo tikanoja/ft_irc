@@ -58,6 +58,7 @@ int main (int ac, char** av) {
 	//we have a connection!
 
 	std::string msg = av[1];
+	msg = msg + "\r\n";
 	send(sockfd, msg.c_str(), msg.size(), 0);
 
 	// if (WAIT) {

@@ -1,5 +1,5 @@
 /*
-** a simple test client that will fire one msg to the server
+** a simple test server that will print out msgs that clients send
 */
 
 #include <iostream>
@@ -7,8 +7,9 @@
 #include <cerrno>
 #include <cstring> // C-style string manip.
 #include <unistd.h> //close()
+#include <cstdlib>
 
-
+#include <poll.h> //struct pollfd
 #include <fcntl.h> //fcntl
 #include <sys/types.h> //types needed for socket() ftions
 #include <sys/socket.h> //socket(), connect(), struct sockaddr
@@ -18,7 +19,6 @@
 
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT "6667"
-#define MESSAGE "oh my god it worked\r\n"
 #define BACKLOG 10
 #define MAXDATASIZE 512
 
@@ -31,7 +31,7 @@ void *get_in_addr(struct sockaddr *sa) {
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main (void) {
+int get_listener_socket(void) {
 	struct addrinfo hints, *servinfo, *p;
 	int sockfd, rv;
 
@@ -46,7 +46,7 @@ int main (void) {
 
 	if ((rv = getaddrinfo(NULL, SERVER_PORT, &hints, &servinfo))) { //resolve addr & port
 		std::cerr << "getaddrinfo: " << gai_strerror(rv) << std::endl;
-		return (1);
+		return (-1);
 	}
 
 	//loop to create a socket & connect to available addr
@@ -65,24 +65,51 @@ int main (void) {
 		break ;
 	}
 
+	freeaddrinfo(servinfo); //no need for this anymore
+
 	if (p == NULL) {
 		std::cerr << "getaddrinfo: failed to connect :(" << std::endl;
-		freeaddrinfo(servinfo); //cleanup
+		return (-1);
+	}
+
+	if (listen(sockfd, BACKLOG) == -1) {
+		perror("listen");
+		return (-1);
+	}
+
+	return (sockfd);
+}
+
+//void add_to_pfds(struct pollfd *pfds[], int newfd, int *fd_count, int *fd_size);
+//void del_from_pfds(struct pollfd pfds[], int i, int *fd_count);
+
+int main (void) {
+	int sockfd = get_listener_socket();
+	if (sockfd == -1) {
+		std::cerr << "failed to create listening socket" << std::endl;
 		return (1);
 	}
-	freeaddrinfo(servinfo);
 
-		if (listen(sockfd, BACKLOG) == -1) {
-			perror("listen");
-			exit(1);
-		}
-	int new_fd;
+	char s[INET6_ADDRSTRLEN];
+	struct sockaddr_storage their_addr; // connector's address information
+	socklen_t sin_size;
+
+	int fd_size = 5;
+	int fd_count = 0;
+	struct pollfd *pfds;
+	pfds = (struct pollfd*)malloc(sizeof(struct pollfd) * fd_size);
+
+	pfds[0].fd = sockfd; //storing the listener in index 0 :)
+	pfds[0].events = POLLIN; //and specifying that this will be used to register incoming traffic
+	fd_count++; //since we just added one...
+
+	int new_fd; //for storing the fd of new clients
+
 	while (1) {
 		sin_size = sizeof their_addr;
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
 		if (new_fd == -1) {
 			perror("accept");
-			// return 1;
 			continue;
 		}
 		else {
@@ -90,16 +117,7 @@ int main (void) {
 			printf("server: got connection from %s\n", s);
 			break;
 		}
-		// if (!fork()) { // this is the child process
-		// 	close(sockfd); // child doesn't need the listener
-		// 	// if (send(new_fd, "Hello, world!", 13, 0) == -1)
-		// 	// 	perror("send");
-		// 	close(new_fd);
-		// 	exit(0);
-		// }
 	}
-
-
 
 	//we have a connection!
 	char buf[MAXDATASIZE];
@@ -109,13 +127,10 @@ int main (void) {
 		exit(1);
 	}
 	buf[numbytes] = '\0';
-	printf("client: received '%s'\n",buf);
-
-
+	printf("server: received '%s'\n",buf);
 
 	close(sockfd);
 	close(new_fd);
 
-	
 	return (0);
 }
