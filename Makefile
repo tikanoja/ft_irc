@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/22 12:08:34 by djagusch         ###   ########.fr        #
+#    Updated: 2023/09/22 14:27:18 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 -Wconversion -Wshadow
+FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
+	-Wconversion -Wshadow -fsanitize=address -static-libsan
 
 all: $(OBJ_DIR) $(NAME)
 

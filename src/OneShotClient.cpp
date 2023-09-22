@@ -60,7 +60,6 @@ int main ( int ac, char **av ) {
 
 	//we have a connection!
 
-
 	char	*msg = av[1];
 	size_t	msg_len = strlen(msg);
 	std::cout << "Message length: " << msg_len << std::endl;
@@ -83,11 +82,6 @@ int main ( int ac, char **av ) {
 	}
 	buf[numbytes] = '\0';
 	printf("Confirmed: '%s'\n", buf);
-
-
-	// if (WAIT) {
-	// 	// recv() from server
-	// }
 
 	close(sockfd);
 	freeaddrinfo(servinfo);
