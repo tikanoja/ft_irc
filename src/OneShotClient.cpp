@@ -14,6 +14,7 @@
 
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT "6667"
+
 #define MAXDATASIZE 512
 
 #define WAIT 0
