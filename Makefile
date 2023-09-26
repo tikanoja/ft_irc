@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/26 10:40:26 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/09/26 15:32:23 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ_DIR = obj
 
 CC = c++
 
-SRC_FILES = main.cpp IRCServer.cpp User.cpp Channel.cpp
+SRC_FILES = main.cpp IRCServer.cpp User.cpp Channel.cpp CircularBuffer.cpp
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 

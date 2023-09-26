@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 10:46:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:18:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include <cstdint>
 #include <cstring>
 #include <string>
@@ -28,12 +29,13 @@
 #include <arpa/inet.h> //inet
 #include <sys/types.h> //types needed for socket() ftions
 #include <sys/socket.h> //socket(), connect(), struct sockaddr
-
+#include "CircularBuffer.hpp"
 #define MAXCLIENTS 10
 #define MAXDATASIZE 512
 
 class User;
 class Channel;
+class CircularBuffer;
 
 class IRCServer {
 	private:
@@ -42,11 +44,12 @@ class IRCServer {
 		std::vector<Channel*> channels;
 		
 		std::vector<struct pollfd> pfds;
+		std::vector<CircularBuffer> circularBuffers;
 
 		void initServer();
 		int getListenerSocket();
-		void addToPfds();
-		void delFromPfds();
+		// void addToPfds();
+		// void delFromPfds();
 		void* get_in_addr(struct sockaddr *sa);
 		int acceptClient();
 		int receiveMsg(nfds_t i);

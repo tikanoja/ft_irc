@@ -6,14 +6,11 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 22:45:35 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 10:52:41 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:18:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <sstream>
-
-#include "IRCServer.hpp"
+#include "../inc/IRCServer.hpp"
 
 int main(int ac, char** av) {
 	if (ac != 3) {
@@ -35,10 +32,10 @@ int main(int ac, char** av) {
 		IRCServer server(port); // Set up listening socket in constructor?
 		if (server.pollingRoutine())
 			throw std::runtime_error("Polling failed");
-	//init server
+		//init server
 		
 	
-	//listen
+		//listen
 		//
 
 	} catch (std::exception& e) {

@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 11:05:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:28:52 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 IRCServer::IRCServer(uint16_t port) : port(port){
 	std::cout << "IRCServer constructor called" << std::endl;
 	pfds.reserve(10);
+	circularBuffers.reserve(10);
 	initServer();
 	return ;
 }
@@ -44,7 +45,7 @@ int IRCServer::getListenerSocket() {
     const char* server_port = str.c_str();
 
 	//init & configure socket
-	memset(&hints, 0, sizeof(hints)); 
+	memset(&hints, 0, sizeof(hints)); //can we use memset ???
 	hints.ai_family = AF_UNSPEC; //set to IPv agnostic
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
@@ -84,16 +85,19 @@ int IRCServer::getListenerSocket() {
 	pfd.fd = sockfd;
 	pfd.events = POLLIN;
 	this->pfds.push_back(pfd);
+
+	CircularBuffer cb;
+	this->circularBuffers.push_back(cb);
 	return (0);
 }
 
-void IRCServer::addToPfds(){
-	return ;
-}
+// void IRCServer::addToPfds(){
+// 	return ;
+// }
 
-void IRCServer::delFromPfds(){
-	return ;
-}
+// void IRCServer::delFromPfds(){
+// 	return ;
+// }
 
 void* IRCServer::get_in_addr(struct sockaddr *sa) {
 	if (sa->sa_family == AF_INET) {
@@ -118,6 +122,8 @@ int IRCServer::acceptClient() {
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
 		this->pfds.push_back(pfd);
+		CircularBuffer cbuf;
+		this->circularBuffers.push_back(cbuf);
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
@@ -161,13 +167,18 @@ int IRCServer::receiveMsg(nfds_t i) {
 		return (-1);
 	}
 	buf[numbytes] = '\0'; //there is stuff to read wohhooo
-	std::cout << "Server: received message: " << buf << std::endl;
+	printf("%c",  circularBuffers[1].buffer[0]);
+	this->circularBuffers[i].addToBuffer(buf, numbytes);
+	if (circularBuffers[i].findCRLF() == -1)
+		return (0);
+	std::cout << "Server: received message: " << circularBuffers[i].getBuffer() << std::endl;
 	replyToMsg(i);
 	return (0);
 }
 
 int IRCServer::pollingRoutine() {
 	int poll_count;
+	int j = 0;
 	nfds_t fd_count = static_cast<nfds_t>(this->pfds.size());
 	while (1) {
 		if ((poll_count = poll(&(pfds[0]), fd_count, -1)) == -1)//of &pfds[0]
@@ -179,6 +190,7 @@ int IRCServer::pollingRoutine() {
 						continue ;
 					fd_count++;
 				} else { //A client has sent us a message
+					std::cout <<"Received msgs:" << j++ << std::endl;
  					if (receiveMsg(i)) {
 						fd_count--;
 						continue ;
