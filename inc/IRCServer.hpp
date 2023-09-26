@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/25 23:49:51 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/09/26 10:46:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ class IRCServer {
 		void delFromPfds();
 		void* get_in_addr(struct sockaddr *sa);
 		int acceptClient();
-		int pollingRoutine();
 		int receiveMsg(nfds_t i);
 		void dropConnection(ssize_t numbytes, nfds_t i);
 		void replyToMsg(nfds_t i);
 
 	public:
 		IRCServer(uint16_t port);
+		int pollingRoutine();
 		~IRCServer(void);
 };
 

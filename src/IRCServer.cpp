@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 00:21:19 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/09/26 11:05:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	std::cout << "IRCServer constructor called" << std::endl;
+	pfds.reserve(10);
 	initServer();
 	return ;
 }
@@ -27,8 +28,8 @@ void IRCServer::initServer() {
 	// get listener socket
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
-	if (pollingRoutine())
-		throw std::runtime_error("Polling failed");
+	// if (pollingRoutine())
+	// 	throw std::runtime_error("Polling failed");
 	return ;
 }
 
@@ -56,7 +57,7 @@ int IRCServer::getListenerSocket() {
 	for (p = servinfo; p != NULL; p = p->ai_next) {
 		if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) //create a socket
 			continue ;
-		if (setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof yes) == -1) {
+		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) {
 			std::cerr << "Failed to create a socket" << std::endl;
 			return (-1);
 		}
@@ -113,11 +114,11 @@ int IRCServer::acceptClient() {
 		std::cerr << "Failed to accept client" << std::endl;
 		return (-1);
 	} else {
-		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 		struct pollfd pfd;
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
-		pfds.push_back(pfd);
+		this->pfds.push_back(pfd);
+		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);
@@ -168,9 +169,8 @@ int IRCServer::receiveMsg(nfds_t i) {
 int IRCServer::pollingRoutine() {
 	int poll_count;
 	nfds_t fd_count = static_cast<nfds_t>(this->pfds.size());
-	
 	while (1) {
-		if ((poll_count = poll(&this->pfds[0], fd_count, -1)) == -1)
+		if ((poll_count = poll(&(pfds[0]), fd_count, -1)) == -1)//of &pfds[0]
 			return (-1);
 		for (nfds_t i = 0; i < fd_count; i++) {
 			if (this->pfds[i].revents & POLLIN) { //We have a new event
@@ -179,16 +179,16 @@ int IRCServer::pollingRoutine() {
 						continue ;
 					fd_count++;
 				} else { //A client has sent us a message
-					if (receiveMsg(i)) {
+ 					if (receiveMsg(i)) {
 						fd_count--;
 						continue ;
 					}
 				}
 			}
 		}
-		for (nfds_t i = 0; i < fd_count; i++) {
-			close(pfds[i].fd);
-		}
+	}
+	for (nfds_t i = 0; i < fd_count; i++) {
+		close(pfds[i].fd);
 	}
 	return (0);
 }
