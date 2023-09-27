@@ -43,7 +43,7 @@ void CircularBuffer::addToBuffer(char* buf, ssize_t numbytes) {
 
 int CircularBuffer::findCRLF() const {
 	for (int i = 0; buffer[i + 1]; i++) {
-		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+		if (buffer[i] == '\r' || buffer[i + 1] == '\n' || (buffer[i] == '\r' && buffer[i + 1] == '\n'))
 			return (i);
 	}
 	return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 10:53:52 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:58:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ int IRCServer::receiveMsg(nfds_t i) {
 		return (-1);
 	}
 	buf[numbytes] = '\0'; //there is stuff to read wohhooo
-	printf("%c",  circularBuffers[1].buffer[0]);
 	this->circularBuffers[i].addToBuffer(buf, numbytes);
 	if (circularBuffers[i].findCRLF() == -1)
 		return (0);

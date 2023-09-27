@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 11:35:19 by djagusch         ###   ########.fr       */
+/*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
+/*   Updated: 2023/09/27 11:49:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef USER_HPP
-# define USER_HPP
+#ifndef MESSAGE_HPP
+# define MESSAGE_HPP
 
 # include <iostream>
+# include <string>
+# include "User.hpp"
 
-class User
+class Message
 {
 	public:
-		User(const std::string password, const std::string nickname, const std::string username);
-		User(User const& src);
-		~User();
+		Message();
+		Message(Message const& src);
+		~Message();
 
-		User &	operator=(User const& rhs);
+		Message &	operator=(Message const& rhs);
 
 	private:
-		User();
-		std::string	p_password;
-		std::string	p_nickname;
-		std::string	p_username;
-		std::string	p_realname;
-		int8_t		p_mode;
-		
-
+		std::string		p_command;
+		User&			p_sender;
+		User&			p_recipient;
+		std::string[15] p_params;
 };
 
 #endif

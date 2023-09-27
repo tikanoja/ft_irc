@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Reply.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 11:35:19 by djagusch         ###   ########.fr       */
+/*   Created: 2023/09/27 11:44:14 by djagusch          #+#    #+#             */
+/*   Updated: 2023/09/27 11:50:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Reply.hpp"
 
-#ifndef USER_HPP
-# define USER_HPP
+Reply::Reply()
+{}
 
-# include <iostream>
-
-class User
+Reply::Reply(Reply const& src)
 {
-	public:
-		User(const std::string password, const std::string nickname, const std::string username);
-		User(User const& src);
-		~User();
+	*this = src;
+}
 
-		User &	operator=(User const& rhs);
+Reply::~Reply()
+{}
 
-	private:
-		User();
-		std::string	p_password;
-		std::string	p_nickname;
-		std::string	p_username;
-		std::string	p_realname;
-		int8_t		p_mode;
-		
-
-};
-
-#endif
+Reply& Reply::operator=(Reply const& rhs)
+{
+	if(this != &rhs)
+		p_ATTRIBUTE = rhs.p_ATTRIBUTE;
+	return *this;
+}

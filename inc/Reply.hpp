@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 11:35:19 by djagusch         ###   ########.fr       */
+/*   Created: 2023/09/27 11:38:18 by djagusch          #+#    #+#             */
+/*   Updated: 2023/09/27 11:45:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef USER_HPP
-# define USER_HPP
+#ifndef REPLY_HPP
+# define REPLY_HPP
 
 # include <iostream>
+# include <map>
+# include "Message.hpp"
 
-class User
+class Reply
 {
 	public:
-		User(const std::string password, const std::string nickname, const std::string username);
-		User(User const& src);
-		~User();
+		Reply();
+		Reply(Reply const& src);
+		~Reply();
 
-		User &	operator=(User const& rhs);
+		Reply &	operator=(Reply const& rhs);
 
 	private:
-		User();
-		std::string	p_password;
-		std::string	p_nickname;
-		std::string	p_username;
-		std::string	p_realname;
-		int8_t		p_mode;
-		
+		std::map<std::string, Message>replies;
 
 };
 

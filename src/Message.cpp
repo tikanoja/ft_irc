@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 11:35:19 by djagusch         ###   ########.fr       */
+/*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
+/*   Updated: 2023/09/27 11:44:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Message.hpp"
 
-#ifndef USER_HPP
-# define USER_HPP
+Message::Message()
+{}
 
-# include <iostream>
-
-class User
+Message::Message(Message const& src)
 {
-	public:
-		User(const std::string password, const std::string nickname, const std::string username);
-		User(User const& src);
-		~User();
+	*this = src; 
+}
 
-		User &	operator=(User const& rhs);
+Message::~Message()
+{}
 
-	private:
-		User();
-		std::string	p_password;
-		std::string	p_nickname;
-		std::string	p_username;
-		std::string	p_realname;
-		int8_t		p_mode;
-		
-
-};
-
-#endif
+Message& Message::operator=(Message const& rhs)
+{
+	if(this != &rhs)
+		p_ATTRIBUTE = rhs.p_ATTRIBUTE;
+	return *this;
+}
