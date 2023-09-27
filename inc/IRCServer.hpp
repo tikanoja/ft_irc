@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 15:18:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:21:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ class CircularBuffer;
 
 class IRCServer {
 	private:
-		uint16_t port;
-		std::vector<User*> users;
-		std::vector<Channel*> channels;
+		uint16_t					port;
+		std::vector<User*> 			users;
+		std::vector<Channel*> 		cchannels;
 		
-		std::vector<struct pollfd> pfds;
-		std::vector<CircularBuffer> circularBuffers;
+		std::vector<struct pollfd>	pfds;
+		std::vector<CircularBuffer>	circularBuffers;
+		std::string					creationDate;
+		std::string					runningDateTime;
+		std::string					version;
 
 		void initServer();
 		int getListenerSocket();
