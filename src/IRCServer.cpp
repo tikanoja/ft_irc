@@ -6,14 +6,14 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 16:28:52 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:53:52 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
 
 IRCServer::IRCServer(uint16_t port) : port(port){
-	std::cout << "IRCServer constructor called" << std::endl;
+	// std::cout << "IRCServer constructor called" << std::endl;
 	pfds.reserve(10);
 	circularBuffers.reserve(10);
 	initServer();
@@ -26,7 +26,6 @@ IRCServer::~IRCServer(void) {
 }
 
 void IRCServer::initServer() {
-	// get listener socket
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	// if (pollingRoutine())

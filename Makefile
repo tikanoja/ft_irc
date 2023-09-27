@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/26 15:32:23 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/09/27 10:33:43 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
-	-Wconversion -Wshadow -g -fsanitize=address -static-libsan
+	-Wconversion -Wshadow #-g -fsanitize=address -static-libsan
 
 all: $(OBJ_DIR) $(NAME)
 

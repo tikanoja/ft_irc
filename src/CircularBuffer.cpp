@@ -1,7 +1,6 @@
 #include "../inc/CircularBuffer.hpp"
 
 CircularBuffer::CircularBuffer() : head(0), tail(0), fill(0) {
-	std::cout << "new buffa" << std::endl;
 	try {
  		buffer = new unsigned char[MAXDATASIZE * 2];
 	} catch (std::exception & e){
@@ -23,7 +22,6 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 		head = rhs.head;
 		tail = rhs.tail;
 		fill = rhs.fill;
-		std::cout << "Buffer addr: " << buffer << std::endl;
 		if (buffer)
 			delete [] buffer;
 		buffer = new unsigned char[2 * MAXDATASIZE];
