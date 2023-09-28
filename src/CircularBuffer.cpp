@@ -1,6 +1,6 @@
 #include "../inc/CircularBuffer.hpp"
 
-CircularBuffer::CircularBuffer() : head(0), tail(0), fill(0) {
+CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
 	try {
  		buffer = new unsigned char[MAXDATASIZE * 2];
 	} catch (std::exception & e){
@@ -19,9 +19,8 @@ CircularBuffer::~CircularBuffer() {
 
 CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	if( this != &rhs ) {
-		head = rhs.head;
-		tail = rhs.tail;
-		fill = rhs.fill;
+		p_head = rhs.p_head;
+		p_tail = rhs.p_tail;
 		if (buffer)
 			delete [] buffer;
 		buffer = new unsigned char[2 * MAXDATASIZE];
@@ -34,21 +33,41 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 
 void CircularBuffer::addToBuffer(char* buf, ssize_t numbytes) {
 	for (ssize_t i = 0; i < numbytes; i++) {
-		this->buffer[head] = static_cast<unsigned char> (buf[i]);
-		head++;
-		if (head == MAXDATASIZE * 2)
-			head = 0;
+		this->buffer[p_head] = static_cast<unsigned char> (buf[i]);
+		p_head++;
+		if (p_head == MAXDATASIZE * 2)
+			p_head = 0;
 	}
 }
 
 int CircularBuffer::findCRLF() const {
-	for (int i = 0; buffer[i + 1]; i++) {
+	for (int i = p_tail; buffer[i + 1]; i++) {
 		if (buffer[i] == '\r' || buffer[i + 1] == '\n' || (buffer[i] == '\r' && buffer[i + 1] == '\n'))
 			return (i);
 	}
 	return (-1);
 }
 
-unsigned char* CircularBuffer::getBuffer() const {
-	return (this->buffer);
+std::string CircularBuffer::extractBuffer() {
+	int templen = 0;
+	int tail_backup = p_tail;
+	while (p_tail != p_head) { //calculating len of the buffered msg
+		p_tail++;
+		if (p_tail == MAXDATASIZE * 2)
+			p_tail = 0;
+		templen++;
+	}
+	
+	unsigned char* tempbuffer = new unsigned char[templen];
+	for (int i = 0; tail_backup != p_head; i++) { //copy buffer to temp & zero buffer
+		tempbuffer[i] = buffer[tail_backup];
+		buffer[tail_backup] = '\0';
+		tail_backup++;
+		if (tail_backup == MAXDATASIZE * 2)
+			tail_backup = 0;
+	}
+
+	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string
+	delete[] tempbuffer;
+	return (bufferString);
 }

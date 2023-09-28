@@ -14,14 +14,13 @@ class CircularBuffer {
 
 		void addToBuffer(char* buf, ssize_t numbytes);
 		int findCRLF() const; // -1 not found, on success returns index of \n
-		unsigned char* getBuffer() const;
+		std::string extractBuffer();
 		unsigned char* buffer;
 
 	private:
 		CircularBuffer &	operator=( CircularBuffer const & rhs );
-		int head;
-		int tail;
-		size_t fill;
+		int p_head;
+		int p_tail;
 };
 
 #endif

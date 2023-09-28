@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 10:58:14 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:54:07 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
+#include "../inc/Message.hpp"
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
@@ -142,7 +143,7 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 
 void IRCServer::replyToMsg(nfds_t i) {
 	std::ostringstream messageStream;
-    messageStream << "Hello client number " << i << " !";
+    messageStream << "Hello client number " << i << " !\r\n";
     std::string message = messageStream.str();
 	const char* msg = message.c_str();
 	
@@ -165,11 +166,16 @@ int IRCServer::receiveMsg(nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-	buf[numbytes] = '\0'; //there is stuff to read wohhooo
+	buf[numbytes] = '\0';
 	this->circularBuffers[i].addToBuffer(buf, numbytes);
-	if (circularBuffers[i].findCRLF() == -1)
+	if (circularBuffers[i].findCRLF() == -1) {
+		std::cout << "did not detect CRLF" << std::endl;
 		return (0);
-	std::cout << "Server: received message: " << circularBuffers[i].getBuffer() << std::endl;
+	}
+	std::string msg = circularBuffers[i].extractBuffer();
+	std::cout << "Server: received message: " << msg << std::endl;
+	//parse message to message object
+	//analyze
 	replyToMsg(i);
 	return (0);
 }
