@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/28 14:16:09 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/09/29 10:52:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
-	pfds.reserve(10);
-	circularBuffers.reserve(10);
+	pfds.reserve(MAXCLIENTS);
+	circularBuffers.reserve(MAXCLIENTS);
 	initServer();
 	return ;
 }
@@ -122,8 +122,10 @@ int IRCServer::acceptClient() {
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
 		this->pfds.push_back(pfd);
+
 		CircularBuffer cbuf;
 		this->circularBuffers.push_back(cbuf);
+		
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
@@ -176,8 +178,8 @@ int IRCServer::receiveMsg(nfds_t i) {
 	std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	//check command on what we should do
-	//respond to the client
+	// command & function pointer map or something ???
+	// respond to the client
 	replyToMsg(i);
 	return (0);
 }

@@ -10,6 +10,7 @@ CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
 }
 
 CircularBuffer::CircularBuffer( CircularBuffer const & src ) {
+	this->buffer = NULL;
 	*this = src; 
 }
 
@@ -21,9 +22,10 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	if( this != &rhs ) {
 		p_head = rhs.p_head;
 		p_tail = rhs.p_tail;
-		if (buffer)
+		if (this->buffer)
 			delete [] buffer;
-		buffer = new unsigned char[2 * MAXDATASIZE];
+		this->buffer = new unsigned char[2 * MAXDATASIZE];
+		memset(this->buffer, 0, MAXDATASIZE * 2);
 		for (int i = 0; rhs.buffer[i]; i++) {
 			this->buffer[i] = rhs.buffer[i];
 		}
@@ -68,6 +70,11 @@ std::string CircularBuffer::extractBuffer() {
 	}
 
 	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string
-	delete[] tempbuffer;
+	delete[] tempbuffer; //free temp
+
+	size_t index = 0;
+    while ((index = bufferString.find("^D", index)) != std::string::npos) // find "^D"
+        bufferString.replace(index, 2, ""); //replace "^D" with ""
+
 	return (bufferString);
 }
