@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/29 10:52:07 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:54:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int IRCServer::getListenerSocket() {
 	int yes = 1;
 	
 	std::stringstream ss;
-    ss << this->port;
-    std::string str = ss.str();
-    const char* server_port = str.c_str();
+	ss << this->port;
+	std::string str = ss.str();
+	const char* server_port = str.c_str();
 
 	//init & configure socket
 	memset(&hints, 0, sizeof(hints)); //can we use memset ???
@@ -124,9 +124,12 @@ int IRCServer::acceptClient() {
 		this->pfds.push_back(pfd);
 
 		CircularBuffer cbuf;
+		users.push_back(new User());
 		this->circularBuffers.push_back(cbuf);
 		
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
+		users.back()->setIP(s);
+		users.back()->setSocket(new_fd);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);
@@ -148,7 +151,7 @@ void IRCServer::replyToMsg(nfds_t i) {
     messageStream << "Hello client number " << i << " !\r\n";
     std::string message = messageStream.str();
 	const char* msg = message.c_str();
-	
+
 	size_t	msg_len = strlen(msg);
 	ssize_t total = 0;
 	ssize_t n_sent = 0;
@@ -157,13 +160,13 @@ void IRCServer::replyToMsg(nfds_t i) {
 			std::cerr << "Send failed" << std::endl;
 		total += n_sent;
 	}
-	std::cout << "Sent: " << n_sent << "/" << total << "bytes." << std::endl;
+	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
 }
 
 int IRCServer::receiveMsg(nfds_t i) {
 	char buf[MAXDATASIZE];
 	ssize_t numbytes;
-	numbytes = recv(this->pfds[i].fd, buf, MAXDATASIZE-1, 0);
+	numbytes = recv(this->pfds[i].fd, buf, MAXDATASIZE - 1, 0);
 	if (numbytes <= 0) {
 		dropConnection(numbytes, i);
 		return (-1);

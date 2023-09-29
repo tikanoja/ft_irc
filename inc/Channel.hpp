@@ -3,31 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/26 09:23:29 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:39:55 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
 
-#include <string>
-#include <iostream>
-#include <vector>
-#include <string>
+# include <iostream>
 
-class User;
-
-class Channel {
-	private:
-		std::string name;
-		std::vector<User*> members;
-		
+class Channel
+{
 	public:
-		Channel(const std::string& name);
-		~Channel(void);
+		Channel();
+		Channel(Channel const& src);
+		~Channel();
+
+		Channel &	operator=(Channel const& rhs);
+
+	private:
+
 };
+
+Channel::Channel()
+{}
+
+Channel::Channel(Channel const& src)
+{
+	*this = src;
+}
+
+Channel::~Channel()
+{}
+
+Channel& Channel::operator=(Channel const& rhs)
+{
+	if(this != &rhs)
+		p_ATTRIBUTE = rhs.p_ATTRIBUTE;
+	return *this;
+}
 
 #endif
