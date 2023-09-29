@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/27 19:54:07 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/09/28 14:16:09 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,10 @@ int IRCServer::receiveMsg(nfds_t i) {
 	}
 	std::string msg = circularBuffers[i].extractBuffer();
 	std::cout << "Server: received message: " << msg << std::endl;
-	//parse message to message object
-	//analyze
+	Message m(msg);
+	m.printContent();
+	//check command on what we should do
+	//respond to the client
 	replyToMsg(i);
 	return (0);
 }

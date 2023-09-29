@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/27 10:33:43 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/09/28 13:13:45 by tuukka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ OBJ_DIR = obj
 
 CC = c++
 
-SRC_FILES = main.cpp IRCServer.cpp User.cpp Channel.cpp CircularBuffer.cpp
+SRC_FILES = main.cpp IRCServer.cpp User.cpp Channel.cpp CircularBuffer.cpp \
+			Message.cpp
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
