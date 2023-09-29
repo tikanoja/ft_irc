@@ -3,61 +3,68 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
+#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/27 10:33:43 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/09/29 11:47:10 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
 
-SRC_DIR = src
-INC_DIR = inc
-OBJ_DIR = obj
+S = src
+I = inc
+O = obj
 
 CC = c++
-
-SRC_FILES = main.cpp IRCServer.cpp User.cpp Channel.cpp CircularBuffer.cpp
-
-SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
-
-OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
 	-Wconversion -Wshadow #-g -fsanitize=address -static-libsan
 
-all: $(OBJ_DIR) $(NAME)
+SRC_FILES = main \
+	IRCServer \
+	CircularBuffer \
+	User
+# Message \
+# Channel \
+# Registration
+	
+INC_FILES = IRCServer \
+	CircularBuffer \
+	User
+#	Message
+# 	Channel \
+# 	Error \
+# 	Reply
+
+SRC = $(addprefix $S/,$(addsuffix .cpp,$(SRC_FILES)))
+
+OBJ = $(patsubst $S/%,$O/%,$(SRC:.cpp=.o))
+
+HEADER = $(addprefix $I/,$(addsuffix .hpp,$(INC_FILES)))
 
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(FLAGS) -I$(INC_DIR) -c $< -o $@
+all: $(NAME)
+
+$O:
+	mkdir -p $O
+
+print:
+	@echo $(HEADER)
+
+$O/%.o: $S/%.cpp $(HEADER) | $O
+	echo $(OBJ) $@
+	$(CC) $(FLAGS) -I$I -c $< -o $@
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
-SERVER = server
-CLIENT = client
-
-print: src/OneShotClient.cpp
-	@echo $(CC) $(FLAGS) $< -o $@
-	
-test: $(SERVER) $(CLIENT)
-
-$(SERVER): src/OneShotServer.cpp #to be removed !!!!!!!
-	$(CC) $(FLAGS) $< -o $@
-
-$(CLIENT): src/OneShotClient.cpp #to be removed !!!!!!!
-	$(CC) $(FLAGS) $< -o $@
-
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $O
 
 fclean: clean
-	rm -f $(NAME) $(SERVER) $(CLIENT)
+	rm -f $(NAME)
 
 re: fclean all
 

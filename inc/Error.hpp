@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/27 15:59:43 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:45:30 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define ERR_YOUWILLBEBANNED ()( + "\r\n") //466
 # define ERR_KEYSET (channel)(channel + ":Channel key already set" + "\r\n") //467
 # define ERR_CHANNELISFULL (channel)(channel + ":Cannot join channel (+l)" + "\r\n") //471
-# define ERR_UNKNOWNMODE (char,, channel)(char + ":is unknown mode char to me for " + channel + "" + "\r\n") //472
+# define ERR_UNKNOWNMODE (char, channel)(char + ":is unknown mode char to me for " + channel + "" + "\r\n") //472
 # define ERR_INVITEONLYCHAN (channel)( channel + ":Cannot join channel (+i)" + "\r\n") //473
 # define ERR_BANNEDFROMCHAN (channel)(channel + ":Cannot join channel (+b)" + "\r\n") //474
 # define ERR_BADCHANNELKEY (channel)(channel + ":Cannot join channel (+k)" + "\r\n") //475
