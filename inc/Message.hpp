@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/28 13:41:28 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/09/29 15:05:47 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ class Message
 
 		void printContent();
 
+		std::string					p_command;
 	private:
 		std::string 				p_prefix;
-		std::string					p_command;
 		std::vector<std::string>	p_params;
 		std::string					p_trailing;
 		User*						p_sender; //changed & to * to compile

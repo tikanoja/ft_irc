@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/29 11:54:31 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:25:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,21 +143,33 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 	}	
 	close(this->pfds[i].fd);
 	pfds.erase(this->pfds.begin() + i);
+	circularBuffers.erase(this->circularBuffers.begin() + i);
 	return ;
 }
 
 void IRCServer::replyToMsg(nfds_t i) {
 	std::ostringstream messageStream;
-    messageStream << "Hello client number " << i << " !\r\n";
-    std::string message = messageStream.str();
-	const char* msg = message.c_str();
+    messageStream << "Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber " << i << " !\r\n";
+    std::string msg = messageStream.str();
+	for (size_t in = 0; in < msg.length(); in++) {
+		if (msg[in] == 26) {//ctrl+z control character
+			msg.erase(in, 1);
+			i--;
+		}
+		else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
+			msg.erase(in, 2);
+			in--;
+		}
+	}
+	const char* msgc = msg.c_str();
 
-	size_t	msg_len = strlen(msg);
+	size_t	msg_len = strlen(msgc);
 	ssize_t total = 0;
 	ssize_t n_sent = 0;
 	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( pfds[i].fd,  &(msg[total]), msg_len, 0 ) ) <= 0)
+		if ( (n_sent = send( pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
+		std::cout << "sent " << n_sent << " bytes." << std::endl;
 		total += n_sent;
 	}
 	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
@@ -195,7 +207,7 @@ int IRCServer::pollingRoutine() {
 		if ((poll_count = poll(&(pfds[0]), fd_count, -1)) == -1)//of &pfds[0]
 			return (-1);
 		for (nfds_t i = 0; i < fd_count; i++) {
-			if (this->pfds[i].revents & POLLIN) { //We have a new event
+			if (this->pfds[i].revents & (POLLIN | POLLOUT)) { //We have a new event!! also check for
 				if (i == 0) { //Listener has a client in accept queue
 					if (acceptClient())
 						continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/29 11:46:14 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:52:02 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class IRCServer {
 		std::vector<Channel*> 		channels;
 		
 		std::vector<struct pollfd>	pfds;
-		std::vector<CircularBuffer>	circularBuffers;
+		std::vector<CircularBuffer>	circularBuffers; //recv
 		std::string					creationDate;
 		std::string					runningDateTime;
 		std::string					version;
