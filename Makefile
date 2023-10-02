@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/29 11:54:55 by djagusch         ###   ########.fr        #
+#    Updated: 2023/09/29 13:02:05 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,19 @@ FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
 	-Wconversion -Wshadow #-g -fsanitize=address -static-libsan
 
 SRC_FILES = main \
-	IRCServer \
-	CircularBuffer \
-	User
-# Message \
-# Channel \
+			IRCServer \
+			CircularBuffer \
+			User \
+			Message
+# Channel
 # Registration
 	
 INC_FILES = IRCServer \
-	CircularBuffer \
-	User
-#	Message
-# 	Channel \
-# 	Error \
+			CircularBuffer \
+			User \
+			Message
+# 	Channel
+# 	Error
 # 	Reply
 
 SRC = $(addprefix $S/,$(addsuffix .cpp,$(SRC_FILES)))
