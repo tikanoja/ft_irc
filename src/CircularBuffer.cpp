@@ -1,11 +1,7 @@
 #include "../inc/CircularBuffer.hpp"
 
 CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
-	try {
- 		buffer = new unsigned char[MAXDATASIZE * 2];
-	} catch (std::exception & e){
-		std::cerr << e.what() << std::endl;
-	}
+ 	buffer = new unsigned char[MAXDATASIZE * 2];
 	memset(buffer, 0, MAXDATASIZE * 2);
 }
 
@@ -33,7 +29,13 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	return (*this);
 }
 
-void CircularBuffer::addToBuffer(char* buf, ssize_t numbytes) {
+int CircularBuffer::emptyCheck() {
+	if (p_tail == p_head)
+		return 0;
+	return 1;
+}
+
+void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 	for (ssize_t i = 0; i < numbytes; i++) {
 		this->buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;

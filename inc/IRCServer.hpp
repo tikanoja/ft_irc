@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 10:37:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:26:29 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ class IRCServer {
 		int			acceptClient();
 		int			receiveMsg(User* user, nfds_t i);
 		void		dropConnection(ssize_t numbytes, nfds_t i);
-		void		replyToMsg(nfds_t i);
+		void		replyToMsg(User *user);
 		
 		bool		getUserMode(User & user, e_uperm mode);
 		void		setUserMode(User & user, e_uperm mode);

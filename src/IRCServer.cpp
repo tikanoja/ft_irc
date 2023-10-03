@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 13:41:27 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/03 17:11:35 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,32 +135,40 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 	return ;
 }
 
-void IRCServer::replyToMsg(nfds_t i) {
-	std::ostringstream messageStream;
-    messageStream << "Hello client number " << i << " !\r\n";
-    std::string msg = messageStream.str();
-	for (size_t in = 0; in < msg.length(); in++) {
-		if (msg[in] == 26) {//ctrl+z control character
-			msg.erase(in, 1);
-			i--;
+void IRCServer::replyToMsg(User* user) { //ottaa vastaan message classin ja target user ?
+	if (user->getSendBuffer().emptyCheck() == 0) {
+		std::ostringstream messageStream;
+		messageStream << "quick brown fox jumps over the lazy dogs" << user->getNick() << " !\r\n";
+		std::string msg = messageStream.str();
+		for (size_t in = 0; in < msg.length(); in++) {
+			if (msg[in] == 26) {//ctrl+z control character
+				msg.erase(in, 1);
+				in--;
+			}
+			else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
+				msg.erase(in, 2);
+				in--;
+			}
 		}
-		else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
-			msg.erase(in, 2);
-			in--;
-		}
+		const char* msgc = msg.c_str();
+		size_t	msg_len = strlen(msgc);
+		user->getSendBuffer().addToBuffer(msgc, static_cast<ssize_t>(msg_len));
 	}
-	const char* msgc = msg.c_str();
-
-	size_t	msg_len = strlen(msgc);
-	ssize_t total = 0;
-	ssize_t n_sent = 0;
-	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
+	if (user->getSendBuffer().emptyCheck() == 1) {
+		std::string toSend = user->getSendBuffer().extractBuffer();
+		const char* toSendC = toSend.c_str();
+		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
+		ssize_t n_sent = 0;
+		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), 5, 0) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
-		std::cout << "sent " << n_sent << " bytes." << std::endl;
-		total += n_sent;
+		// if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
+		// 	std::cerr << "Send failed" << std::endl;
+		if (n_sent > 0 && n_sent < toSendLen) {
+			toSend.erase(0, static_cast<size_t>(n_sent));
+			const char* toBuffer = toSend.c_str();
+			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
+		}
 	}
-	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
 }
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
@@ -202,11 +210,11 @@ int IRCServer::pollingRoutine() {
 					fd_count++;
 				} else { //A client has sent us a message
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(users.findUserBySocket(static_cast<int>(i)), i)) {
+ 					if (receiveMsg(users.findUserBySocket(this->pfds[i].fd), i)) {
 						fd_count--;
 						continue ;
 					}
-					replyToMsg(i);
+					replyToMsg(users.findUserBySocket(this->pfds[i].fd));
 				}
 			}
 		}
