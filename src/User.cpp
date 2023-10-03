@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/09/29 11:49:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:34:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ User::User(const std::string password, const std::string nickname,
 	const std::string username) : p_password(password), p_nickname(nickname), p_username(username){
 	std::cout << "User param constructor called" << std::endl;
 }
-
 
 User::User()
 {
@@ -35,7 +34,7 @@ User::~User()
 
 User& User::operator=(User const& rhs)
 {
-	if(this != &rhs){
+	if (this != &rhs){
 		p_password = rhs.p_password;
 		p_nickname = rhs.p_nickname;
 		p_username = rhs.p_username;
@@ -55,10 +54,55 @@ void	User::setSocket(int socketfd){
 	p_socket_fd = socketfd;
 }
 
-char*	User::getIP(void){
+void	User::setNick(std::string nickname){
+		p_nickname = nickname;
+}
+
+void	User::setMode(int mode){
+		p_mode = mode;
+}
+
+void	User::setRealName(std::string realname){
+		p_realname = realname;
+}
+
+void	User::setUserName(std::string username){
+		p_username = username;
+}
+
+char const *	User::getIP(void) const {
 	return p_ipaddress;
 }
 
-int		User::getSocket(void){
+int		User::getSocket(void) const {
 	return p_socket_fd;
+}
+
+std::string	const &	User::getNick(void) const {
+	return p_nickname;
+}
+
+int	User::getMode(void) const {
+	return p_mode;
+}
+
+std::string	const &	User::getRealName(void) const {
+	return p_realname;
+}
+
+std::string	const &	User::getUserName(void) const {
+	return p_username;
+}
+
+CircularBuffer & User::getRecvBuffer(void) {
+	return p_recvBuffer;
+}
+
+CircularBuffer & User::getSendBuffer(void) {
+	return p_sendBuffer;
+}
+
+void	User::resetBuffers(void){
+	p_recvBuffer.free();
+	p_sendBuffer.free();
 }

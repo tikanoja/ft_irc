@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/28 14:02:00 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/03 09:31:45 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Message.hpp"
+#include "../inc/Message.hpp"
 
 Message::Message()
 {}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/02 16:25:03 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:43:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
 	pfds.reserve(MAXCLIENTS);
-	circularBuffers.reserve(MAXCLIENTS);
+	users.reserve(MAXCLIENTS);
 	initServer();
 	return ;
 }
@@ -86,18 +86,8 @@ int IRCServer::getListenerSocket() {
 	pfd.events = POLLIN;
 	this->pfds.push_back(pfd);
 
-	CircularBuffer cb;
-	this->circularBuffers.push_back(cb);
 	return (0);
 }
-
-// void IRCServer::addToPfds(){
-// 	return ;
-// }
-
-// void IRCServer::delFromPfds(){
-// 	return ;
-// }
 
 void* IRCServer::get_in_addr(struct sockaddr *sa) {
 	if (sa->sa_family == AF_INET) {
@@ -123,9 +113,7 @@ int IRCServer::acceptClient() {
 		pfd.events = POLLIN;
 		this->pfds.push_back(pfd);
 
-		CircularBuffer cbuf;
 		users.push_back(new User());
-		this->circularBuffers.push_back(cbuf);
 		
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 		users.back()->setIP(s);
@@ -142,8 +130,8 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 		std::cerr << "Recv failed. Numbytes: " << numbytes << std::endl;
 	}	
 	close(this->pfds[i].fd);
+	users.findUserBySocket(this->pfds[i].fd)->resetBuffers();
 	pfds.erase(this->pfds.begin() + i);
-	circularBuffers.erase(this->circularBuffers.begin() + i);
 	return ;
 }
 
@@ -175,7 +163,7 @@ void IRCServer::replyToMsg(nfds_t i) {
 	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
 }
 
-int IRCServer::receiveMsg(nfds_t i) {
+int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
 	ssize_t numbytes;
 	numbytes = recv(this->pfds[i].fd, buf, MAXDATASIZE - 1, 0);
@@ -184,18 +172,18 @@ int IRCServer::receiveMsg(nfds_t i) {
 		return (-1);
 	}
 	buf[numbytes] = '\0';
-	this->circularBuffers[i].addToBuffer(buf, numbytes);
-	if (circularBuffers[i].findCRLF() == -1) {
+	user->getRecvBuffer().addToBuffer(buf, numbytes);
+	if (user->getRecvBuffer().findCRLF() == -1) {
 		std::cout << "did not detect CRLF" << std::endl;
 		return (0);
 	}
-	std::string msg = circularBuffers[i].extractBuffer();
+	std::string msg = user->getRecvBuffer().extractBuffer();
 	std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
 	// command & function pointer map or something ???
 	// respond to the client
-	replyToMsg(i);
+
 	return (0);
 }
 
@@ -214,10 +202,11 @@ int IRCServer::pollingRoutine() {
 					fd_count++;
 				} else { //A client has sent us a message
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(i)) {
+ 					if (receiveMsg(users.findUserBySocket(i), i)) {
 						fd_count--;
 						continue ;
 					}
+					replyToMsg(i);
 				}
 			}
 		}
