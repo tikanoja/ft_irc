@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/29 15:05:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:43:58 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ class Message
 		std::string 				p_prefix;
 		std::vector<std::string>	p_params;
 		std::string					p_trailing;
-		User*						p_sender; //changed & to * to compile
-		User*						p_recipient; //changed & to * to compile
+		User*						p_sender;		//changed & to * to compile
+		User*						p_recipient;	//changed & to * to compile
 };
 
 #endif

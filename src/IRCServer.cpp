@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 10:43:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:45:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
+	serverName = "ThisServerBeBitchin\'";
 	pfds.reserve(MAXCLIENTS);
 	users.reserve(MAXCLIENTS);
 	initServer();
@@ -27,6 +28,7 @@ IRCServer::~IRCServer(void) {
 }
 
 void IRCServer::initServer() {
+	runningDateTime = clock();
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	// if (pollingRoutine())

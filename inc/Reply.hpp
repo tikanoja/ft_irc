@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/28 09:47:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:45:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # include <string>
 
-void	sendRPjL(int const client_fd, std::string client_buffer);
+void	sendRPL(int const client_fd, std::string client_buffer);
 
 # define USER_ID (nickname, username, host) (":" + nickname + "!" + username + "@" + host)
 

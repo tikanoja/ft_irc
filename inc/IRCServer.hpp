@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 10:37:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:43:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sstream>
 # include <cstdint>
 # include <cstring>
+# include <time.h>
 # include <string>
 # include <poll.h>
 # include <netdb.h>
@@ -45,11 +46,11 @@ class IRCServer {
 			away = 0x0001,			// user is flagged as away;
 			wallops = 0x0002,		// user receives wallops;
 			invisible = 0x0004,		// marks a users as invisible;
-			restricted = 0x0008,		// restricted user connection;
+			restricted = 0x0008,	// restricted user connection;
 			oper = 0x0010,			// operator flag;
 			Oper = 0x0020,			// local operator flag;
 			server_notice = 0x0040,	// marks a user for receipt of server notices.
-			registered = 0x0080,		// user has completed registration
+			registered = 0x0080,	// user has completed registration
 			online = 0x0100			// user is online
 		};
 
@@ -58,6 +59,7 @@ class IRCServer {
 		std::vector<Channel*>		channels;
 
 		std::vector<struct pollfd>	pfds;
+		std::string					serverName;
 		std::string					creationDate;
 		std::string					runningDateTime;
 		std::string					version;
