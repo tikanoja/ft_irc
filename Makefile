@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/09/29 13:02:05 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/03 13:27:09 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,16 @@ SRC_FILES = main \
 			IRCServer \
 			CircularBuffer \
 			User \
-			Message
+			Message \
+			Uvector
 # Channel
 # Registration
 	
 INC_FILES = IRCServer \
 			CircularBuffer \
 			User \
-			Message
+			Message \
+			Uvector
 # 	Channel
 # 	Error
 # 	Reply

@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   CircularBuffer.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 09:32:47 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:43:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:38:27 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CIRCULARBUFFER_HPP
 # define CIRCULARBUFFER_HPP
 
-# include "IRCServer.hpp"
+# include <typeinfo>
+# include <iostream>
+# include <string>
 # include <exception>
 
 # define MAXDATASIZE 512
