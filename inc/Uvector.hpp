@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 08:53:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:20:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:48:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <iostream>
 # include <vector>
 # include <typeinfo>
-# include <poll.h>
 # include "User.hpp"
 
 class Uvector : public std::vector<User*>
@@ -27,7 +26,7 @@ class Uvector : public std::vector<User*>
 		~Uvector();
 
 		Uvector &	operator=(Uvector const & rhs);
-		User*		findUserBySocket(nfds_t const socket_fd);
+		User*		findUserBySocket(int const socket_fd);
 		User*		findUserByNick(std::string const & nick);
 
 	private:

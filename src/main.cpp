@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 22:45:35 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 10:07:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:45:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,10 @@ int main(int ac, char** av) {
 	uint16_t port = static_cast<uint16_t>(portInt);
 	std::string password(av[2]);
 
-	//start server
 	try {
-		IRCServer server(port); // Set up listening socket in constructor?
+		IRCServer server(port);
 		if (server.pollingRoutine())
 			throw std::runtime_error("Polling failed");
-		//init server
-		
-	
-		//listen
-		//
-
 	} catch (std::exception& e) {
 		std::cerr << "Server quit: " << e.what() << std::endl;
 	}

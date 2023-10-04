@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/04 09:59:18 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/04 11:42:44 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,15 @@ O = obj
 CC = c++
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
-	-Wconversion -Wshadow #-g -fsanitize=address -static-libsan
+	-Wconversion -Wshadow -I$I #-g -fsanitize=address -static-libsan
 
 SRC_FILES = main \
 			IRCServer \
+			ConnectToUser \
 			CircularBuffer \
 			User \
 			Uverctor \
 			Message \
-			cmd_invite \
-			cmd_join \
-			cmd_list \
-			cmd_mode \
-			cmd_names \
-			cmd_part \
-			cmd_topic \
 			cmd_away \
 			cmd_kill \
 			cmd_lusers \
@@ -50,18 +44,26 @@ SRC_FILES = main \
 			cmd_quit \
 			cmd_squit \
 			cmd_user
-# 			Channel
+#			chan_invite
+#			chan_join
+#			chan_list
+#			chan_mode
+#			chan_mode
+#			chan_names
+#			chan_part
+#			chan_topic
+#			Channel
 # 			Registration
-	
+
 INC_FILES = IRCServer \
 			CircularBuffer \
 			User \
 			Uvector \
-			Commands
-# 			Error 
-# 			Reply
-#			Message
-# 			Channel
+			Commands \
+			Message \
+			Error \
+			Reply
+#			Channel 
 
 SRC = $(foreach FILE,$(SRC_FILES),$(shell find $S -type f -name "$(FILE).cpp"))
 OBJ = $(patsubst $S/%,$O/%,$(SRC:.cpp=.o))
@@ -80,7 +82,7 @@ print:
 	@echo $(OBJ_DIRS)
 
 $O/%.o: $S/%.cpp $(HEADER) | $O
-	$(CC) $(FLAGS) -I$I -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $< -o $@

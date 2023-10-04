@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 10:03:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:46:39 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,22 @@ class IRCServer {
 		std::string					version;
 
 
-		int			getListenerSocket();
-		void		initServer();
-		void*		get_in_addr(struct sockaddr *sa);
-		int			acceptClient();
-		int			receiveMsg(User* user, nfds_t i);
-		void		dropConnection(ssize_t numbytes, nfds_t i);
-		void		replyToMsg(nfds_t i);
-		
-		bool		getUserMode(User & user, e_uperm mode);
-		void		setUserMode(User & user, e_uperm mode);
+		int					getListenerSocket();
+		void				initServer();
+		void*				get_in_addr(struct sockaddr *sa);
+		int					acceptClient();
+		int					receiveMsg(User* user, nfds_t i);
+		void				dropConnection(ssize_t numbytes, nfds_t i);
+		void				replyToMsg(nfds_t i);
+
+		bool				getUserMode(User & user, e_uperm mode);
+		void				setUserMode(User & user, e_uperm mode);
 
 	public:
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 		int pollingRoutine();
+		std::string	const & getName();
 };
 
 #endif

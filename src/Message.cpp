@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:31:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:24:36 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,3 +81,28 @@ Message& Message::operator=(Message const& rhs)
 	}
 	return *this;
 }
+
+std::string const &	Message::getPrefix(){
+	return p_prefix;
+}
+
+std::vector<std::string> const &	Message::getParams(){
+	return p_params;
+}
+
+std::string const &	Message::getTrailing(){
+	return p_trailing;
+}
+
+User const *	Message::getSender(){
+	return p_sender;
+}
+
+User const *	Message::getRecipient(){
+	return p_recipient;
+}
+
+std::string const &	Message::getCommand(){
+	return p_command;
+}
+

@@ -33,8 +33,11 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	return (*this);
 }
 
-void CircularBuffer::addToBuffer(char* buf, ssize_t numbytes) {
-	for (ssize_t i = 0; i < numbytes; i++) {
+void CircularBuffer::addToBuffer(char const* buf) {
+
+	size_t len = strlen(buf);
+
+	for (size_t i = 0; i < len; i++) {
 		this->buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;
 		if (p_head == MAXDATASIZE * 2)

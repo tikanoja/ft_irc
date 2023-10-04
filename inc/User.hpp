@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 11:34:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:52:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class User
 		std::string		p_nickname;
 		std::string		p_username;
 		std::string		p_realname;
-		int8_t			p_mode;
+		int32_t			p_mode;
 		int				p_socket_fd;
 		char			p_ipaddress[INET6_ADDRSTRLEN];
 		CircularBuffer	p_recvBuffer;
