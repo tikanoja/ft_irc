@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 16:43:47 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:03:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ class IRCServer {
 		std::vector<struct pollfd>	pfds;
 		std::string					serverName;
 		std::string					creationDate;
-		std::string					runningDateTime;
+		clock_t						runningDateTime;
 		std::string					version;
 
 

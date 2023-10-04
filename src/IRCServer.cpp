@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 16:45:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:41:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
-	serverName = "ThisServerBeBitchin\'";
 	pfds.reserve(MAXCLIENTS);
 	users.reserve(MAXCLIENTS);
 	initServer();
@@ -28,7 +27,6 @@ IRCServer::~IRCServer(void) {
 }
 
 void IRCServer::initServer() {
-	runningDateTime = clock();
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	// if (pollingRoutine())
@@ -139,7 +137,7 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 
 void IRCServer::replyToMsg(nfds_t i) {
 	std::ostringstream messageStream;
-    messageStream << "Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber " << i << " !\r\n";
+    messageStream << "Hello client number " << i << " !\r\n";
     std::string msg = messageStream.str();
 	for (size_t in = 0; in < msg.length(); in++) {
 		if (msg[in] == 26) {//ctrl+z control character
@@ -204,7 +202,7 @@ int IRCServer::pollingRoutine() {
 					fd_count++;
 				} else { //A client has sent us a message
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(users.findUserBySocket(i), i)) {
+ 					if (receiveMsg(users.findUserBySocket(static_cast<int>(i)), i)) {
 						fd_count--;
 						continue ;
 					}
