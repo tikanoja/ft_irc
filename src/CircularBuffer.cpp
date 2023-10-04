@@ -79,7 +79,7 @@ std::string CircularBuffer::extractBuffer() {
 	return (bufferString);
 }
 
-void CircularBuffer::free(){
+void CircularBuffer::clear(){
 	memset(this, 0, MAXDATASIZE);
 	p_head = 0;
 	p_tail = 0;

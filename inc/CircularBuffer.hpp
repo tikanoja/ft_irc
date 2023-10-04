@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 09:32:47 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:43:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 07:36:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class CircularBuffer {
 		std::string		extractBuffer();
 		unsigned char*	buffer;
 
-		void			free();
+		void			clear();
 
 	private:
 		int p_head;

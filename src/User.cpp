@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 11:34:33 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 07:36:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ CircularBuffer & User::getSendBuffer(void) {
 }
 
 void	User::resetBuffers(void){
-	p_recvBuffer.free();
-	p_sendBuffer.free();
+	p_recvBuffer.clear();
+	p_sendBuffer.clear();
 }
