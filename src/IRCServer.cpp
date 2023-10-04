@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 17:11:35 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:08:23 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,34 +135,20 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 	return ;
 }
 
-void IRCServer::replyToMsg(User* user) { //ottaa vastaan message classin ja target user ?
+void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message classin ja target user ?
 	if (user->getSendBuffer().emptyCheck() == 0) {
-		std::ostringstream messageStream;
-		messageStream << "quick brown fox jumps over the lazy dogs" << user->getNick() << " !\r\n";
-		std::string msg = messageStream.str();
-		for (size_t in = 0; in < msg.length(); in++) {
-			if (msg[in] == 26) {//ctrl+z control character
-				msg.erase(in, 1);
-				in--;
-			}
-			else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
-				msg.erase(in, 2);
-				in--;
-			}
-		}
-		const char* msgc = msg.c_str();
+		const char* msgc = msg->toString();
 		size_t	msg_len = strlen(msgc);
 		user->getSendBuffer().addToBuffer(msgc, static_cast<ssize_t>(msg_len));
-	}
-	if (user->getSendBuffer().emptyCheck() == 1) {
+		delete msgc;
+	} if (user->getSendBuffer().emptyCheck() == 1) {
+		user->getSendBuffer().printbuf();
 		std::string toSend = user->getSendBuffer().extractBuffer();
 		const char* toSendC = toSend.c_str();
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
 		ssize_t n_sent = 0;
-		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), 5, 0) ) <= 0)
+		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
-		// if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
-		// 	std::cerr << "Send failed" << std::endl;
 		if (n_sent > 0 && n_sent < toSendLen) {
 			toSend.erase(0, static_cast<size_t>(n_sent));
 			const char* toBuffer = toSend.c_str();
@@ -173,11 +159,16 @@ void IRCServer::replyToMsg(User* user) { //ottaa vastaan message classin ja targ
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
+	memset(buf, '\0', MAXDATASIZE);
 	ssize_t numbytes;
 	numbytes = recv(this->pfds[i].fd, buf, MAXDATASIZE - 1, 0);
 	if (numbytes <= 0) {
 		dropConnection(numbytes, i);
 		return (-1);
+	}
+	if (numbytes == 1) {
+		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
+		return (0);
 	}
 	buf[numbytes] = '\0';
 	user->getRecvBuffer().addToBuffer(buf, numbytes);
@@ -189,9 +180,9 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	// command & function pointer map or something ???
-	// respond to the client
-
+	//analyze msg
+	//do something
+	replyToMsg(users.findUserBySocket(this->pfds[i].fd), &m);
 	return (0);
 }
 
@@ -214,7 +205,6 @@ int IRCServer::pollingRoutine() {
 						fd_count--;
 						continue ;
 					}
-					replyToMsg(users.findUserBySocket(this->pfds[i].fd));
 				}
 			}
 		}

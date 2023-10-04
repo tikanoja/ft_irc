@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 09:32:47 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 17:11:37 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:59:34 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class CircularBuffer {
 		std::string		extractBuffer();
 		int				emptyCheck();
 		unsigned char*	buffer;
+		void printbuf();
 
 		void			free();
 

@@ -2,7 +2,7 @@
 
 CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
  	buffer = new unsigned char[MAXDATASIZE * 2];
-	memset(buffer, 0, MAXDATASIZE * 2);
+	memset(buffer, '\0', MAXDATASIZE * 2);
 }
 
 CircularBuffer::CircularBuffer( CircularBuffer const & src ) {
@@ -21,7 +21,7 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 		if (this->buffer)
 			delete [] buffer;
 		this->buffer = new unsigned char[2 * MAXDATASIZE];
-		memset(this->buffer, 0, MAXDATASIZE * 2);
+		memset(this->buffer, '\0', MAXDATASIZE * 2);
 		for (int i = 0; rhs.buffer[i]; i++) {
 			this->buffer[i] = rhs.buffer[i];
 		}
@@ -30,6 +30,7 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 }
 
 int CircularBuffer::emptyCheck() {
+	//empty or full check for null heh rhymes!
 	if (p_tail == p_head)
 		return 0;
 	return 1;
@@ -85,4 +86,17 @@ void CircularBuffer::free(){
 	memset(this, 0, MAXDATASIZE);
 	p_head = 0;
 	p_tail = 0;
+}
+
+void CircularBuffer::printbuf() {
+	std::cout << "Tail is at: " << p_tail << ", Head is at: " << p_head << std::endl;
+	std::cout << "In buffer: ";
+	for (int i = p_tail; i != p_head; i++) {
+		if (i == MAXDATASIZE * 2) {
+			i = 0;
+		}
+		std::cout << buffer[i];
+	}
+	std::cout << std::endl;
+	return ;
 }
