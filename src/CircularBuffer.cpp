@@ -63,7 +63,7 @@ std::string CircularBuffer::extractBuffer() {
 		templen++;
 	}
 	
-	unsigned char* tempbuffer = new unsigned char[templen];
+	unsigned char* tempbuffer = new unsigned char[templen]; //muista delete
 	for (int i = 0; tail_backup != p_head; i++) { //copy buffer to temp & zero buffer
 		tempbuffer[i] = buffer[tail_backup];
 		buffer[tail_backup] = '\0';

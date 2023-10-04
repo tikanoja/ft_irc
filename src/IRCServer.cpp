@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 17:08:23 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:22:27 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
 	}
-	buf[numbytes] = '\0';
+	// buf[numbytes] = '\0';
 	user->getRecvBuffer().addToBuffer(buf, numbytes);
 	if (user->getRecvBuffer().findCRLF() == -1) {
 		std::cout << "did not detect CRLF" << std::endl;
