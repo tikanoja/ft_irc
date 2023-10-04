@@ -6,12 +6,11 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 11:48:26 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:44:28 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
-#include "../inc/Message.hpp"
 
 IRCServer::IRCServer(uint16_t port) : port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
@@ -34,10 +33,32 @@ void IRCServer::initServer() {
 	return ;
 }
 
+void IRCServer::initCommands() {
+	static const std::string cmd_names[] = {
+		"PASS",
+		"NICK"
+	};
+
+	static const CommandFunction cmd_functions[] = {
+		cmd_pass,
+		cmd_nick
+	};
+	
+	for (size_t i = 0; i < N_COMMANDS; i++)
+		command_map[cmd_names[i]] = cmd_functions[i];
+}
+
 std::string const & IRCServer::getName(){
 	return serverName;
 }
 
+std::string const & IRCServer::getPassword() const{
+	return (password);
+}
+
+Uvector		const &	IRCServer::getUsers() const{
+	return (users);
+}
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];

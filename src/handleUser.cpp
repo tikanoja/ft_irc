@@ -6,13 +6,13 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:31:19 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:12:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
 
-bool IRCServer::getUserMode(User & user, e_uperm mode){
+bool IRCServer::getUserMode(User & user, e_uperm mode) const{
 	try {
 		if (!user.getNick().empty())
 			return users.findUserByNick(user.getNick())->getMode() & mode;

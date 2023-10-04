@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 11:46:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:43:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define IRCSERVER_HPP
 
 # include <vector>
+# include <map>
 # include <iostream>
 # include <sstream>
 # include <cstdint>
@@ -32,9 +33,19 @@
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
 # include "CircularBuffer.hpp"
 # include "Uvector.hpp"
+# include "Message.hpp"
 # include "User.hpp"
+# include "Commands.hpp"
+
 # define MAXCLIENTS 10
-# define MAXDATASIZE 512
+
+# ifndef MAXDATASIZE
+#  define MAXDATASIZE 512
+# endif
+
+# ifndef N_COMMANDS
+#  define N_COMMANDS 1
+# endif
 
 class User;
 class Channel;
@@ -55,6 +66,7 @@ class IRCServer {
 		};
 
 		uint16_t					port;
+		std::string	const 			password;
 		Uvector						users;
 		std::vector<Channel*>		channels;
 
@@ -64,23 +76,30 @@ class IRCServer {
 		clock_t						runningDateTime;
 		std::string					version;
 
+		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
+		std::map<std::string, CommandFunction>	command_map;
 
-		int					getListenerSocket();
-		void				initServer();
-		void*				get_in_addr(struct sockaddr *sa);
-		int					acceptClient();
-		int					receiveMsg(User* user, nfds_t i);
-		void				dropConnection(ssize_t numbytes, nfds_t i);
-		void				replyToMsg(nfds_t i);
+		int				getListenerSocket();
+		void			initServer();
+		void 			initCommands();
+		void*			get_in_addr(struct sockaddr *sa);
+		int				acceptClient();
+		int				receiveMsg(User* user, nfds_t i);
+		void			dropConnection(ssize_t numbytes, nfds_t i);
+		void			replyToMsg(nfds_t i);
+		
+		bool			getUserMode(User & user, e_uperm mode) const;
+		void			setUserMode(User & user, e_uperm mode);
 
-		bool				getUserMode(User & user, e_uperm mode);
-		void				setUserMode(User & user, e_uperm mode);
 
 	public:
 		IRCServer(uint16_t port);
 		~IRCServer(void);
+		
 		int pollingRoutine();
 		std::string	const & getName();
+		std::string const &	getPassword() const;
+		Uvector		const &	getUsers() const;
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 10:48:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:14:18 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ Uvector& Uvector::operator=(Uvector const & rhs)
 	return *this;
 }
 
-User*		Uvector::findUserBySocket(int const socket_fd)
+User*		Uvector::findUserBySocket(int const socket_fd) const
 {
-	for (std::vector<User*>::iterator it = this->begin(); it != this->end(); it++){
+	for (std::vector<User*>::const_iterator it = this->begin(); it != this->end(); it++){
 		if ((*it)->getSocket() == socket_fd)
 			return (*it);
 	}
 	return NULL;
 }
 
-User*		Uvector::findUserByNick(std::string const & nick)
+User*		Uvector::findUserByNick(std::string const & nick) const
 {
-	for (std::vector<User*>::iterator it = this->begin(); it != this->end(); it++){
+	for (std::vector<User*>::const_iterator it = this->begin(); it != this->end(); it++){
 		if ((*it)->getNick() == nick)
 			return (*it);
 	}
