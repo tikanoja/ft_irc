@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 19:58:08 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:32:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int IRCServer::pollingRoutine() {
 		if ((poll_count = poll(&(p_pfds[0]), fd_count, -1)) == -1)//of &p_pfds[0]
 			return (-1);
 		for (nfds_t i = 0; i < fd_count; i++) {
-			if (p_pfds[i].revents & (POLLIN | POLLOUT)) { //We have a new event!! also check for
+			if (p_pfds[i].revents & (POLLIN | POLLOUT)) { 
 				if (i == 0) { //Listener has a client in accept queue
 					if (acceptClient())
 						continue ;

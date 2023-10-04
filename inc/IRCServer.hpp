@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 20:04:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:31:45 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,36 @@ class CircularBuffer;
 
 class IRCServer {
 	private:
+
+		uint16_t					p_port;
+		std::string	const 			p_password;
+		Uvector						p_users;
+		Uvector						p_opers;
+		std::vector<Channel*>		p_channels;
+
+		std::vector<struct pollfd>	p_pfds;
+		std::string					p_serverName;
+		std::string					p_creationDate;
+		clock_t						p_runningDateTime;
+		std::string					p_version;
+		std::vector<std::string>	p_blockeUserNames;
+
+		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
+		std::map<std::string, CommandFunction>	p_commandMap;
+
+		int									getListenerSocket();
+		void								initServer();
+		void 								initCommands();
+		void*								get_in_addr(struct sockaddr *sa);
+		int									acceptClient();
+		int									receiveMsg(User* user, nfds_t i);
+		void								dropConnection(ssize_t numbytes, nfds_t i);
+		void								replyToMsg(nfds_t i);
+
+		std::vector<std::string> const &	getBlocked() const;
+		void								setBlocked(std::string nick);
+
+	public:
 		enum e_uperm{
 			away = 0x0001,			// user is flagged as away;
 			wallops = 0x0002,		// user receives wallops;
@@ -65,44 +95,17 @@ class IRCServer {
 			online = 0x0100			// user is online
 		};
 
-		uint16_t					p_port;
-		std::string	const 			p_password;
-		Uvector						p_users;
-		std::vector<Channel*>		p_channels;
-
-		std::vector<struct pollfd>	p_pfds;
-		std::string					p_serverName;
-		std::string					p_creationDate;
-		clock_t						p_runningDateTime;
-		std::string					p_version;
-		std::vector<std::string>	p_blockeUserNames;
-
-		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
-		std::map<std::string, CommandFunction>	command_map;
-
-		int									getListenerSocket();
-		void								initServer();
-		void 								initCommands();
-		void*								get_in_addr(struct sockaddr *sa);
-		int									acceptClient();
-		int									receiveMsg(User* user, nfds_t i);
-		void								dropConnection(ssize_t numbytes, nfds_t i);
-		void								replyToMsg(nfds_t i);
-
-		bool								getUserMode(User & user, e_uperm mode) const;
-		void								setUserMode(User & user, e_uperm mode);
-		std::vector<std::string> const &	getBlocked() const;
-		void								setBlocked(std::string nick);
-
-	public:
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 
-		int pollingRoutine();
+		int					pollingRoutine();
+		int					executeCommand(User& user, Message& message);
 		std::string	const & getName();
 		std::string const &	getPassword() const;
 		Uvector		const &	getUsers() const;
 		bool				isBlocked(std::string nick) const;
+		bool				getUserMode(User & user, e_uperm mode) const;
+		void				setUserMode(User & user, e_uperm mode);
 };
 
 #endif
