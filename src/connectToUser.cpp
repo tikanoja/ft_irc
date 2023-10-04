@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 11:42:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 20:12:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int IRCServer::getListenerSocket() {
 	struct addrinfo hints, *servinfo, *p;
 	int sockfd, rv;
 	int yes = 1;
-	
+
 	std::stringstream ss;
-	ss << this->port;
+	ss << p_port;
 	std::string str = ss.str();
 	const char* server_port = str.c_str();
 
@@ -57,12 +57,12 @@ int IRCServer::getListenerSocket() {
 		std::cerr << "Failed to listen" << std::endl;
 		return (-1);
 	}
-	
+
 	//create pollfd & save to pfds[0]
 	struct pollfd pfd;
 	pfd.fd = sockfd;
 	pfd.events = POLLIN;
-	this->pfds.push_back(pfd);
+	p_pfds.push_back(pfd);
 
 	return (0);
 }
@@ -79,9 +79,9 @@ int IRCServer::acceptClient() {
 	struct sockaddr_storage their_addr; // connector's address information
 	socklen_t sin_size;
 	int new_fd;
-	
+
 	sin_size = sizeof(their_addr);
-	new_fd = accept(this->pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
+	new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
 	if (new_fd == -1) {
 		std::cerr << "Failed to accept client" << std::endl;
 		return (-1);
@@ -89,13 +89,13 @@ int IRCServer::acceptClient() {
 		struct pollfd pfd;
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
-		this->pfds.push_back(pfd);
+		p_pfds.push_back(pfd);
 
-		users.push_back(new User());
-		
+		p_users.push_back(new User());
+
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-		users.back()->setIP(s);
-		users.back()->setSocket(new_fd);
+		p_users.back()->setIP(s);
+		p_users.back()->setSocket(new_fd);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);
@@ -106,10 +106,10 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 		std::cout << "Connection #" << i << " closed." << std::endl;
 	else {
 		std::cerr << "Recv failed. Numbytes: " << numbytes << std::endl;
-	}	
-	close(this->pfds[i].fd);
-	users.findUserBySocket(this->pfds[i].fd)->resetBuffers();
-	pfds.erase(this->pfds.begin() + i);
+	}
+	close(p_pfds[i].fd);
+	p_users.findUserBySocket(p_pfds[i].fd)->resetBuffers();
+	p_pfds.erase(p_pfds.begin() + i);
 	return ;
 }
 
@@ -133,7 +133,7 @@ void IRCServer::replyToMsg(nfds_t i) {
 	ssize_t total = 0;
 	ssize_t n_sent = 0;
 	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
+		if ( (n_sent = send( p_pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
 		std::cout << "sent " << n_sent << " bytes." << std::endl;
 		total += n_sent;

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:14:29 by djagusch          #+#    #+#             */
-/*   Updated: 2023/09/30 11:14:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:22:03 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ Logger& Logger::operator=(Logger const& rhs)
 }
 
 void Logger::p_displayTimestamp(){
-	std::time_t cur_time = std::time(0);
-	std::tm* now = std::localtime(&cur_time);
+	std::time_t p_cur_time = std::time(0);
+	std::tm* now = std::localtime(&p_cur_time);
 
 	p_outstream << std::setfill('0') << "[" << 1900 + now->tm_year
 				<< std::setw(2) << 1 + now->tm_mon
