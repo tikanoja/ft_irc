@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/04 11:42:44 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/04 19:28:08 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ O = obj
 
 CC = c++
 
-FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
+FLAGS = -Wall -Wextra -Werror -pedantic -std=c++11 \
 	-Wconversion -Wshadow -I$I #-g -fsanitize=address -static-libsan
 
 SRC_FILES = main \
@@ -59,11 +59,11 @@ INC_FILES = IRCServer \
 			CircularBuffer \
 			User \
 			Uvector \
-			Commands \
 			Message \
+			Commands \
 			Error \
 			Reply
-#			Channel 
+#			Channel
 
 SRC = $(foreach FILE,$(SRC_FILES),$(shell find $S -type f -name "$(FILE).cpp"))
 OBJ = $(patsubst $S/%,$O/%,$(SRC:.cpp=.o))
