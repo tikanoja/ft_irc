@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 08:53:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 16:13:34 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:49:25 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ class Uvector : public std::vector<User*>
 		~Uvector();
 
 		Uvector &	operator=(Uvector const & rhs);
+		std::string toIRCLower(std::string const & str) const;
 		User*		findUserBySocket(int const socket_fd) const;
 		User*		findUserByNick(std::string const & nick) const;
+		User*		findUserByIP(std::string const & ip_address) const;
 
 	private:
 		class UserNotFound : public std::exception{

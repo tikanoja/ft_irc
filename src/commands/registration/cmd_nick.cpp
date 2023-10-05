@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 16:52:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:31:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 /*         ERR_NONICKNAMEGIVEN             ERR_ERRONEUSNICKNAME
            ERR_NICKNAMEINUSE               ERR_NICKCOLLISION
            ERR_UNAVAILRESOURCE             ERR_RESTRICTED */
-
-
-
-
-/*   { => [
-	} => ] 
-	| => \
-	^ =>  ~ */
 
 
 bool	isNickvalid(std::string & nick){

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 11:42:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:27:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,17 @@ int IRCServer::acceptClient() {
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
 		this->pfds.push_back(pfd);
-
-		users.push_back(new User());
-		
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-		users.back()->setIP(s);
-		users.back()->setSocket(new_fd);
+		
+		User *user;
+		if (!(user = users.findUserByIP(s)))
+		{
+			users.push_back(new User());
+			users.back()->setIP(s);
+			users.back()->setSocket(new_fd);
+		}
+		else
+			user->setSocket(new_fd);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);
