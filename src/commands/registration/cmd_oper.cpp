@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Registration.cpp                                   :+:      :+:    :+:   */
+/*   cmd_oper.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/28 09:48:36 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 10:25:18 by djagusch         ###   ########.fr       */
+/*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
+/*   Updated: 2023/10/04 21:32:04 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
-#include "../inc/User.hpp"
+#include "../../../inc/Commands.hpp"
 
+int cmd_oper(IRCServer& server, User& user, Message& message){
+
+	
+
+	return 0;
+}

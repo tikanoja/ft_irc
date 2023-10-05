@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:53:25 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:55:01 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class Message
 		const char* toString();
 
 	private:
+		std::string					p_command;
 		std::string 				p_prefix;
 		std::string					p_command;
 		std::vector<std::string>	p_params;

@@ -1,29 +1,29 @@
 #include "../inc/CircularBuffer.hpp"
 
 CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
- 	buffer = new unsigned char[MAXDATASIZE * 2];
-	memset(buffer, '\0', MAXDATASIZE * 2);
+	p_buffer = new unsigned char[MAXDATASIZE * 2];
+	memset(p_buffer, '\0', MAXDATASIZE * 2);
 }
 
 CircularBuffer::CircularBuffer( CircularBuffer const & src ) {
-	this->buffer = NULL;
-	*this = src; 
+	p_buffer = NULL;
+	*this = src;
 }
 
 CircularBuffer::~CircularBuffer() {
-	delete[] buffer;
+	delete[] p_buffer;
 }
 
 CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	if( this != &rhs ) {
 		p_head = rhs.p_head;
 		p_tail = rhs.p_tail;
-		if (this->buffer)
-			delete [] buffer;
-		this->buffer = new unsigned char[2 * MAXDATASIZE];
-		memset(this->buffer, '\0', MAXDATASIZE * 2);
-		for (int i = 0; rhs.buffer[i]; i++) {
-			this->buffer[i] = rhs.buffer[i];
+		if (p_buffer)
+			delete [] p_buffer;
+		p_buffer = new unsigned char[2 * MAXDATASIZE];
+		memset(p_buffer, 0, MAXDATASIZE * 2);
+		for (int i = 0; rhs.p_buffer[i]; i++) {
+			p_buffer[i] = rhs.p_buffer[i];
 		}
 	}
 	return (*this);
@@ -38,7 +38,7 @@ int CircularBuffer::emptyCheck() {
 
 void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 	for (ssize_t i = 0; i < numbytes; i++) {
-		this->buffer[p_head] = static_cast<unsigned char> (buf[i]);
+		p_buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;
 		if (p_head == MAXDATASIZE * 2)
 			p_head = 0;
@@ -46,8 +46,8 @@ void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 }
 
 int CircularBuffer::findCRLF() const {
-	for (int i = p_tail; buffer[i + 1]; i++) {
-		if (buffer[i] == '\r' || buffer[i + 1] == '\n' || (buffer[i] == '\r' && buffer[i + 1] == '\n'))
+	for (int i = p_tail; p_buffer[i + 1]; i++) {
+		if (p_buffer[i] == '\r' || p_buffer[i + 1] == '\n' || (p_buffer[i] == '\r' && p_buffer[i + 1] == '\n'))
 			return (i);
 	}
 	return (-1);
@@ -62,11 +62,11 @@ std::string CircularBuffer::extractBuffer() {
 			p_tail = 0;
 		templen++;
 	}
-	
-	unsigned char* tempbuffer = new unsigned char[templen]; //muista delete
-	for (int i = 0; tail_backup != p_head; i++) { //copy buffer to temp & zero buffer
-		tempbuffer[i] = buffer[tail_backup];
-		buffer[tail_backup] = '\0';
+
+	unsigned char* tempbuffer = new unsigned char[templen];
+	for (int i = 0; tail_backup != p_head; i++) { //copy p_buffer to temp & zero p_buffer
+		tempbuffer[i] = p_buffer[tail_backup];
+		p_buffer[tail_backup] = '\0';
 		tail_backup++;
 		if (tail_backup == MAXDATASIZE * 2)
 			tail_backup = 0;
@@ -82,7 +82,7 @@ std::string CircularBuffer::extractBuffer() {
 	return (bufferString);
 }
 
-void CircularBuffer::free(){
+void CircularBuffer::clear(){
 	memset(this, 0, MAXDATASIZE);
 	p_head = 0;
 	p_tail = 0;
@@ -95,7 +95,7 @@ void CircularBuffer::printbuf() {
 		if (i == MAXDATASIZE * 2) {
 			i = 0;
 		}
-		std::cout << buffer[i];
+		std::cout << p_buffer[i];
 	}
 	std::cout << std::endl;
 	return ;

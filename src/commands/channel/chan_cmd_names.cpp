@@ -1,16 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Registration.cpp                                   :+:      :+:    :+:   */
+/*   cmd_names.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/28 09:48:36 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 10:25:18 by djagusch         ###   ########.fr       */
+/*   Created: 2023/10/04 09:40:59 by djagusch          #+#    #+#             */
+/*   Updated: 2023/10/04 09:42:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
-#include "../inc/User.hpp"
-
+#include "../Channel.hpp"

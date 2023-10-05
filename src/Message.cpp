@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:04:12 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:08:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,7 @@ Message& Message::operator=(Message const& rhs)
 	return *this;
 }
 
-std::string Message::getPrefix() {
-	return this->p_prefix;
-}
-
-std::string Message::getCommand() {
-	return this->p_command;
-}
-
-std::string Message::getParams() {
+std::string Message::combineParams() {
 	std::string combinedParams;
 	for (size_t i = 0; i < p_params.size(); i++) {
 		combinedParams += p_params[i];
@@ -96,10 +88,6 @@ std::string Message::getParams() {
 			combinedParams += " ";
 	}
 	return combinedParams;
-}
-
-std::string Message::getTrailing() {
-	return this->p_trailing;
 }
 
 const char* Message::toString() {
@@ -114,7 +102,7 @@ const char* Message::toString() {
 		temp += " ";
 	}
 	if (p_params.size() > 0 && p_params[0] != "") {
-		temp += getParams();
+		temp += combineParams();
 		temp += " ";
 	}
 	if (p_trailing != "") {
@@ -130,4 +118,27 @@ const char* Message::toString() {
 		str[i] = temp[i];
 	}
 	return str;
+}
+std::string const &	Message::getPrefix() const{
+	return p_prefix;
+}
+
+std::vector<std::string> const &	Message::getParams() const {
+	return p_params;
+}
+
+std::string const &	Message::getTrailing() const {
+	return p_trailing;
+}
+
+User const *	Message::getSender() const {
+	return p_sender;
+}
+
+User const *	Message::getRecipient() const {
+	return p_recipient;
+}
+
+std::string const &	Message::getCommand() const {
+	return p_command;
 }

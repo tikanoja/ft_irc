@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CircularBuffer.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 09:32:47 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 15:59:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:59:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 # include <typeinfo>
 # include <iostream>
 # include <string>
+# include <cstdlib>
 # include <exception>
 
-# define MAXDATASIZE 512
+# ifndef MAXDATASIZE
+	# define MAXDATASIZE 512
+# endif
 
 class CircularBuffer {
 	public:
@@ -32,9 +35,9 @@ class CircularBuffer {
 		std::string		extractBuffer();
 		int				emptyCheck();
 		unsigned char*	buffer;
-		void printbuf();
+		void			printbuf();
 
-		void			free();
+		void			clear();
 
 	private:
 		int p_head;

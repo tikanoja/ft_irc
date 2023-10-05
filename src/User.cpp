@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 13:39:18 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:59:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/User.hpp"
 
-User::User(const std::string password, const std::string nickname,
-	const std::string username) : p_password(password), p_nickname(nickname), p_username(username){
+User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
 	std::cout << "User param constructor called" << std::endl;
+	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 }
 
 User::User()
@@ -55,7 +55,7 @@ void	User::setSocket(int socketfd){
 }
 
 void	User::setNick(std::string nickname){
-		p_nickname = nickname;
+		p_nickname = nickname.substr(0, 9);
 }
 
 void	User::setMode(int mode){
@@ -103,6 +103,6 @@ CircularBuffer & User::getSendBuffer(void) {
 }
 
 void	User::resetBuffers(void){
-	p_recvBuffer.free();
-	p_sendBuffer.free();
+	p_recvBuffer.clear();
+	p_sendBuffer.clear();
 }
