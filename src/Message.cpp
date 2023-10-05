@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 17:08:15 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:04:12 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ const char* Message::toString() {
 	}
 	temp += "\r\n";
 	size_t len = temp.length();
-	char* str = new char[len];
+	char* str = new char[len + 1];
+	str[len] = '\0';
+	
 	for (size_t i = 0; i < temp.length(); i++) {
 		str[i] = temp[i];
 	}

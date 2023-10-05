@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 17:22:27 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:05:35 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message c
 		user->getSendBuffer().addToBuffer(msgc, static_cast<ssize_t>(msg_len));
 		delete msgc;
 	} if (user->getSendBuffer().emptyCheck() == 1) {
-		user->getSendBuffer().printbuf();
 		std::string toSend = user->getSendBuffer().extractBuffer();
 		const char* toSendC = toSend.c_str();
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
@@ -170,7 +169,6 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
 	}
-	// buf[numbytes] = '\0';
 	user->getRecvBuffer().addToBuffer(buf, numbytes);
 	if (user->getRecvBuffer().findCRLF() == -1) {
 		std::cout << "did not detect CRLF" << std::endl;
@@ -180,8 +178,6 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	//analyze msg
-	//do something
 	replyToMsg(users.findUserBySocket(this->pfds[i].fd), &m);
 	return (0);
 }
