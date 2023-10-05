@@ -1,12 +1,8 @@
 #include "../inc/CircularBuffer.hpp"
 
 CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
-	try {
- 		buffer = new unsigned char[MAXDATASIZE * 2];
-	} catch (std::exception & e){
-		std::cerr << e.what() << std::endl;
-	}
-	memset(buffer, 0, MAXDATASIZE * 2);
+ 	buffer = new unsigned char[MAXDATASIZE * 2];
+	memset(buffer, '\0', MAXDATASIZE * 2);
 }
 
 CircularBuffer::CircularBuffer( CircularBuffer const & src ) {
@@ -25,7 +21,7 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 		if (this->buffer)
 			delete [] buffer;
 		this->buffer = new unsigned char[2 * MAXDATASIZE];
-		memset(this->buffer, 0, MAXDATASIZE * 2);
+		memset(this->buffer, '\0', MAXDATASIZE * 2);
 		for (int i = 0; rhs.buffer[i]; i++) {
 			this->buffer[i] = rhs.buffer[i];
 		}
@@ -33,7 +29,14 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	return (*this);
 }
 
-void CircularBuffer::addToBuffer(char* buf, ssize_t numbytes) {
+int CircularBuffer::emptyCheck() {
+	//empty or full check for null heh rhymes!
+	if (p_tail == p_head)
+		return 0;
+	return 1;
+}
+
+void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 	for (ssize_t i = 0; i < numbytes; i++) {
 		this->buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;
@@ -60,7 +63,7 @@ std::string CircularBuffer::extractBuffer() {
 		templen++;
 	}
 	
-	unsigned char* tempbuffer = new unsigned char[templen];
+	unsigned char* tempbuffer = new unsigned char[templen]; //muista delete
 	for (int i = 0; tail_backup != p_head; i++) { //copy buffer to temp & zero buffer
 		tempbuffer[i] = buffer[tail_backup];
 		buffer[tail_backup] = '\0';
@@ -83,4 +86,17 @@ void CircularBuffer::free(){
 	memset(this, 0, MAXDATASIZE);
 	p_head = 0;
 	p_tail = 0;
+}
+
+void CircularBuffer::printbuf() {
+	std::cout << "Tail is at: " << p_tail << ", Head is at: " << p_head << std::endl;
+	std::cout << "In buffer: ";
+	for (int i = p_tail; i != p_head; i++) {
+		if (i == MAXDATASIZE * 2) {
+			i = 0;
+		}
+		std::cout << buffer[i];
+	}
+	std::cout << std::endl;
+	return ;
 }

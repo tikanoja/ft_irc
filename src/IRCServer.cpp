@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 16:45:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:53:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,43 +137,40 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
 	return ;
 }
 
-void IRCServer::replyToMsg(nfds_t i) {
-	std::ostringstream messageStream;
-    messageStream << "Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber Hello client num^Zber " << i << " !\r\n";
-    std::string msg = messageStream.str();
-	for (size_t in = 0; in < msg.length(); in++) {
-		if (msg[in] == 26) {//ctrl+z control character
-			msg.erase(in, 1);
-			i--;
-		}
-		else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
-			msg.erase(in, 2);
-			in--;
-		}
-	}
-	const char* msgc = msg.c_str();
-
-	size_t	msg_len = strlen(msgc);
-	ssize_t total = 0;
-	ssize_t n_sent = 0;
-	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
+void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message classin ja target user ?
+	if (user->getSendBuffer().emptyCheck() == 0) {
+		const char* msgc = msg->toString();
+		size_t	msg_len = strlen(msgc);
+		user->getSendBuffer().addToBuffer(msgc, static_cast<ssize_t>(msg_len));
+		delete msgc;
+	} if (user->getSendBuffer().emptyCheck() == 1) {
+		std::string toSend = user->getSendBuffer().extractBuffer();
+		const char* toSendC = toSend.c_str();
+		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
+		ssize_t n_sent = 0;
+		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
-		std::cout << "sent " << n_sent << " bytes." << std::endl;
-		total += n_sent;
+		if (n_sent > 0 && n_sent < toSendLen) {
+			toSend.erase(0, static_cast<size_t>(n_sent));
+			const char* toBuffer = toSend.c_str();
+			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
+		}
 	}
-	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
 }
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
+	memset(buf, '\0', MAXDATASIZE);
 	ssize_t numbytes;
 	numbytes = recv(this->pfds[i].fd, buf, MAXDATASIZE - 1, 0);
 	if (numbytes <= 0) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-	buf[numbytes] = '\0';
+	if (numbytes == 1) {
+		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
+		return (0);
+	}
 	user->getRecvBuffer().addToBuffer(buf, numbytes);
 	if (user->getRecvBuffer().findCRLF() == -1) {
 		std::cout << "did not detect CRLF" << std::endl;
@@ -183,9 +180,7 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	// command & function pointer map or something ???
-	// respond to the client
-
+	replyToMsg(users.findUserBySocket(this->pfds[i].fd), &m);
 	return (0);
 }
 
@@ -204,11 +199,10 @@ int IRCServer::pollingRoutine() {
 					fd_count++;
 				} else { //A client has sent us a message
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(users.findUserBySocket(i), i)) {
+ 					if (receiveMsg(users.findUserBySocket(this->pfds[i].fd), i)) {
 						fd_count--;
 						continue ;
 					}
-					replyToMsg(i);
 				}
 			}
 		}

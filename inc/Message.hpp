@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 16:43:58 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:53:25 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ class Message
 		Message &	operator=(Message const& rhs);
 
 		void printContent();
+		std::string getPrefix();
+		std::string getCommand();
+		std::string getParams();
+		std::string getTrailing();
+		const char* toString();
 
-		std::string					p_command;
 	private:
 		std::string 				p_prefix;
+		std::string					p_command;
 		std::vector<std::string>	p_params;
 		std::string					p_trailing;
 		User*						p_sender;		//changed & to * to compile

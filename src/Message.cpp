@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:31:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:04:12 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,22 @@ Message::Message(std::string msg)
 	std::string token;
 	int index = 0;
 	
-	/*
-	** this loop expects the input to be in format:
-	** :irc.example.com PRIVMSG #channel other param :Hello, everyone!
-	** ^prefix          ^cmd    ^param[0] ^p[1] ^p[2] ^trailing
-	** cmd not optional!
-	*/
+	p_prefix = "";
+	p_command = "";
+	p_params.push_back("");
+	p_trailing = "";
 	while (iss >> token) {
 		if (index == 0 && token[0] == ':')
 			p_prefix = token.substr(1);
 		else if (index == 0 && token[0] != ':')
-		{
-			p_prefix = "";
 			p_command = token;
-		}
 		else if (index == 1 && p_prefix != "")
 			p_command = token;
-		else if (index >= 1 && token[0] != ':')
+		else if (index >= 1 && token[0] != ':') {
+			if (p_params.size() == 1 && p_params[0] == "")
+				p_params.pop_back();
 			p_params.push_back(token);
+		}
 		else if (index >= 1 && token[0] == ':')
 		{
 			p_trailing = token.substr(1);
@@ -80,4 +78,56 @@ Message& Message::operator=(Message const& rhs)
 		p_params = rhs.p_params;
 	}
 	return *this;
+}
+
+std::string Message::getPrefix() {
+	return this->p_prefix;
+}
+
+std::string Message::getCommand() {
+	return this->p_command;
+}
+
+std::string Message::getParams() {
+	std::string combinedParams;
+	for (size_t i = 0; i < p_params.size(); i++) {
+		combinedParams += p_params[i];
+		if (i + 1 != p_params.size())
+			combinedParams += " ";
+	}
+	return combinedParams;
+}
+
+std::string Message::getTrailing() {
+	return this->p_trailing;
+}
+
+const char* Message::toString() {
+	std::string temp = "";
+	if (p_prefix != "") {
+		temp = ":";
+		temp += p_prefix;
+		temp += " ";
+	}
+	if (p_command != "") {
+		temp += p_command;
+		temp += " ";
+	}
+	if (p_params.size() > 0 && p_params[0] != "") {
+		temp += getParams();
+		temp += " ";
+	}
+	if (p_trailing != "") {
+		temp += ":";
+		temp += p_trailing;
+	}
+	temp += "\r\n";
+	size_t len = temp.length();
+	char* str = new char[len + 1];
+	str[len] = '\0';
+	
+	for (size_t i = 0; i < temp.length(); i++) {
+		str[i] = temp[i];
+	}
+	return str;
 }

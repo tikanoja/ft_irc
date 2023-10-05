@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Uvector.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:21:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:11:50 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Uvector& Uvector::operator=(Uvector const & rhs)
 	return *this;
 }
 
-User*		Uvector::findUserBySocket(nfds_t const socket_fd)
+User*		Uvector::findUserBySocket(int const socket_fd)
 {
 	for (std::vector<User*>::iterator it = this->begin(); it != this->end(); it++){
 		if ((*it)->getSocket() == socket_fd)

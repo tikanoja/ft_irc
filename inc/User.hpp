@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 11:34:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 14:51:46 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <string>
 # include <netinet/in.h>
-# include "CircularBuffer.hpp"
+# include "../inc/CircularBuffer.hpp"
 
 class User
 {
@@ -50,7 +50,7 @@ class User
 		std::string		p_nickname;
 		std::string		p_username;
 		std::string		p_realname;
-		int8_t			p_mode;
+		int32_t			p_mode;
 		int				p_socket_fd;
 		char			p_ipaddress[INET6_ADDRSTRLEN];
 		CircularBuffer	p_recvBuffer;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Uvector.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 08:53:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/03 09:20:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:18:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Uvector : public std::vector<User*>
 		~Uvector();
 
 		Uvector &	operator=(Uvector const & rhs);
-		User*		findUserBySocket(nfds_t const socket_fd);
+		User*		findUserBySocket(int const socket_fd);
 		User*		findUserByNick(std::string const & nick);
 
 	private:

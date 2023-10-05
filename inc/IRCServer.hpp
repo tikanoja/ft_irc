@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/03 16:43:47 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:52:58 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 class User;
 class Channel;
 class CircularBuffer;
+class Message;
 
 class IRCServer {
 	private:
@@ -71,7 +72,7 @@ class IRCServer {
 		int			acceptClient();
 		int			receiveMsg(User* user, nfds_t i);
 		void		dropConnection(ssize_t numbytes, nfds_t i);
-		void		replyToMsg(nfds_t i);
+		void		replyToMsg(User *user, Message *msg);
 		
 		bool		getUserMode(User & user, e_uperm mode);
 		void		setUserMode(User & user, e_uperm mode);
