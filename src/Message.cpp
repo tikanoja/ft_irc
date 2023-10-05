@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 11:24:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 08:59:26 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Message::Message(std::string msg)
 	/*
 	** this loop expects the input to be in format:
 	** :irc.example.com PRIVMSG #channel other param :Hello, everyone!
-	** ^prefix          ^cmd    ^param[0] ^p[1] ^p[2] ^trailing
+	** :^prefix          ^cmd    ^param[0] ^p[1] ^p[2] :^trailing
 	** cmd not optional!
 	*/
 	while (iss >> token) {
@@ -105,4 +105,3 @@ User const *	Message::getRecipient(){
 std::string const &	Message::getCommand(){
 	return p_command;
 }
-

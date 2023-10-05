@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 07:52:16 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:41:55 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ User*		Uvector::findUserBySocket(int const socket_fd) const
 	return NULL;
 }
 
-// needs to be caseinsesitive!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 User*		Uvector::findUserByNick(std::string const & nick) const
 {
 	for (std::vector<User*>::const_iterator it = this->begin(); it != this->end(); it++){

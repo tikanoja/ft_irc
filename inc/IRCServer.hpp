@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 21:31:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:40:52 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # endif
 
 # ifndef N_COMMANDS
-#  define N_COMMANDS 1
+#  define N_COMMANDS 3
 # endif
 
 class User;

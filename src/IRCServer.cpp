@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 21:32:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:53:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ void IRCServer::initServer() {
 }
 
 void IRCServer::initCommands() {
-	static const std::string cmd_names[] = {
+	static const std::string cmdNames[] = {
 		"PASS",
 		"NICK"
 	};
 
-	static const CommandFunction cmd_functions[] = {
+	static const CommandFunction cmdFunctions[] = {
 		cmd_pass,
 		cmd_nick
 	};
 
 	for (size_t i = 0; i < N_COMMANDS; i++)
-		command_map[cmd_names[i]] = cmd_functions[i];
+		p_commandMap[cmdNames[i]] = cmdFunctions[i];
 }
 
 std::string const & IRCServer::getName(){

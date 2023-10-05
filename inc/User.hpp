@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 10:52:31 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 08:58:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class User
 {
 	public:
 		User();
-		User(const std::string password, const std::string nickname, const std::string username);
+		User(int const socket_fd, char const * ipaddress );
 		User(User const& src);
 		~User();
 

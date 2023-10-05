@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 20:08:00 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:11:37 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ bool IRCServer::getUserMode(User & user, e_uperm mode) const{
 			return p_users.findUserByNick(user.getNick())->getMode() & mode;
 		return p_users.findUserBySocket(user.getSocket())->getMode() & mode;
 	} catch (std::exception & e){
+		
+		return false;
 		/* send error reply, no such user (techically we'd check first the local p_users, then all user list (combined from all servers)
 		and only then give the error)*/
 	}

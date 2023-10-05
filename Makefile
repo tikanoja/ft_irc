@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/04 19:28:08 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/05 09:50:58 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,32 +18,34 @@ O = obj
 
 CC = c++
 
-FLAGS = -Wall -Wextra -Werror -pedantic -std=c++11 \
-	-Wconversion -Wshadow -I$I #-g -fsanitize=address -static-libsan
+FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
+	-Wconversion -Wshadow -I $I #-g -fsanitize=address -static-libsan
 
 SRC_FILES = main \
-			IRCServer \
-			ConnectToUser \
 			CircularBuffer \
 			User \
-			Uverctor \
+			Uvector \
 			Message \
-			cmd_away \
-			cmd_kill \
-			cmd_lusers \
-			cmd_notice \
-			cmd_ping \
-			cmd_pong \
-			cmd_privmsg \
-			cmd_who \
-			cmd_whois \
-			cmd_mode \
-			cmd_nick \
-			cmd_oper \
+			IRCServer \
+			connectToUser \
+			handleUser \
+			executeCommand \
 			cmd_pass \
-			cmd_quit \
-			cmd_squit \
-			cmd_user
+			cmd_nick \
+			cmd_user \
+#			cmd_away
+#			cmd_kill
+#			cmd_lusers
+#			cmd_notice
+#			cmd_ping
+#			cmd_pong
+#			cmd_privmsg
+#			cmd_who
+#			cmd_whois
+#			cmd_mode
+#			cmd_oper
+#			cmd_quit
+#			cmd_squit
 #			chan_invite
 #			chan_join
 #			chan_list
@@ -55,14 +57,14 @@ SRC_FILES = main \
 #			Channel
 # 			Registration
 
-INC_FILES = IRCServer \
-			CircularBuffer \
+INC_FILES = CircularBuffer \
 			User \
 			Uvector \
 			Message \
-			Commands \
 			Error \
-			Reply
+			Reply \
+			Commands \
+			IRCServer
 #			Channel
 
 SRC = $(foreach FILE,$(SRC_FILES),$(shell find $S -type f -name "$(FILE).cpp"))
@@ -75,17 +77,16 @@ HEADER = $(addprefix $I/,$(addsuffix .hpp,$(INC_FILES)))
 all: $(NAME)
 
 $O:
-	mkdir -p $@ $(OBJ_DIRS)
+	@mkdir -p $@ $(OBJ_DIRS)
 
 print:
-	@echo $(SRC)
-	@echo $(OBJ_DIRS)
+	@echo $(HEADER)
 
 $O/%.o: $S/%.cpp $(HEADER) | $O
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $< -o $@
+	$(CC) $(FLAGS) $^ -o $@
 
 clean:
 	rm -rf $O

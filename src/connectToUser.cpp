@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 07:51:26 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:47:01 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,43 +89,38 @@ int IRCServer::acceptClient() {
 		struct pollfd pfd;
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
-		this->pfds.push_back(pfd);
+		p_pfds.push_back(pfd);
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-		
-		User *user;
-		if (!(user = users.findUserByIP(s)))
-		{
-			users.push_back(new User());
-			users.back()->setIP(s);
-			users.back()->setSocket(new_fd);
-		}
-		else
-			user->setSocket(new_fd);
+
+		p_users.push_back(new User());
+		p_users.back()->setIP(s);
+		p_users.back()->setSocket(new_fd);
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);
 }
 
-void IRCServer::dropConnection(ssize_t numbytes, nfds_t i) {
+void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	if (numbytes == 0)
-		std::cout << "Connection #" << i << " closed." << std::endl;
+		std::cout << "Connection #" << fd_index << " closed." << std::endl;
 	else {
 		std::cerr << "Recv failed. Numbytes: " << numbytes << std::endl;
 	}
-	close(p_pfds[i].fd);
-	p_users.findUserBySocket(p_pfds[i].fd)->resetBuffers();
-	p_pfds.erase(p_pfds.begin() + i);
+	close(p_pfds[fd_index].fd);
+	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);
+	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());
+	p_pfds.erase(p_pfds.begin() + fd_index);
 	return ;
 }
 
-void IRCServer::replyToMsg(nfds_t i) {
+void IRCServer::replyToMsg(nfds_t fd_index) {
 	std::ostringstream messageStream;
-    messageStream << "Hello client number " << i << " !\r\n";
+    messageStream << "Hello client number " << fd_index << " !\r\n";
     std::string msg = messageStream.str();
-	for (size_t in = 0; in < msg.length(); in++) {
+	for (size_t in = 0; in < msg.length(); in++){
 		if (msg[in] == 26) {//ctrl+z control character
 			msg.erase(in, 1);
-			i--;
+			fd_index--;
 		}
 		else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
 			msg.erase(in, 2);
@@ -138,7 +133,7 @@ void IRCServer::replyToMsg(nfds_t i) {
 	ssize_t total = 0;
 	ssize_t n_sent = 0;
 	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( p_pfds[i].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
+		if ( (n_sent = send( p_pfds[fd_index].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
 		std::cout << "sent " << n_sent << " bytes." << std::endl;
 		total += n_sent;
