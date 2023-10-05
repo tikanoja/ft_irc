@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 10:21:05 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:16:52 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
+#include <fstream>
+
+void bitsToStream(short num, std::ostream& os) {
+    int numBits = sizeof(num) * 8; // Number of bits in a short
+
+    for (int i = numBits - 1; i >= 0; i--) {
+        // Use bitwise AND to check the i-th bit
+        int bit = (num >> i) & 1;
+        os << bit;
+    }
+}
 
 IRCServer::IRCServer(uint16_t port) : p_port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
@@ -88,21 +99,29 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
+    std::ofstream outFile;
+	outFile.open("log", std::fstream::app);
+	outFile << buf;
+	outFile << "=============================" << std::endl;
 	if (numbytes == 1) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
 	}
 	user->getRecvBuffer().addToBuffer(buf);
-	if (user->getRecvBuffer().findCRLF() == -1) {
-		std::cout << "did not detect CRLF" << std::endl;
+	return (0);
+}
+
+int IRCServer::checkBuffer(User* user, nfds_t i) {
+	if (user->getRecvBuffer().findCRLF() == -1) { //do we have a complete msg ???
+		// std::cout << "did not detect CRLF" << std::endl;
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();
-	std::cout << "Server: received message: " << msg << std::endl;
+	// std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
 	replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &m);
-	return (0);
+	return 0;
 }
 
 void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message classin ja target user ?
@@ -125,27 +144,39 @@ void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message c
 	}
 }
 
+//check for POLLNVAL & POLLERR
 int IRCServer::pollingRoutine() {
 	int poll_count;
 	int j = 0;
 	nfds_t fd_count = static_cast<nfds_t>(p_pfds.size());
 	while (1) {
-		if ((poll_count = poll(&(p_pfds[0]), fd_count, -1)) == -1)//of &p_pfds[0]
+		if ((poll_count = poll(&(p_pfds[0]), fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
 		for (nfds_t i = 0; i < fd_count; i++) {
-			if (p_pfds[i].revents & (POLLIN | POLLOUT)) { 
+			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
 				if (i == 0) { //Listener has a client in accept queue
 					if (acceptClient())
 						continue ;
 					fd_count++;
-				} else { //A client has sent us a message
+				} else if (p_pfds[i].revents & POLLIN) { //A client has sent us a message, add to buffer!
 					std::cout <<"Received msgs:" << j++ << std::endl;
  					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i)) {
 						fd_count--;
 						continue ;
 					}
+				} else if (p_pfds[i].revents & POLLOUT) { //A client has sent us a message, add to buffer!
+					std::cout << "Ready to receive!" << std::endl;
+				}  else { //if (p_pfds[i].revents & (POLLNVAL | POLLERR)) { //A client has sent us a message, add to buffer!
+					std::cout << "Polling invalid / error" << std::endl;
+					dropConnection(-1, i);
 				}
+				std::cout << "our bits: ";
+				bitsToStream(p_pfds[i].revents, std::cout);
+				std::cout << std::endl;
 			}
+			if (i != 0) //check the buffer for this user, if there is something in there, extract until CRLF and process
+				checkBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
+			//catch a signal maybe?? with sigaction ????
 		}
 	}
 	for (nfds_t i = 0; i < fd_count; i++) {

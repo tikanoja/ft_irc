@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 10:08:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:45:19 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ Message::Message(std::string msg)
 	std::string token;
 	int index = 0;
 	
+	size_t in = 0;
+	while ((in = msg.find('\n', in)) != std::string::npos) // find "\n"
+        msg.replace(in, 1, "");
+	while ((in = msg.find('\r', in)) != std::string::npos) // find "\r"
+        msg.replace(in, 1, "");
+
 	p_prefix = "";
 	p_command = "";
 	p_params.push_back("");
@@ -52,7 +58,7 @@ Message::Message(std::string msg)
 
 void Message::printContent()
 {
-	std::cout << "$ directly after param to spot whitespace/nondisp" << std::endl;
+	std::cout << std::endl << "*** constructed msg ***" << std::endl;
 	std::cout << "Prefix: " << this->p_prefix << "$" << std::endl;
 	std::cout << "Command: " << this->p_command << "$" << std::endl;
 	for (unsigned long i = 0; i < p_params.size(); i++)

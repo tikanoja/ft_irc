@@ -57,8 +57,8 @@ void CircularBuffer::addToBuffer(const char* buf) {
 }
 
 int CircularBuffer::findCRLF() const {
-	for (int i = p_tail; p_buffer[i + 1]; i++) {
-		if (p_buffer[i] == '\r' || p_buffer[i + 1] == '\n' || (p_buffer[i] == '\r' && p_buffer[i + 1] == '\n'))
+	for (int i = p_tail; p_buffer[i] != '\0'; i++) {
+		if (p_buffer[i] == '\r' || p_buffer[i] == '\n')// || (p_buffer[i] == '\r' && p_buffer[i + 1] == '\n'))
 			return (i);
 	}
 	return (-1);
@@ -72,6 +72,11 @@ std::string CircularBuffer::extractBuffer() {
 		if (p_tail == MAXDATASIZE * 2)
 			p_tail = 0;
 		templen++;
+		if (p_buffer[p_tail] == '\n') {
+			p_tail++;
+			templen++;
+			break ;
+		}
 	}
 
 	unsigned char* tempbuffer = new unsigned char[templen];
@@ -81,6 +86,8 @@ std::string CircularBuffer::extractBuffer() {
 		tail_backup++;
 		if (tail_backup == MAXDATASIZE * 2)
 			tail_backup = 0;
+		if (tempbuffer[i] == '\n')
+			break ;
 	}
 
 	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string

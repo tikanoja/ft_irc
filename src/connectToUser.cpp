@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 10:09:50 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:47:29 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int IRCServer::acceptClient() {
 
 	sin_size = sizeof(their_addr);
 	new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
+	fcntl(new_fd, F_SETFL, O_NONBLOCK); // ?
 	if (new_fd == -1) {
 		std::cerr << "Failed to accept client" << std::endl;
 		return (-1);

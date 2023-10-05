@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 10:10:19 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:20:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ class IRCServer {
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
 		int									receiveMsg(User* user, nfds_t i);
+		int									checkBuffer(User* user, nfds_t i);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 		void								replyToMsg(User* user, Message *msg);
 
