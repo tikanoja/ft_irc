@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 09:59:48 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:23:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void	User::setNick(std::string nickname){
 }
 
 void	User::setMode(int mode){
-		p_mode = mode;
+		p_mode |= mode;
+}
+
+void	User::unsetMode(int mode){
+		p_mode &= ~mode;
 }
 
 void	User::setRealName(std::string realname){

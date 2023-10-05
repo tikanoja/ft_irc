@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 10:21:05 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:52:46 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int IRCServer::pollingRoutine() {
 					fd_count++;
 				} else { //A client has sent us a message
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i)) {
+					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i)) {
 						fd_count--;
 						continue ;
 					}

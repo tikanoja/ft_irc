@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 10:10:19 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:59:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ class IRCServer {
 		bool				isBlocked(std::string nick) const;
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
+		void				unsetUserMode(User & user, e_uperm mode);
+		void				setBatchMode(User & user, std::string modes);
 };
 
 #endif
