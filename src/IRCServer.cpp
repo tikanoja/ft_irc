@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 10:09:57 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:21:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message classin ja target user ?
 	if (user->getSendBuffer().emptyCheck() == 0) {
 		const char* msgc = msg->toString();
-		size_t	msg_len = strlen(msgc);
-		user->getSendBuffer().addToBuffer(msgc, static_cast<ssize_t>(msg_len));
+		user->getSendBuffer().addToBuffer(msgc);
 		delete msgc;
 	} if (user->getSendBuffer().emptyCheck() == 1) {
 		std::string toSend = user->getSendBuffer().extractBuffer();

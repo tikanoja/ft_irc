@@ -45,6 +45,17 @@ void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 	}
 }
 
+void CircularBuffer::addToBuffer(const char* buf) {
+	
+	size_t len = strlen(buf);
+	for (size_t i = 0; i <  len; i++) {
+		p_buffer[p_head] = static_cast<unsigned char> (buf[i]);
+		p_head++;
+		if (p_head == MAXDATASIZE * 2)
+			p_head = 0;
+	}
+}
+
 int CircularBuffer::findCRLF() const {
 	for (int i = p_tail; p_buffer[i + 1]; i++) {
 		if (p_buffer[i] == '\r' || p_buffer[i + 1] == '\n' || (p_buffer[i] == '\r' && p_buffer[i + 1] == '\n'))

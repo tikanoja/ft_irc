@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 09:56:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:10:19 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ class IRCServer {
 		int									acceptClient();
 		int									receiveMsg(User* user, nfds_t i);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
-		void								replyToMsg(nfds_t i);
+		void								replyToMsg(User* user, Message *msg);
 
 		std::vector<std::string> const &	getBlocked() const;
 		void								setBlocked(std::string nick);

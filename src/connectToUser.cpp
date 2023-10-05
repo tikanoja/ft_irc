@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:47:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:09:50 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,32 +111,4 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());
 	p_pfds.erase(p_pfds.begin() + fd_index);
 	return ;
-}
-
-void IRCServer::replyToMsg(nfds_t fd_index) {
-	std::ostringstream messageStream;
-    messageStream << "Hello client number " << fd_index << " !\r\n";
-    std::string msg = messageStream.str();
-	for (size_t in = 0; in < msg.length(); in++){
-		if (msg[in] == 26) {//ctrl+z control character
-			msg.erase(in, 1);
-			fd_index--;
-		}
-		else if (msg[in + 1] && msg[in] == '^' && msg[in + 1] == 'Z') {
-			msg.erase(in, 2);
-			in--;
-		}
-	}
-	const char* msgc = msg.c_str();
-
-	size_t	msg_len = strlen(msgc);
-	ssize_t total = 0;
-	ssize_t n_sent = 0;
-	while (total < static_cast<ssize_t>(msg_len) ){
-		if ( (n_sent = send( p_pfds[fd_index].fd,  &(msgc[total]), MAXDATASIZE, 0 ) ) <= 0)
-			std::cerr << "Send failed" << std::endl;
-		std::cout << "sent " << n_sent << " bytes." << std::endl;
-		total += n_sent;
-	}
-	std::cout << "Sent: " << n_sent << "/" << msg_len << "bytes." << std::endl;
 }
