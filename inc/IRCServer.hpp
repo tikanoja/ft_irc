@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 13:20:11 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:02:46 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class IRCServer {
 		Uvector						p_users;
 		Uvector						p_opers;
 		std::vector<Channel*>		p_channels;
+		nfds_t 						p_fd_count;
 
 		std::vector<struct pollfd>	p_pfds;
 		std::string					p_serverName;
@@ -108,6 +109,8 @@ class IRCServer {
 		bool				isBlocked(std::string nick) const;
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
+		void				delUser(User& user);
+		void				delFd(User& user);
 };
 
 #endif

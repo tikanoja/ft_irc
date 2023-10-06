@@ -6,11 +6,12 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 17:16:52 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:15:29 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
+#include "../inc/Commands.hpp"
 #include <fstream>
 
 void bitsToStream(short num, std::ostream& os) {
@@ -39,6 +40,7 @@ IRCServer::~IRCServer(void) {
 void IRCServer::initServer() {
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
+	initCommands();
 	// if (pollingRoutine())
 	// 	throw std::runtime_error("Polling failed");
 	return ;
@@ -47,14 +49,15 @@ void IRCServer::initServer() {
 void IRCServer::initCommands() {
 	static const std::string cmdNames[] = {
 		"PASS",
-		"NICK"
+		"NICK",
+		"QUIT"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
 		cmd_pass,
-		cmd_nick
+		cmd_nick,
+		cmd_quit
 	};
-
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
 }
@@ -90,6 +93,25 @@ bool	IRCServer::isBlocked(std::string nick) const{
 	return false;
 }
 
+void IRCServer::delUser(User& user) {
+	for (size_t i = 0; i < p_users.size(); i++) {
+		if (user.getSocket() == p_users[i]->getSocket()) {
+			p_users.erase(p_users.begin() + static_cast<ssize_t>(i));
+			break ;
+		}
+	}
+}
+
+void IRCServer::delFd(User& user) {
+	for (size_t i = 0; i < p_pfds.size(); i++) {
+		if (user.getSocket() == p_pfds[i].fd) {
+			p_pfds.erase(p_pfds.begin() + static_cast<ssize_t>(i));
+			p_fd_count--;
+			break ;
+		}
+	}
+}
+
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
 	memset(buf, '\0', MAXDATASIZE);
@@ -120,11 +142,32 @@ int IRCServer::checkBuffer(User* user, nfds_t i) {
 	// std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &m);
+	if (m.getCommand() == "JOIN") {
+		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
+		me.printContent();
+		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
+		return 1;
+	}
+	if (m.getCommand() == "USER") {
+		Message me(":127.0.0.1 001 user :Welcome please enjoy!!!!");
+		me.printContent();
+		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
+		return 1;
+	}
+	if (m.getCommand() == "PING") {
+		Message me(":127.0.01 PONG 127.0.0.1 :user");
+		me.printContent();
+		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
+		return 1;
+	}
+	if (m.getCommand() == "QUIT") {
+		executeCommand(*user, m);
+		// cmd_quit(*this, *user, m);
+	}
 	return 0;
 }
 
-void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message classin ja target user ?
+void IRCServer::replyToMsg(User* user, Message *msg) {
 	if (user->getSendBuffer().emptyCheck() == 0) {
 		const char* msgc = msg->toString();
 		user->getSendBuffer().addToBuffer(msgc);
@@ -148,38 +191,40 @@ void IRCServer::replyToMsg(User* user, Message *msg) { //ottaa vastaan message c
 int IRCServer::pollingRoutine() {
 	int poll_count;
 	int j = 0;
-	nfds_t fd_count = static_cast<nfds_t>(p_pfds.size());
+	p_fd_count = static_cast<nfds_t>(p_pfds.size());
 	while (1) {
-		if ((poll_count = poll(&(p_pfds[0]), fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
+		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
-		for (nfds_t i = 0; i < fd_count; i++) {
-			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
+		for (nfds_t i = 0; i < p_fd_count; i++) {
+			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {
 				if (i == 0) { //Listener has a client in accept queue
 					if (acceptClient())
 						continue ;
-					fd_count++;
 				} else if (p_pfds[i].revents & POLLIN) { //A client has sent us a message, add to buffer!
 					std::cout <<"Received msgs:" << j++ << std::endl;
- 					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i)) {
-						fd_count--;
+ 					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
 						continue ;
-					}
 				} else if (p_pfds[i].revents & POLLOUT) { //A client has sent us a message, add to buffer!
 					std::cout << "Ready to receive!" << std::endl;
-				}  else { //if (p_pfds[i].revents & (POLLNVAL | POLLERR)) { //A client has sent us a message, add to buffer!
-					std::cout << "Polling invalid / error" << std::endl;
+				} else if (p_pfds[i].revents & POLLHUP) {
+					std::cout << "They hang up!" << std::endl;
+				} else {
+					std::cout << "Polling invalid / error!" << std::endl;
+					std::cout << "p_fd_count: " << p_fd_count << std::endl;
+					std::cout << "p_pfds.size(): " << p_pfds.size() << std::endl;
+					std::cout << "p_users.size() " << p_users.size() << std::endl;
 					dropConnection(-1, i);
 				}
-				std::cout << "our bits: ";
-				bitsToStream(p_pfds[i].revents, std::cout);
-				std::cout << std::endl;
+				// std::cout << "our bits: ";
+				// bitsToStream(p_pfds[i].revents, std::cout);
+				// std::cout << std::endl;
 			}
 			if (i != 0) //check the buffer for this user, if there is something in there, extract until CRLF and process
 				checkBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
 			//catch a signal maybe?? with sigaction ????
 		}
 	}
-	for (nfds_t i = 0; i < fd_count; i++) {
+	for (nfds_t i = 0; i < p_fd_count; i++) {
 		close(p_pfds[i].fd);
 	}
 	return (0);

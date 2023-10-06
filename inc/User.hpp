@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 09:58:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/06 10:34:40 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,27 @@ class User
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
 
-		void	setIP(char const * ip);
-		void	setSocket(int socketfd);
-		void	setNick(std::string nickname);
-		void	setMode(int mode);
-		void	setRealName(std::string realname);
-		void	setUserName(std::string username);
+		void				setIP(char const * ip);
+		void				setSocket(int socketfd);
+		void				setNick(std::string nickname);
+		void				setMode(int mode);
+		void				setRealName(std::string realname);
+		void				setUserName(std::string username);
 
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);
 		void				resetBuffers(void);
 
 	private:
-		std::string		p_password;
-		std::string		p_nickname;
-		std::string		p_username;
-		std::string		p_realname;
-		int32_t			p_mode;
-		int				p_socket_fd;
-		char			p_ipaddress[INET6_ADDRSTRLEN];
-		CircularBuffer	p_recvBuffer;
-		CircularBuffer	p_sendBuffer;
+		std::string			p_password;
+		std::string			p_nickname;
+		std::string			p_username;
+		std::string			p_realname;
+		int32_t				p_mode;
+		int					p_socket_fd;
+		char				p_ipaddress[INET6_ADDRSTRLEN];
+		CircularBuffer		p_recvBuffer;
+		CircularBuffer		p_sendBuffer;
 
 };
 

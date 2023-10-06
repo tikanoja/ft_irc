@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/05 09:57:16 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/06 13:12:29 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC_FILES = main \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
+			cmd_quit \
 #			cmd_away
 #			cmd_kill
 #			cmd_lusers
@@ -44,7 +45,6 @@ SRC_FILES = main \
 #			cmd_whois
 #			cmd_mode
 #			cmd_oper
-#			cmd_quit
 #			cmd_squit
 #			chan_invite
 #			chan_join

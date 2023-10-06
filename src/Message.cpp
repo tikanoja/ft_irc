@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 14:45:19 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/06 09:41:14 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ Message::Message()
 
 Message::Message(std::string msg)
 {
+	size_t in = 0;
+	// while ((in = msg.find('\n', in)) != std::string::npos) // find "\n"
+    //     msg.replace(in, 1, "");
+	while ((in = msg.find('\r', in)) != std::string::npos) // find "\r"
+        msg.replace(in, 1, "");
 	std::istringstream iss(msg);
 	std::string token;
 	int index = 0;
-	
-	size_t in = 0;
-	while ((in = msg.find('\n', in)) != std::string::npos) // find "\n"
-        msg.replace(in, 1, "");
-	while ((in = msg.find('\r', in)) != std::string::npos) // find "\r"
-        msg.replace(in, 1, "");
-
 	p_prefix = "";
 	p_command = "";
 	p_params.push_back("");
