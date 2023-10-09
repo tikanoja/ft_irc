@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/06 16:15:29 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:27:40 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 #include "../inc/Commands.hpp"
 #include <fstream>
 
-void bitsToStream(short num, std::ostream& os) {
-    int numBits = sizeof(num) * 8; // Number of bits in a short
+// void bitsToStream(short num, std::ostream& os) {
+//     int numBits = sizeof(num) * 8; // Number of bits in a short
 
-    for (int i = numBits - 1; i >= 0; i--) {
-        // Use bitwise AND to check the i-th bit
-        int bit = (num >> i) & 1;
-        os << bit;
-    }
-}
+//     for (int i = numBits - 1; i >= 0; i--) {
+//         // Use bitwise AND to check the i-th bit
+//         int bit = (num >> i) & 1;
+//         os << bit;
+//     }
+// }
+
+// volatile bool ctrlC = false;
+
+// void signalHandler(int signum) {
+// 	if (signum == SIGINT) {
+// 		std::cout << std::endl << "Server quit." << std::endl;
+// 		ctrlC = true;
+// 	}
+// }
 
 IRCServer::IRCServer(uint16_t port) : p_port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
@@ -192,6 +201,7 @@ int IRCServer::pollingRoutine() {
 	int poll_count;
 	int j = 0;
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
+	// signal(SIGINT, signalHandler);
 	while (1) {
 		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
@@ -227,5 +237,6 @@ int IRCServer::pollingRoutine() {
 	for (nfds_t i = 0; i < p_fd_count; i++) {
 		close(p_pfds[i].fd);
 	}
+	std::cout << "here!" << std::endl;
 	return (0);
 }
