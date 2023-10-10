@@ -18,7 +18,7 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 	if( this != &rhs ) {
 		p_head = rhs.p_head;
 		p_tail = rhs.p_tail;
-		if (p_buffer)
+		if (p_buffer != NULL)
 			delete [] p_buffer;
 		p_buffer = new unsigned char[2 * MAXDATASIZE];
 		memset(p_buffer, 0, MAXDATASIZE * 2);

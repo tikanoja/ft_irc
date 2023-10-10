@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/09 15:27:40 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:52:20 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@
 //     }
 // }
 
-// volatile bool ctrlC = false;
-
-// void signalHandler(int signum) {
-// 	if (signum == SIGINT) {
-// 		std::cout << std::endl << "Server quit." << std::endl;
-// 		ctrlC = true;
-// 	}
-// }
+void signalHandler(int signum) {
+	if (signum == SIGINT) {
+		std::cout << std::endl << "Server quit." << std::endl;
+		exit(0);
+	}
+}
 
 IRCServer::IRCServer(uint16_t port) : p_port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
@@ -201,7 +199,7 @@ int IRCServer::pollingRoutine() {
 	int poll_count;
 	int j = 0;
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
-	// signal(SIGINT, signalHandler);
+	signal(SIGINT, signalHandler);
 	while (1) {
 		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
