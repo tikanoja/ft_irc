@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/10 10:52:20 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:25:46 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 void signalHandler(int signum) {
 	if (signum == SIGINT) {
 		std::cout << std::endl << "Server quit." << std::endl;
+		//delete p_users
+			//(and their buffers ?)
+		//delete p_channels
 		exit(0);
 	}
 }
@@ -57,13 +60,15 @@ void IRCServer::initCommands() {
 	static const std::string cmdNames[] = {
 		"PASS",
 		"NICK",
-		"QUIT"
+		"QUIT",
+		"JOIN"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
 		cmd_pass,
 		cmd_nick,
-		cmd_quit
+		cmd_quit,
+		chan_cmd_join
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -74,11 +79,15 @@ std::string const & IRCServer::getName(){
 }
 
 std::string const & IRCServer::getPassword() const{
-	return (p_password);
+	return p_password;
 }
 
 Uvector		const &	IRCServer::getUsers() const{
-	return (p_users);
+	return p_users;
+}
+
+Cvector			  & IRCServer::getChannels(){
+	return p_channels;
 }
 
 std::vector<std::string> const &		IRCServer::getBlocked() const{

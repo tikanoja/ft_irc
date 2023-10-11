@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/06 13:12:29 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/11 11:30:35 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC_FILES = main \
 			CircularBuffer \
 			User \
 			Uvector \
+			Cvector \
 			Message \
 			IRCServer \
 			connectToUser \
@@ -34,6 +35,8 @@ SRC_FILES = main \
 			cmd_nick \
 			cmd_user \
 			cmd_quit \
+			chan_cmd_join \
+			Channel
 #			cmd_away
 #			cmd_kill
 #			cmd_lusers
@@ -47,7 +50,6 @@ SRC_FILES = main \
 #			cmd_oper
 #			cmd_squit
 #			chan_invite
-#			chan_join
 #			chan_list
 #			chan_mode
 #			chan_mode
@@ -60,12 +62,13 @@ SRC_FILES = main \
 INC_FILES = CircularBuffer \
 			User \
 			Uvector \
+			Cvector \
 			Message \
 			Error \
 			Reply \
 			Commands \
-			IRCServer
-#			Channel
+			IRCServer \
+			Channel
 
 SRC = $(foreach FILE,$(SRC_FILES),$(shell find $S -type f -name "$(FILE).cpp"))
 OBJ = $(patsubst $S/%,$O/%,$(SRC:.cpp=.o))

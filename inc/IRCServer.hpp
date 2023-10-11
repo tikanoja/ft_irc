@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/09 14:57:35 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:04:14 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
 # include "CircularBuffer.hpp"
 # include "Uvector.hpp"
+# include "Cvector.hpp"
 # include "Message.hpp"
 # include "User.hpp"
 # include "Commands.hpp"
@@ -44,7 +45,7 @@
 # endif
 
 # ifndef N_COMMANDS
-#  define N_COMMANDS 3
+#  define N_COMMANDS 4
 # endif
 
 class User;
@@ -59,7 +60,7 @@ class IRCServer {
 		std::string	const 			p_password;
 		Uvector						p_users;
 		Uvector						p_opers;
-		std::vector<Channel*>		p_channels;
+		Cvector						p_channels;
 		nfds_t 						p_fd_count;
 
 		std::vector<struct pollfd>	p_pfds;
@@ -106,6 +107,7 @@ class IRCServer {
 		std::string	const & getName();
 		std::string const &	getPassword() const;
 		Uvector		const &	getUsers() const;
+		Cvector			  & getChannels();
 		bool				isBlocked(std::string nick) const;
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);

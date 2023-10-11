@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/06 10:25:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:27:28 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 #include "IRCServer.hpp"
 #include "Message.hpp"
 #include "Uvector.hpp"
+#include "Cvector.hpp"
 #include "User.hpp"
 #include "Reply.hpp"
 #include "Error.hpp"
+#include "Channel.hpp"
 
 class IRCServer;
 class User;
 class Uvector;
+class Cvector;
 class Message;
 
 //Registration functions
@@ -47,5 +50,9 @@ int cmd_quit(IRCServer& server, User &user, Message &message);
 // int cmd_privmsg(IRCServer& server, User &user, Message &message);
 // int cmd_who(IRCServer& server, User &user, Message &message);
 // int cmd_whois(IRCServer& server, User &user, Message &message);
+
+//Channel functions
+
+int chan_cmd_join(IRCServer& server, User& user, Message& message);
 
 #endif
