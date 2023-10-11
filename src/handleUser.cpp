@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:11:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:41:19 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,98 @@ void IRCServer::setUserMode(User & user, e_uperm mode){
 		/* send error reply, no such user (techically we'd check first the local p_users, then all user list (combined from all servers)
 		and only then give the error)*/
 	}
+}
+
+void	IRCServer::unsetUserMode(User & user, e_uperm mode){
+	try {
+		if (user.getNick() == "")
+				p_users.findUserByNick(user.getNick())->unsetMode(mode);
+			p_users.findUserBySocket(user.getSocket())->unsetMode(mode);
+	} catch (std::exception & e){
+		/* send error reply, no such user (techically we'd check first the local p_users, then all user list (combined from all servers)
+		and only then give the error)*/
+	}
+}
+
+std::string	IRCServer::printModeStr(User const & user){
+	static const e_uperm permissions[] = {away, wallops, invisible, restricted, oper, Oper, server_notice};
+	static const std::string characters = "awiroOs";
+	std::string result = "+";
+	int mode = user.getMode();
+	
+	for(size_t i = 0; i < N_COMMANDS; i++) {
+		if (mode & permissions[i])
+			result += characters[i];
+	}
+	return result;
+}
+
+std::string	IRCServer::setBatchMode(User & user, std::string modes){
+
+	std::string opsdone = "";
+	static const std::string characters = "iwrs";
+
+	if (modes[0] != '+')
+	{
+		for ( size_t i = 1; i < modes.size(); i++ ){
+			switch (modes[i]){
+				case ('i'):
+					if (user.setMode(invisible))
+						opsdone += characters[0];
+					break;
+				case ('w'):
+					if (user.setMode(wallops))
+						opsdone += characters[1];
+					break;
+				case ('r'):
+					if (user.setMode(restricted))
+						opsdone += characters[2];
+					break;
+				case ('s'):
+					if (user.setMode(server_notice))
+						opsdone += characters[3];
+					break;
+				default:
+					continue;
+			}
+		}
+	}
+	return opsdone;
+}
+
+std::string	IRCServer::unsetBatchMode(User & user, std::string modes){
+
+	std::string opsdone = "";
+	static const std::string characters = "iwoOs";
+
+	if (modes[0] != '-')
+	{
+		for ( size_t i = 1; i < modes.size(); i++ ){
+			switch (modes[i]){
+				case ('i'):
+					if (user.unsetMode(away))
+						opsdone += characters[0];
+					break;
+				case ('w'):
+					if (user.unsetMode(invisible))
+						opsdone += characters[1];
+					break;
+				case ('o'):
+					if (user.unsetMode(wallops))
+						opsdone += characters[2];
+					break;
+				case ('O'):
+					if (user.unsetMode(restricted))
+						opsdone += characters[3];
+					break;
+				case ('s'):
+					if (user.unsetMode(server_notice))
+						opsdone += characters[4];
+					break;
+				default:
+					continue;
+			}
+		}
+	}
+	return opsdone;
 }

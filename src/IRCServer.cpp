@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 10:25:46 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:45:46 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ int IRCServer::pollingRoutine() {
 					if (acceptClient())
 						continue ;
 				} else if (p_pfds[i].revents & POLLIN) { //A client has sent us a message, add to buffer!
-					std::cout <<"Received msgs:" << j++ << std::endl;
+					std::cout << "Received msgs:" << j++ << std::endl;
  					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
 						continue ;
 				} else if (p_pfds[i].revents & POLLOUT) { //A client has sent us a message, add to buffer!

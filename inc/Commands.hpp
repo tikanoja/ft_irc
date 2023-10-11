@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/11 11:27:28 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:46:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class Message;
 int cmd_pass(IRCServer& server, User& user, Message& message);
 int cmd_nick(IRCServer& server, User& user, Message& message);
 int cmd_user(IRCServer& server, User& user, Message& message);
+int cmd_mode(IRCServer& server, User& user, Message& message);
 // int cmd_user(IRCServer& server, User &user, Message &message);
 // int cmd_oper(IRCServer& server, User &user, Message &message);
 int cmd_quit(IRCServer& server, User &user, Message &message);

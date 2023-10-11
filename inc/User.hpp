@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/06 10:34:40 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:47:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ class User
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
 
-		void				setIP(char const * ip);
-		void				setSocket(int socketfd);
-		void				setNick(std::string nickname);
-		void				setMode(int mode);
-		void				setRealName(std::string realname);
-		void				setUserName(std::string username);
+		void	setIP(char const * ip);
+		void	setSocket(int socketfd);
+		void	setNick(std::string nickname);
+		bool	setMode(int mode);
+		bool	unsetMode(int mode);
+		void	setRealName(std::string realname);
+		void	setUserName(std::string username);
 
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);

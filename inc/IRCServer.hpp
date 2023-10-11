@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 10:04:14 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:48:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <stdexcept>
 # include <netinet/in.h>
 # include <arpa/inet.h> //inet
-# include <sys/types.h> //types needed for socket() ftions
+# include <sys/types.h> //types needed for socket() functions
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
 # include "CircularBuffer.hpp"
 # include "Uvector.hpp"
@@ -105,14 +105,19 @@ class IRCServer {
 		int					pollingRoutine();
 		int					executeCommand(User& user, Message& message);
 		std::string	const & getName();
-		std::string const &	getPassword() const;
+		std::string	const &	getPassword() const;
 		Uvector		const &	getUsers() const;
 		Cvector			  & getChannels();
 		bool				isBlocked(std::string nick) const;
+		void				delFd(User& user);
+		void				delUser(User& user);
+
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
-		void				delUser(User& user);
-		void				delFd(User& user);
+		void				unsetUserMode(User & user, e_uperm mode);
+		std::string			setBatchMode(User & user, std::string modes);
+		std::string			unsetBatchMode(User & user, std::string modes);
+		std::string			printModeStr(User const &user);
 };
 
 #endif
