@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 11:33:52 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 12:38:28 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,11 @@ std::string Channel::getName()
 Uvector* Channel::getMembers()
 {
 	return &(this->p_members);
+}
+
+void Channel::broadcastToChannel(std::string message)
+{
+	for (size_t i = 0; i < p_members.size(); i++) {
+		p_members[i]->getRecvBuffer().addToBuffer(message.c_str());
+	}
 }

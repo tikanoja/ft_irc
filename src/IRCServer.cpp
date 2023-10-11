@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 11:45:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:12:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ void IRCServer::initCommands() {
 		"PASS",
 		"NICK",
 		"QUIT",
-		"JOIN"
+		"JOIN",
+		"USER"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
 		cmd_pass,
 		cmd_nick,
 		cmd_quit,
-		chan_cmd_join
+		chan_cmd_join,
+		cmd_user
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -137,10 +139,10 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-    std::ofstream outFile;
-	outFile.open("log", std::fstream::app);
-	outFile << buf;
-	outFile << "=============================" << std::endl;
+    // std::ofstream outFile;
+	// outFile.open("log", std::fstream::app);
+	// outFile << buf;
+	// outFile << "=============================" << std::endl;
 	if (numbytes == 1) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
@@ -158,28 +160,24 @@ int IRCServer::checkBuffer(User* user, nfds_t i) {
 	// std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	m.printContent();
-	if (m.getCommand() == "JOIN") {
+	if (m.getCommand() == "JOIN" && m.getParams().front() == "") {
 		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
 		me.printContent();
 		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
 		return 1;
-	}
-	if (m.getCommand() == "USER") {
+	} else if (m.getCommand() == "USER") {
 		Message me(":127.0.0.1 001 user :Welcome please enjoy!!!!");
 		me.printContent();
 		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
 		return 1;
-	}
-	if (m.getCommand() == "PING") {
+	} else if (m.getCommand() == "PING") {
 		Message me(":127.0.01 PONG 127.0.0.1 :user");
 		me.printContent();
 		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
 		return 1;
 	}
-	if (m.getCommand() == "QUIT") {
-		executeCommand(*user, m);
-		// cmd_quit(*this, *user, m);
-	}
+	// else
+	// 	executeCommand(*user, m);
 	return 0;
 }
 

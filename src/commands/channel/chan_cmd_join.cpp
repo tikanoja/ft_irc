@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/11 11:24:02 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:17:39 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	//check p_channels for the chan requested
+	if (*message.getParams().begin() == "") {
+		std::cout << "Join target not specified!" << std::endl;
+		return 0;
+	}
 	Channel* toJoin = server.getChannels().findChannel(*message.getParams().begin());
 	//if yes join
 	if (toJoin != NULL) {
