@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 13:42:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:46:49 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ class User
 		void	setIP(char const * ip);
 		void	setSocket(int socketfd);
 		void	setNick(std::string nickname);
-		void	setMode(int mode);
-		void	unsetMode(int mode);
+		bool	setMode(int mode);
+		bool	unsetMode(int mode);
 		void	setRealName(std::string realname);
 		void	setUserName(std::string username);
 

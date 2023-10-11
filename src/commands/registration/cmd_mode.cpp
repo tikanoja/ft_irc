@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 16:39:05 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:41:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,68 @@
 
 # define SETTABLE_MODES "iwroO"
 
-int cmd_mode(IRCServer& server, User& user, Message& message){
+// int cmd_mode(IRCServer& server, User& user, Message& message){
 	
-	if (message.getParams().size() < 1){
-		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()).c_str());
-		return 1;
-	}
-	if (message.getSender()->getNick() != message.getParams()[0]){
-		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
-		return 1;
-	}
+// 	if (message.getParams().size() < 1){
+// 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
+// 			message.getCommand()).c_str());
+// 		return 1;
+// 	}
+// 	if (message.getSender()->getNick() != message.getParams()[0]){
+// 		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
+// 		return 1;
+// 	}
 
-	for (size_t i = 1; i < message.getParams().size(); i++){
-		if (message.getParams()[i][0] != '+' || message.getParams()[i][0]  != '-'){
-			user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
-			continue;
-		}
-		
-		size_t forbidden;
-		if (message.getParams()[i][0] != '+' || message.getParams()[i][0] != '-')
-			forbidden = message.getParams()[i].substr(1).find_first_not_of(SETTABLE_MODES);
-		if (forbidden != std::string::npos){
-			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
-			continue;
-		}
+// 	std::string additions;
+// 	std::string removals;
+// 	for (size_t i = 1; i < message.getParams().size(); i++){
+// 		if (message.getParams()[i][0] != '+' || message.getParams()[i][0]  != '-'){
+// 			continue;
+// 		}
+// 		size_t forbidden;
+// 		if (message.getParams()[i][0] != '+' && message.getParams()[i][0] != '-')
+// 			forbidden = message.getParams()[i].substr(1).find_first_not_of(SETTABLE_MODES);
+// 		if (forbidden != std::string::npos){
+// 			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
+// 			continue;
+// 		}
+// 		additions += server.setBatchMode(user, message.getParams()[i]);
+// 		removals += server.unsetBatchMode(user, message.getParams()[i]);
+// 	}
+// 	user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
+// 		server.printModeStr(user)).c_str());
+// 	return 0;
+// }
 
-		server.setBatchMode(user, message.getParams()[i]);
-		user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(), user.getMode()).c_str());
-	}
+// int cmd_mode(IRCServer& server, User& user, Message& message){
 	
-	return 0;
-}
+// 	if (message.getParams().size() < 1){
+// 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
+// 			message.getCommand()).c_str());
+// 		return 1;
+// 	}
+// 	if (message.getSender()->getNick() != message.getParams()[0]){
+// 		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
+// 		return 1;
+// 	}
+
+// 	std::string additions;
+// 	std::string removals;
+// 	for (size_t i = 1; i < message.getParams().size(); i++){
+// 		if (message.getParams()[i][0] != '+' || message.getParams()[i][0]  != '-'){
+// 			continue;
+// 		}
+// 		size_t forbidden;
+// 		if (message.getParams()[i][0] != '+' && message.getParams()[i][0] != '-')
+// 			forbidden = message.getParams()[i].substr(1).find_first_not_of(SETTABLE_MODES);
+// 		if (forbidden != std::string::npos){
+// 			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
+// 			continue;
+// 		}
+// 		additions += server.setBatchMode(user, message.getParams()[i]);
+// 		removals += server.unsetBatchMode(user, message.getParams()[i]);
+// 	}
+// 	user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
+// 		server.printModeStr(user)).c_str());
+// 	return 0;
+// }

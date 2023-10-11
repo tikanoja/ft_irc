@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/05 13:59:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:57:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,15 @@ class IRCServer {
 		int					pollingRoutine();
 		int					executeCommand(User& user, Message& message);
 		std::string	const & getName();
-		std::string const &	getPassword() const;
+		std::string	const &	getPassword() const;
 		Uvector		const &	getUsers() const;
 		bool				isBlocked(std::string nick) const;
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
 		void				unsetUserMode(User & user, e_uperm mode);
-		void				setBatchMode(User & user, std::string modes);
+		std::string			setBatchMode(User & user, std::string modes);
+		std::string			unsetBatchMode(User & user, std::string modes);
+		std::string			printModeStr(User const &user);
 };
 
 #endif
