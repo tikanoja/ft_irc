@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/12 13:52:00 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:44:17 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,26 +163,21 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();
-	// std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
 	std::cout << std::endl << "RECEIVED: ";
 	m.printContent();
 	if (m.getCommand() == "JOIN" && m.getParams().front() == "") {
 		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
 		me.printContent();
-		// replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
 		user->getSendBuffer().addToBuffer(me.toString());
 		return 1;
-	} else if (m.getCommand() == "USER") {
+	}/* else if (m.getCommand() == "USER") {
 		Message me(":127.0.0.1 001 user :Welcome please enjoy!!!!");
 		me.printContent();
-		// replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
 		user->getSendBuffer().addToBuffer(me.toString());
 		return 1;
-	}
-	else if (m.getCommand() == "PING") {
-		executeCommand(*user, m);
-	}
+	}*/
+	executeCommand(*user, m);
 	(void)i;
 	return 0;
 }
