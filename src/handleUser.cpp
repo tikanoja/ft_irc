@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/11 11:41:19 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:37:02 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ std::string	IRCServer::printModeStr(User const & user){
 	return result;
 }
 
-std::string	IRCServer::setBatchMode(User & user, std::string modes){
+std::string	IRCServer::setBatchMode(User & user, std::string const & modes, size_t *index){
 
 	std::string opsdone = "";
 	static const std::string characters = "iwrs";
 
-	if (modes[0] != '+')
+	if (modes[index] == '+')
 	{
-		for ( size_t i = 1; i < modes.size(); i++ ){
-			switch (modes[i]){
+		for ( size_t index; index < modes.size(); (*index)++ ){
+			switch (modes[index]){
 				case ('i'):
 					if (user.setMode(invisible))
 						opsdone += characters[0];
@@ -85,6 +85,8 @@ std::string	IRCServer::setBatchMode(User & user, std::string modes){
 					if (user.setMode(server_notice))
 						opsdone += characters[3];
 					break;
+				case ('-'):
+					return opsdone;
 				default:
 					continue;
 			}
@@ -93,35 +95,33 @@ std::string	IRCServer::setBatchMode(User & user, std::string modes){
 	return opsdone;
 }
 
-std::string	IRCServer::unsetBatchMode(User & user, std::string modes){
+std::string		IRCServer::unsetBatchMode(User & user, std::string const & modes, size_t *index){
 
 	std::string opsdone = "";
 	static const std::string characters = "iwoOs";
 
-	if (modes[0] != '-')
+	if (modes[index] == '-')
 	{
-		for ( size_t i = 1; i < modes.size(); i++ ){
-			switch (modes[i]){
+		for ( size_t index; index < modes.size(); (*index)++ ){
+			switch (modes[index]){
 				case ('i'):
-					if (user.unsetMode(away))
+					if (user.setMode(invisible))
 						opsdone += characters[0];
 					break;
 				case ('w'):
-					if (user.unsetMode(invisible))
+					if (user.setMode(wallops))
 						opsdone += characters[1];
 					break;
-				case ('o'):
-					if (user.unsetMode(wallops))
+				case ('r'):
+					if (user.setMode(restricted))
 						opsdone += characters[2];
 					break;
-				case ('O'):
-					if (user.unsetMode(restricted))
+				case ('s'):
+					if (user.setMode(server_notice))
 						opsdone += characters[3];
 					break;
-				case ('s'):
-					if (user.unsetMode(server_notice))
-						opsdone += characters[4];
-					break;
+				case ('+'):
+					return opsdone;
 				default:
 					continue;
 			}

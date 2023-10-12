@@ -146,7 +146,7 @@
 >> :nonstop.ix.me.dal.net PONG nonstop.ix.me.dal.net :djagusch
 --> lag pong
 << MODE djagusch -w +i -b -a
-<< MODE djagusch +wi -b -a
+<< MODE djaguschi +w -b -a
 >> :djagusch MODE djagusch :+w
 --> requested usermode change
 << MODE djagusch -wi -b -a
