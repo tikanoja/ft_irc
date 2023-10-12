@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/11 13:54:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:44:54 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int cmd_privmsg(IRCServer& server, User& user, Message& message){
 	std::string targetNick = message.getParams().front();
-	if (target == "") {
+	if (targetNick == "") {
 		std::cout << "could not find target for privmsg..." << std::endl;
 		return 1;
 	}
@@ -26,9 +26,10 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 	}
 	//tee stringgi
 	std::string msg;
-	msg = ":" + message.getPrefix() + " PRIVMSG " + targetNick + " :" + message.getTrailing;
+	msg = ":" + message.getPrefix() + " PRIVMSG " + targetNick + " :" + message.getTrailing();
 
 	//tunge se stringi tanne
 	recipient->getRecvBuffer().addToBuffer(msg.c_str());
+	(void)user;
 	return 0;
 }

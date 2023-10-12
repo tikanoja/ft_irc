@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 12:46:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:25:29 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ class IRCServer {
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
 		int									receiveMsg(User* user, nfds_t i);
-		int									checkBuffer(User* user, nfds_t i);
+		int									checkRecvBuffer(User* user, nfds_t i);
+		int									checkSendBuffer(User* user);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 		void								replyToMsg(User* user, Message *msg);
 

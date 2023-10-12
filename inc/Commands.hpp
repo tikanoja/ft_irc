@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/11 13:10:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:43:17 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int cmd_quit(IRCServer& server, User &user, Message &message);
 // int cmd_notice(IRCServer& server, User &user, Message &message);
 int cmd_ping(IRCServer& server, User &user, Message &message);
 int cmd_pong(IRCServer& server, User &user, Message &message);
-// int cmd_privmsg(IRCServer& server, User &user, Message &message);
+int cmd_privmsg(IRCServer& server, User &user, Message &message);
 // int cmd_who(IRCServer& server, User &user, Message &message);
 // int cmd_whois(IRCServer& server, User &user, Message &message);
 

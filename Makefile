@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/11 13:14:36 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/12 10:44:02 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,12 @@ SRC_FILES = main \
 			chan_cmd_join \
 			Channel \
 			cmd_ping \
-			cmd_pong
+			cmd_pong \
+			cmd_privmsg
 #			cmd_away
 #			cmd_kill
 #			cmd_lusers
 #			cmd_notice
-#			cmd_privmsg
 #			cmd_who
 #			cmd_whois
 #			cmd_mode

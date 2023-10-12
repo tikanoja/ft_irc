@@ -46,7 +46,6 @@ void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 }
 
 void CircularBuffer::addToBuffer(const char* buf) {
-	
 	size_t len = strlen(buf);
 	for (size_t i = 0; i <  len; i++) {
 		p_buffer[p_head] = static_cast<unsigned char> (buf[i]);
@@ -64,34 +63,54 @@ int CircularBuffer::findCRLF() const {
 	return (-1);
 }
 
+// std::string CircularBuffer::extractBuffer() {
+// 	int templen = 0;
+// 	int tail_backup = p_tail;
+// 	while (p_tail != p_head) { //calculating len of the buffered msg
+// 		p_tail++;
+// 		if (p_tail == MAXDATASIZE * 2)
+// 			p_tail = 0;
+// 		templen++;
+// 		if (p_buffer[p_tail] == '\n') {
+// 			p_tail++;
+// 			templen++;
+// 			break ;
+// 		}
+// 	}
+
+// 	unsigned char* tempbuffer = new unsigned char[templen];
+// 	for (int i = 0; tail_backup != p_tail; i++) { //copy p_buffer to temp & zero p_buffer
+// 		tempbuffer[i] = p_buffer[tail_backup];
+// 		p_buffer[tail_backup] = '\0';
+// 		tail_backup++;
+// 		if (tail_backup == MAXDATASIZE * 2)
+// 			tail_backup = 0;
+// 	}
+
+// 	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string
+// 	delete[] tempbuffer; //free temp
+
+// 	size_t index = 0;
+//     while ((index = bufferString.find("^D", index)) != std::string::npos) // find "^D"
+//         bufferString.replace(index, 2, ""); //replace "^D" with ""
+
+// 	return (bufferString);
+// }
+
 std::string CircularBuffer::extractBuffer() {
-	int templen = 0;
-	int tail_backup = p_tail;
+	std::string bufferString;
 	while (p_tail != p_head) { //calculating len of the buffered msg
-		p_tail++;
+		bufferString.push_back(static_cast<char>(p_buffer[p_tail]));
 		if (p_tail == MAXDATASIZE * 2)
 			p_tail = 0;
-		templen++;
 		if (p_buffer[p_tail] == '\n') {
+			p_buffer[p_tail] = '\0';
 			p_tail++;
-			templen++;
 			break ;
 		}
+		p_buffer[p_tail] = '\0';
+		p_tail++;
 	}
-
-	unsigned char* tempbuffer = new unsigned char[templen];
-	for (int i = 0; tail_backup != p_head; i++) { //copy p_buffer to temp & zero p_buffer
-		tempbuffer[i] = p_buffer[tail_backup];
-		p_buffer[tail_backup] = '\0';
-		tail_backup++;
-		if (tail_backup == MAXDATASIZE * 2)
-			tail_backup = 0;
-		if (tempbuffer[i] == '\n')
-			break ;
-	}
-
-	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string
-	delete[] tempbuffer; //free temp
 
 	size_t index = 0;
     while ((index = bufferString.find("^D", index)) != std::string::npos) // find "^D"
@@ -99,6 +118,7 @@ std::string CircularBuffer::extractBuffer() {
 
 	return (bufferString);
 }
+
 
 void CircularBuffer::clear(){
 	memset(this, 0, MAXDATASIZE);
