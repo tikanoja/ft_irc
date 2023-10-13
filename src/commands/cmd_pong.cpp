@@ -6,14 +6,14 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:30 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 09:44:48 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 12:33:17 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Commands.hpp"
 
 int cmd_pong(IRCServer& server, User& user, Message& message){
-	Message me(":127.0.0.1 PONG 127.0.0.1 :user"); //replace user w username!
+	Message me(":127.0.0.1 PONG 127.0.0.1 :" + user.getUserName()); //?????
 	me.printContent();
 	const char* toAdd = me.toString();
 	user.getSendBuffer().addToBuffer(toAdd);
