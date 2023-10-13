@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 10:34:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:28:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
 	std::cout << "User param constructor called" << std::endl;
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
+	p_mode = 0;
 }
 
 User::User()

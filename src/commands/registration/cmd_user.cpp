@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/12 12:26:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:27:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 //USER guest 0 * :Ronnie Reagan
 
 int cmd_user(IRCServer& server, User& user, Message& message){
-
+	message.printContent();
 	if (message.getParams()[2].empty() || message.getTrailing().empty()){
 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()).c_str());
 		return 1;
 	}
-	if (!server.getUserMode(user, static_cast<IRCServer::e_uperm>(0x0080))){
+	if (server.getUserMode(user, static_cast<IRCServer::e_uperm>(0x0080))){
 		user.getSendBuffer().addToBuffer(ERR_ALREADYREGISTRED(server.getName()).c_str());
 		return 1;
 	}
@@ -32,5 +32,7 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 	if (message.getParams()[2] == "8")
 		user.setMode(static_cast<IRCServer::e_uperm>(0x0004));
 	user.setMode(static_cast<IRCServer::e_uperm>(0x0080));
+	std::cout << "adding to buf: " << RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1").c_str() << std::endl;
+	user.getSendBuffer().addToBuffer(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1").c_str());
 	return 0;
 }

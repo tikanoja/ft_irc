@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:22:41 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:29:01 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # endif
 
 # ifndef N_COMMANDS
-#  define N_COMMANDS 4
+#  define N_COMMANDS 6
 # endif
 
 class User;
@@ -79,7 +79,8 @@ class IRCServer {
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
 		int									receiveMsg(User* user, nfds_t i);
-		int									checkBuffer(User* user, nfds_t i);
+		int									checkRecvBuffer(User* user, nfds_t i);
+		int									checkSendBuffer(User* user);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 		void								replyToMsg(User* user, Message *msg);
 

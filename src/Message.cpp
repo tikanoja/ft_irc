@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/06 09:41:14 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:53:43 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ const char* Message::toString() {
 	}
 	return str;
 }
+
 std::string const &	Message::getPrefix() const{
 	return p_prefix;
 }

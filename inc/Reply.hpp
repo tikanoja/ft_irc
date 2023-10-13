@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/12 14:43:25 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:27:20 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 /*Registration*/
 
-# define RPL_WELCOME(servername, nick, user, host)(":" + servername + " 001 Welcome to the Internet Relay Network " + nick + "!" + user + "@" + host + "\r\n") //001
+# define RPL_WELCOME(servername, nick, user, host)(":" + servername + " 001 " + nick + " Welcome to the Internet Relay Network " + nick + "!" + user + "@" + host + "\r\n") //001
 # define RPL_YOURHOST(servername, version)(":" + servername + " 002 Your host is " + servername + ", running version " + version + "\r\n") //002
 # define RPL_CREATED(servername, date)(":" + servername + " 003 This server was created" + date + "\r\n") //003
 # define RPL_MYINFO(servername, version, umodes, cmodes)(":" + servername + " 004 " + servername + " " + version + " " + umodes + " " + cmodes + "\r\n") //004

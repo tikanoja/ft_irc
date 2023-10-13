@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:23:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:28:26 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void IRCServer::initCommands() {
 		"NICK",
 		"USER",
 		"QUIT",
-		"JOIN"
+		"JOIN",
+		"USER",
+		"PING",
+		"PONG",
+		"PRIVMSG"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -68,7 +72,11 @@ void IRCServer::initCommands() {
 		cmd_nick,
 		cmd_user,
 		cmd_quit,
-		chan_cmd_join
+		chan_cmd_join,
+		cmd_user,
+		cmd_ping,
+		cmd_pong,
+		cmd_privmsg
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -137,10 +145,10 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-    std::ofstream outFile;
-	outFile.open("log", std::fstream::app);
-	outFile << buf;
-	outFile << "=============================" << std::endl;
+    // std::ofstream outFile;
+	// outFile.open("log", std::fstream::app);
+	// outFile << buf;
+	// outFile << "=============================" << std::endl;
 	if (numbytes == 1) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
@@ -149,49 +157,30 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	return (0);
 }
 
-int IRCServer::checkBuffer(User* user, nfds_t i) {
+int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 	if (user->getRecvBuffer().findCRLF() == -1) { //do we have a complete msg ???
 		// std::cout << "did not detect CRLF" << std::endl;
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();
-	// std::cout << "Server: received message: " << msg << std::endl;
 	Message m(msg);
+	std::cout << std::endl << "RECEIVED: ";
 	m.printContent();
-	if (m.getCommand() == "JOIN") {
-		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
-		me.printContent();
-		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
-		return 1;
-	}
-	if (m.getCommand() == "USER") {
-		Message me(":127.0.0.1 001 user :Welcome please enjoy!!!!");
-		me.printContent();
-		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
-		return 1;
-	}
-	if (m.getCommand() == "PING") {
-		Message me(":127.0.01 PONG 127.0.0.1 :user");
-		me.printContent();
-		replyToMsg(p_users.findUserBySocket(p_pfds[i].fd), &me);
-		return 1;
-	}
-	if (m.getCommand() == "QUIT") {
-		executeCommand(*user, m);
-		// cmd_quit(*this, *user, m);
-	}
+	executeCommand(*user, m);
+	(void)i;
 	return 0;
 }
 
-void IRCServer::replyToMsg(User* user, Message *msg) {
+int IRCServer::checkSendBuffer(User* user) {
 	if (user->getSendBuffer().emptyCheck() == 0) {
-		const char* msgc = msg->toString();
-		user->getSendBuffer().addToBuffer(msgc);
-		delete msgc;
+		return 0;
 	} if (user->getSendBuffer().emptyCheck() == 1) {
 		std::string toSend = user->getSendBuffer().extractBuffer();
-		const char* toSendC = toSend.c_str();
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
+		char* toSendC = new char[toSendLen];
+		memset(toSendC, '\0', static_cast<size_t>(toSendLen)); //this fixed the buffer duplicating...
+		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
+			toSendC[i] = toSend[i];
 		ssize_t n_sent = 0;
 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
@@ -200,8 +189,30 @@ void IRCServer::replyToMsg(User* user, Message *msg) {
 			const char* toBuffer = toSend.c_str();
 			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
 		}
+		delete[] toSendC;
 	}
+	return 0;
 }
+
+// void IRCServer::replyToMsg(User* user, Message *msg) {
+// 	if (user->getSendBuffer().emptyCheck() == 0) {
+// 		const char* msgc = msg->toString();
+// 		user->getSendBuffer().addToBuffer(msgc);
+// 		delete msgc;
+// 	} if (user->getSendBuffer().emptyCheck() == 1) {
+// 		std::string toSend = user->getSendBuffer().extractBuffer();
+// 		const char* toSendC = toSend.c_str();
+// 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
+// 		ssize_t n_sent = 0;
+// 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
+// 			std::cerr << "Send failed" << std::endl;
+// 		if (n_sent > 0 && n_sent < toSendLen) {
+// 			toSend.erase(0, static_cast<size_t>(n_sent));
+// 			const char* toBuffer = toSend.c_str();
+// 			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
+// 		}
+// 	}
+// }
 
 //check for POLLNVAL & POLLERR
 int IRCServer::pollingRoutine() {
@@ -236,14 +247,14 @@ int IRCServer::pollingRoutine() {
 				// bitsToStream(p_pfds[i].revents, std::cout);
 				// std::cout << std::endl;
 			}
-			if (i != 0) //check the buffer for this user, if there is something in there, extract until CRLF and process
-				checkBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
-			//catch a signal maybe?? with sigaction ????
+			if (i != 0) {
+				checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
+				checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
+			}
 		}
 	}
 	for (nfds_t i = 0; i < p_fd_count; i++) {
 		close(p_pfds[i].fd);
 	}
-	std::cout << "here!" << std::endl;
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/13 13:22:12 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/13 13:29:33 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,15 @@ SRC_FILES = CircularBuffer \
 			cmd_nick \
 			cmd_user \
 			cmd_quit \
-			chan_cmd_join
-#			cmd_mode 
+			chan_cmd_join \
+			Channel \
+			cmd_ping \
+			cmd_pong \
+			cmd_privmsg
 #			cmd_away
 #			cmd_kill
 #			cmd_lusers
 #			cmd_notice
-#			cmd_ping
-#			cmd_pong
-#			cmd_privmsg
 #			cmd_who
 #			cmd_whois
 #			cmd_mode
@@ -66,7 +66,7 @@ INC_FILES = CircularBuffer \
 			Reply \
 			Commands \
 			IRCServer \
-			Channel
+			Channel \
 
 SRC = $(foreach FILE,$(SRC_FILES),$(shell find $S -type f -name "$(FILE).cpp"))
 OBJ = $(patsubst $S/%,$O/%,$(SRC:.cpp=.o))

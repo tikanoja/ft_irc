@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Uvector.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:58:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:27:33 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ User*		Uvector::findUserByNick(std::string const & nick) const
 		if (toIRCLower((*it)->getNick()) == toIRCLower(nick))
 			return (*it);
 	}
-	throw(UserNotFound());
+	return NULL;
 }
 
 User*		Uvector::findUserByIP(std::string const & ip_address) const
