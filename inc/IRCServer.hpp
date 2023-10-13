@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/12 12:35:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:48:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@
 # include <stdexcept>
 # include <netinet/in.h>
 # include <arpa/inet.h> //inet
-# include <sys/types.h> //types needed for socket() ftions
+# include <sys/types.h> //types needed for socket() functions
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
 # include "CircularBuffer.hpp"
 # include "Uvector.hpp"
+# include "Cvector.hpp"
 # include "Message.hpp"
 # include "User.hpp"
 # include "Commands.hpp"
@@ -44,7 +45,7 @@
 # endif
 
 # ifndef N_COMMANDS
-#  define N_COMMANDS 3
+#  define N_COMMANDS 4
 # endif
 
 class User;
@@ -59,7 +60,8 @@ class IRCServer {
 		std::string	const 			p_password;
 		Uvector						p_users;
 		Uvector						p_opers;
-		std::vector<Channel*>		p_channels;
+		Cvector						p_channels;
+		nfds_t 						p_fd_count;
 
 		std::vector<struct pollfd>	p_pfds;
 		std::string					p_serverName;
@@ -77,6 +79,7 @@ class IRCServer {
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
 		int									receiveMsg(User* user, nfds_t i);
+		int									checkBuffer(User* user, nfds_t i);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 		void								replyToMsg(User* user, Message *msg);
 
@@ -104,12 +107,16 @@ class IRCServer {
 		std::string	const & getName();
 		std::string	const &	getPassword() const;
 		Uvector		const &	getUsers() const;
+		Cvector			  & getChannels();
 		bool				isBlocked(std::string nick) const;
+		void				delFd(User& user);
+		void				delUser(User& user);
+
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
 		void				unsetUserMode(User & user, e_uperm mode);
-		std::string			setBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			unsetBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string			setBatchMode(User & user, std::string modes);
+		std::string			unsetBatchMode(User & user, std::string modes);
 		std::string			printModeStr(User const &user);
 };
 

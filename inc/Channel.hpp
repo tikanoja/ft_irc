@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/04 11:01:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:21:09 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,27 @@
 # define CHANNEL_HPP
 
 # include <iostream>
+# include "Uvector.hpp"
+
+class User;
 
 class Channel
 {
 	public:
-		Channel::Channel(const std::string name);
+		Channel(const std::string name);
 		Channel(Channel const& src);
 		~Channel();
-
 		Channel &	operator=(Channel const& rhs);
+		std::string getName();
+		Uvector* getMembers();
 
 	private:
 		Channel();
 		std::string	p_name;
+		Uvector		p_members;
+		//wrapper for the members to have permissions etc :)
+		Uvector		p_chopers;
+		//channel mode
 };
-
-Channel::Channel()
-{}
-
-Channel::Channel(Channel const& src)
-{
-	*this = src;
-}
-
-Channel::~Channel()
-{}
-
-Channel& Channel::operator=(Channel const& rhs)
-{
-	if(this != &rhs)
-		p_name = rhs.p_name;
-	return *this;
-}
 
 #endif

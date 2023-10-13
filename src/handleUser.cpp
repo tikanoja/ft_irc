@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/12 12:37:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:51:51 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ std::string	IRCServer::setBatchMode(User & user, std::string const & modes, size
 	std::string opsdone = "";
 	static const std::string characters = "iwrs";
 
-	if (modes[index] == '+')
+	if (modes[*index] == '+')
 	{
-		for ( size_t index; index < modes.size(); (*index)++ ){
-			switch (modes[index]){
+		for (; *index < modes.size(); (*index)++ ){
+			switch (modes[*index]){
 				case ('i'):
 					if (user.setMode(invisible))
 						opsdone += characters[0];
@@ -100,10 +100,10 @@ std::string		IRCServer::unsetBatchMode(User & user, std::string const & modes, s
 	std::string opsdone = "";
 	static const std::string characters = "iwoOs";
 
-	if (modes[index] == '-')
+	if (modes[*index] == '-')
 	{
-		for ( size_t index; index < modes.size(); (*index)++ ){
-			switch (modes[index]){
+		for ( ; *index < modes.size(); (*index)++ ){
+			switch (modes[*index]){
 				case ('i'):
 					if (user.setMode(invisible))
 						opsdone += characters[0];
