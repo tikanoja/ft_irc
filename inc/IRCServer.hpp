@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 11:48:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:15:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ class IRCServer {
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
 		void				unsetUserMode(User & user, e_uperm mode);
-		std::string			setBatchMode(User & user, std::string modes);
-		std::string			unsetBatchMode(User & user, std::string modes);
+		std::string			setBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string			unsetBatchMode(User & user, std::string const & modes, size_t *index);
 		std::string			printModeStr(User const &user);
 };
 

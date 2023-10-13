@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Cvector.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:06 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/11 11:22:16 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:09:41 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cvector.hpp"
+#include "../inc/Cvector.hpp"
 
 Cvector::Cvector()
 {}

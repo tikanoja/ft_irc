@@ -396,3 +396,10 @@
 << PING lion.tx.us.dal.net
 >> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :djagusch
 --> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :djagusch
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :djagusch
+--> lag pong
+<< QUIT :leaving

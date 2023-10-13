@@ -51,8 +51,6 @@ void IRCServer::initServer() {
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	initCommands();
-	// if (pollingRoutine())
-	// 	throw std::runtime_error("Polling failed");
 	return ;
 }
 
