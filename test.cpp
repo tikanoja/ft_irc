@@ -46,8 +46,6 @@ int main(){
 	std::cout << "Mode:" << nuser.getMode() << std::endl;
 	cmd_mode(nserver, nuser, nmessage7);
 	std::cout << "Mode:" << nuser.getMode() << std::endl;
-	cmd_mode(nserver, nuser, nmessage8);
-	std::cout << "Mode:" << nuser.getMode() << std::endl;
 
 	return 0;
 }

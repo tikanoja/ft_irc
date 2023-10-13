@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 10:23:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:23:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int IRCServer::acceptClient() {
 
 	sin_size = sizeof(their_addr);
 	new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
+	fcntl(new_fd, F_SETFL, O_NONBLOCK); // ?
 	if (new_fd == -1) {
 		std::cerr << "Failed to accept client" << std::endl;
 		return (-1);
@@ -90,6 +91,7 @@ int IRCServer::acceptClient() {
 		pfd.fd = new_fd;
 		pfd.events = POLLIN;
 		p_pfds.push_back(pfd);
+		p_fd_count++;
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 
 		p_users.push_back(new User());
@@ -108,7 +110,10 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	}
 	close(p_pfds[fd_index].fd);
 	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);
+	if (userToRemove)
+		delete userToRemove;
 	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());
 	p_pfds.erase(p_pfds.begin() + fd_index);
+	p_fd_count--;
 	return ;
 }
