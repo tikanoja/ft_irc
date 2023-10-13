@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/12 14:44:17 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:01:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,17 +166,6 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 	Message m(msg);
 	std::cout << std::endl << "RECEIVED: ";
 	m.printContent();
-	if (m.getCommand() == "JOIN" && m.getParams().front() == "") {
-		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
-		me.printContent();
-		user->getSendBuffer().addToBuffer(me.toString());
-		return 1;
-	}/* else if (m.getCommand() == "USER") {
-		Message me(":127.0.0.1 001 user :Welcome please enjoy!!!!");
-		me.printContent();
-		user->getSendBuffer().addToBuffer(me.toString());
-		return 1;
-	}*/
 	executeCommand(*user, m);
 	(void)i;
 	return 0;
@@ -258,16 +247,14 @@ int IRCServer::pollingRoutine() {
 				// bitsToStream(p_pfds[i].revents, std::cout);
 				// std::cout << std::endl;
 			}
-			if (i != 0) { //check the buffer for this user, if there is something in there, extract until CRLF and process
-				checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
+			if (i != 0) {
 				checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
+				checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
 			}
-			//catch a signal maybe?? with sigaction ????
 		}
 	}
 	for (nfds_t i = 0; i < p_fd_count; i++) {
 		close(p_pfds[i].fd);
 	}
-	std::cout << "here!" << std::endl;
 	return (0);
 }

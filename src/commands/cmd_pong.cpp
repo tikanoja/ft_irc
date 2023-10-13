@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:30 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/12 13:53:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:44:48 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int cmd_pong(IRCServer& server, User& user, Message& message){
 	Message me(":127.0.0.1 PONG 127.0.0.1 :user"); //replace user w username!
 	me.printContent();
-	user.getSendBuffer().addToBuffer(me.toString());
+	const char* toAdd = me.toString();
+	user.getSendBuffer().addToBuffer(toAdd);
+	delete[] toAdd;
 	(void)server;
 	(void)message;
 	return 0;
