@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_ping.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:27 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 12:31:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:32:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/Commands.hpp"
+#include "../../inc/Commands.hpp"
 
 int cmd_ping(IRCServer& server, User& user, Message& message){
 	cmd_pong(server, user, message);

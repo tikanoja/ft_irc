@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:14 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/14 10:27:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ std::ostream & operator<<( std::ostream & o, User const & user){
 		<< "Nick: " << user.getNick() << "\n"
 		<< "User:"<< user.getUserName() << "\n"
 		<< "Real:"<< user.getRealName() << "\n"
+		<< "Mode:"<< user.getMode() << "\n"
 		<< "Socket: "<< user.getSocket() << "\n"
 		<< "IP Address: "<< user.getIP() << std::endl;
 	return o;
