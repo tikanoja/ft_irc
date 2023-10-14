@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/11 12:29:00 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/14 10:38:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ class Channel
 		Channel(const std::string name);
 		Channel(Channel const& src);
 		~Channel();
-		Channel &	operator=(Channel const& rhs);
-		std::string getName();
-		Uvector* getMembers();
-		void broadcastToChannel(std::string message);
+		Channel &		operator=(Channel const& rhs);
+		std::string 	getName();
+		Uvector*		getMembers();
+		void			broadcastToChannel(std::string message);
 
 	private:
 		Channel();

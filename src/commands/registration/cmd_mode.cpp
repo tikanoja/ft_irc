@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:05:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/14 10:52:22 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 
 	if (params.size() == 2){
 		user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
-			server.printModeStr(user)).c_str());
-		std::cout << "mode is " << server.printModeStr(user) << std::endl;
+			server.getModeStr(user)).c_str());
+		std::cout << "mode is " << server.getModeStr(user) << std::endl;
 	}
 	std::cout << "modes given" << std::endl;
 

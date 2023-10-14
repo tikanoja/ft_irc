@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/14 12:28:28 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	IRCServer::unsetUserMode(User & user, e_uperm mode){
 	}
 }
 
-std::string	IRCServer::printModeStr(User const & user){
+std::string	IRCServer::getModeStr(User const & user){
 	static const e_uperm permissions[] = {away, wallops, invisible, restricted, oper, Oper, server_notice};
 	static const std::string characters = "awiroOs";
 	std::string result = "+";
 	int mode = user.getMode();
-	
+
 	for(size_t i = 0; i < N_COMMANDS; i++) {
 		if (mode & permissions[i])
 			result += characters[i];
@@ -105,19 +105,23 @@ std::string		IRCServer::unsetBatchMode(User & user, std::string const & modes, s
 		for ( ; *index < modes.size(); (*index)++ ){
 			switch (modes[*index]){
 				case ('i'):
-					if (user.setMode(invisible))
+					if (user.unsetMode(invisible))
 						opsdone += characters[0];
 					break;
 				case ('w'):
-					if (user.setMode(wallops))
+					if (user.unsetMode(wallops))
 						opsdone += characters[1];
 					break;
-				case ('r'):
-					if (user.setMode(restricted))
+				case ('o'):
+					if (user.unsetMode(oper))
 						opsdone += characters[2];
 					break;
+				case ('O'):
+					if (user.unsetMode(Oper))
+						opsdone += characters[3];
+					break;
 				case ('s'):
-					if (user.setMode(server_notice))
+					if (user.unsetMode(server_notice))
 						opsdone += characters[3];
 					break;
 				case ('+'):

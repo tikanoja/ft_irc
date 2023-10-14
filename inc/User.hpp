@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:24:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/14 10:56:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ class User
 		User &				operator=(User const& rhs);
 		char const *		getIP(void) const;
 		int					getSocket(void) const;
-		std::string	const &	getNick(void) const;
 		int					getMode(void) const;
+		std::string	const &	getNick(void) const;
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
 
 		void	setIP(char const * ip);
 		void	setSocket(int socketfd);
-		void	setNick(std::string nickname);
 		bool	setMode(int mode);
+		void	setNick(std::string nickname);
 		bool	unsetMode(int mode);
 		void	setRealName(std::string realname);
 		void	setUserName(std::string username);

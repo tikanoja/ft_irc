@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:29:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/14 11:10:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ class IRCServer {
 
 		uint16_t					p_port;
 		std::string	const 			p_password;
-		Uvector						p_users;
+		// Uvector						p_users;
 		Uvector						p_opers;
 		Cvector						p_channels;
 		nfds_t 						p_fd_count;
@@ -113,12 +113,14 @@ class IRCServer {
 		void				delFd(User& user);
 		void				delUser(User& user);
 
+		Uvector						p_users;
+
 		bool				getUserMode(User & user, e_uperm mode) const;
 		void				setUserMode(User & user, e_uperm mode);
 		void				unsetUserMode(User & user, e_uperm mode);
 		std::string			setBatchMode(User & user, std::string const & modes, size_t *index);
 		std::string			unsetBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			printModeStr(User const &user);
+		std::string			getModeStr(User const &user);
 };
 
 #endif
