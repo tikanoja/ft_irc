@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:27:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:01:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@
 # define RPL_EXCEPTLIST(servername)(":" + servername + " 348 \r\n") //348 ??????
 # define RPL_ENDOFEXCEPTLIST(servername, channel)(":" + servername + " 349 " + channel + " :End of channel exception list\r\n") //349
 # define RPL_VERSION(servername, version, debuglevel, server, comments)(":" + servername + " 351 " + version + "." + debuglevel + " " + server + " :" + comments + "\r\n") //351
-# define RPL_WHOREPLY(servername)(":" + servername + " 352 \r\n") //352 ??????
+# define RPL_WHOREPLY(servername)(":" + servername + " 352 " + nick + " " + channel + " " + username + " " + host + " " + servername + " " + nick + " " + status + " :0 " + realname + "\r\n")
 # define RPL_NAMREPLY(servername)(":" + servername + " 353 \r\n") //353 ???????
 # define RPL_LINKS(servername, mask, server, hopcount, serverinfo)(":" + servername + " 364 " + mask +  + " " + server + " :" + hopcount + " " + serverinfo + "\r\n") //364 ????? not sure we need it
 # define RPL_ENDOFLINKS(servername, mask)(":" + servername + " 365 " +  mask + " :End of LINKS list\r\n") //365

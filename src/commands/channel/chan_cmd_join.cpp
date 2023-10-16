@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 09:46:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:36:40 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	if (message.getParams().front() == "") { //irssi expects this reply for some reason w registering...
 		Message me(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.");
-		me.printContent();
 		const char* toAdd = me.toString();
 		user.getSendBuffer().addToBuffer(toAdd);
 		delete[] toAdd;

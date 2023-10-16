@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 08:50:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:39:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 	Message m(msg);
 	std::cout << std::endl << "RECEIVED: ";
 	m.printContent();
+	std::cout << std::endl;
 	executeCommand(*user, m);
 	(void)i;
 	return 0;
@@ -178,6 +179,7 @@ int IRCServer::checkSendBuffer(User* user) {
 		return 0;
 	} if (user->getSendBuffer().emptyCheck() == 1) {
 		std::string toSend = user->getSendBuffer().extractBuffer();
+		std::cout << "SENDING: " << std::endl << toSend << std::endl;
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
 		char* toSendC = new char[toSendLen];
 		memset(toSendC, '\0', static_cast<size_t>(toSendLen)); //this fixed the buffer duplicating...
