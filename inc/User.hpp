@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 09:06:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:18:30 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class User
 		std::string	const &	getNick(void) const;
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
+		std::string	const &	getAwayMsg(void) const;
 
 		void	setIP(char const * ip);
 		void	setSocket(int socketfd);

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 09:09:56 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:18:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,8 @@ std::ostream & operator<<( std::ostream & o, User const & user){
 
 void	User::setAwayMsg(std::string const & comment){
 	p_awaymsg = comment;
+}
+
+std::string	const &	User::getAwayMsg(void) const{
+	return p_awaymsg;
 }
