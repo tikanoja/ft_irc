@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/14 10:56:05 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:06:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class User
 		bool	unsetMode(int mode);
 		void	setRealName(std::string realname);
 		void	setUserName(std::string username);
+		void	setAwayMsg(std::string const & comment);
 
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);
@@ -50,6 +51,7 @@ class User
 		std::string		p_nickname;
 		std::string		p_username;
 		std::string		p_realname;
+		std::string		p_awaymsg;
 		int32_t			p_mode;
 		int				p_socket_fd;
 		char			p_ipaddress[INET6_ADDRSTRLEN];
