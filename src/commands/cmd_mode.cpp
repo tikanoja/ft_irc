@@ -6,11 +6,11 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/14 10:52:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 07:44:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/Commands.hpp"
+#include "../../inc/Commands.hpp"
 
 
 //    ERR_NEEDMOREPARAMS              ERR_USERSDONTMATCH
@@ -27,42 +27,40 @@
 //		online = 0x0100			// user is online		NOT SELF
 
 # define ALL_MODES "awiroOs"
-# define SETTABLE_MODES "iwroO"
 
-
-int cmd_mode(IRCServer& server, User& user, Message& message){
-
-	std::vector<std::string>const & params = message.getParams();
-
-	if (params.size() < 1){
+static bool hasPermissions(IRCServer& server, User& user, Message& message){
+	
+	if (!user.getMode() >> 0x0080 & 1)
+		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(), message.getCommand()).c_str());
+	if (message.getParams()[0].size() < 1){
 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()).c_str());
 		return 1;
 	}
-	std::cout << "param check passed" << std::endl;
-	std::cout << user.getNick() << "\n" << params[0] << std::endl;
-	if (user.getNick() != params[0]){
+	if (user.getNick() != message.getParams()[0]){
 		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
-		std::cout << "Users don't match" << std::endl;
 		return 1;
 	}
-	std::cout << "nick check passed" << std::endl;
-
-	if (params.size() == 2){
+	if (message.getParams()[0].size() == 2){
 		user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
 			server.getModeStr(user)).c_str());
-		std::cout << "mode is " << server.getModeStr(user) << std::endl;
 	}
-	std::cout << "modes given" << std::endl;
+}
 
+int cmd_mode(IRCServer& server, User& user, Message& message){
+
+	
+	if (!hasPermissions(server, user, message));
+		return 1;
+		
+	std::vector<std::string>const & params = message.getParams();
 	size_t forbidden;
-	for (size_t i = 0; i < params.size(); i++){
+	for (size_t i = 1; i < params.size(); i++){
 		forbidden = params[i].find_first_not_of(ALL_MODES);
+		std::cout << std::boolalpha << (forbidden == std::string::npos) << std::endl;
 		if (forbidden != std::string::npos)
 			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
-		std::cout << "Unknown MODE flag" << std::endl;
 	}
-	std::cout << "Unknown mode flags checked" << std::endl;
 
 	std::string additions;
 	std::string removals;
@@ -70,16 +68,21 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 		size_t pos = 0;
 		while (pos < params[i].size())
 		{
-			additions += server.setBatchMode(user, params[i], &pos);
-			removals += server.unsetBatchMode(user, params[i], &pos);
-			pos++;
+			if (params[i][pos] == '+')
+				additions += server.setBatchMode(user, params[i], &pos);
+			else if (params[i][pos] == '-')
+				removals += server.unsetBatchMode(user, params[i], &pos);
+			else
+				pos++;
 		}
 	}
-	std::cout << "YAAAAAAS" << std::endl;
 
-	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :+" + additions + "-" + removals;
+	removeCommonCharacters(additions, removals);
+
+	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :";
+	reply += !additions.empty() ? ("+" + additions) : "";
+	reply += !removals.empty() ?  ("-" + removals) : "";
 	user.getSendBuffer().addToBuffer(reply.c_str());
-	std::cout << "BYYYYYYEEEEE GUUUUURRRRLL" << std::endl;
 
 	return 0;
 }

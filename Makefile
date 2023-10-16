@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/14 11:14:43 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/15 16:05:09 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ T = test_dir
 CC = c++
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
-	-Wconversion -Wshadow -I $I #-g -fsanitize=address -static-libsan
+	-Wconversion -Wshadow -I $I -g #-fsanitize=address -static-libsan
 
 SRC_FILES = CircularBuffer \
 			User \

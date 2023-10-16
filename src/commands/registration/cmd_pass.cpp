@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:05:53 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 09:15:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 07:25:03 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int cmd_pass(IRCServer& server, User& user, Message& message){
 
 	if (message.getParams()[0].empty()){
-		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()).c_str());
+		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
+			message.getCommand()).c_str());
 		return 1;
 	}
 	if (server.getPassword() != message.getParams()[0]){

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 16:07:30 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 07:42:04 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define ERR_NOLOGIN(servername, user)(":" + servername + " 444 " + user + ":User not logged in" + "\r\n") //444
 # define ERR_SUMMONDISABLED(servername)(":" + servername + " 445 :SUMMON has been disabled" + "\r\n") //445
 # define ERR_USERSDISABLED(servername)(":" + servername + " 446 :USERS has been disabled" + "\r\n") //446
-# define ERR_NOTREGISTERED(servername)("You have not registered" + "\r\n") //451
+# define ERR_NOTREGISTERED(servername,  command)(":" + servername + " 451 * " + command + ":You have not registered" + "\r\n") //451
 # define ERR_NEEDMOREPARAMS(servername, command)(":" + servername + " 461 " + command + ":Not enough parameters" + "\r\n") //461
 # define ERR_ALREADYREGISTRED(servername)(":" + servername + " 462 " +  ":Unauthorized command (already registered)" + "\r\n") //462
 # define ERR_NOPERMFORHOST(servername)(":" + servername + " 463 :Your host isn't among the privileged" + "\r\n") //463
