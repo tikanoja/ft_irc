@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 10:06:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:23:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@ std::vector<std::string> split( const std::string& str ) {
 }
 
 int cmd_privmsg(IRCServer& server, User& user, Message& message){
+	
 	std::string targetNick = message.getParams().front();
+	
+	if (!(user.getMode() & 0x0080)){
+		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
+		message.getCommand()).c_str());
+		return 1;
+	}
 	if (targetNick == "") {
 			user.getSendBuffer().addToBuffer(ERR_NORECIPIENT(server.getName(),
 			message.getCommand()).c_str());
 		return 1;
 	}
+	
 	std::vector<std::string> recipients = split(message.getParams()[0]);
 	size_t num_recipients = recipients.size();
 

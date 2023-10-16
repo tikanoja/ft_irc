@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:17 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 10:11:19 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:23:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 	User *toBeKilled = server.getUsers().findUserByNick(user.getNick());
 
 	if (user.getMode() & 0x0080){
-			user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
-				message.getCommand()).c_str());
+		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()).c_str());
 		return 1;
 	}
 	if ((user.getMode() & 0x0010) || (user.getMode() & 0x0020)){

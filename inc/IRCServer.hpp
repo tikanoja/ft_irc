@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 10:08:21 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:20:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ class IRCServer {
 			oper = 0x0010,			// operator flag;
 			Oper = 0x0020,			// local operator flag;
 			server_notice = 0x0040,	// marks a user for receipt of server notices.
-			registered = 0x0080	// user has completed registration
+			registered = 0x0080		// user has completed registration
 		};
 
 		IRCServer(uint16_t port);

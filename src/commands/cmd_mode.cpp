@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 10:13:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:23:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@
 
 static bool hasPermissions(IRCServer& server, User& user, Message& message){
 	
-	if (!(user.getMode() & 0x0080))
-		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(), message.getCommand()).c_str());
+	if (!(user.getMode() & 0x0080)){
+		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()).c_str());
+		return false;
+	}
 	if (message.getParams()[0].size() < 1){
 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()).c_str());
