@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 07:44:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:13:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,29 @@
 
 static bool hasPermissions(IRCServer& server, User& user, Message& message){
 	
-	if (!user.getMode() >> 0x0080 & 1)
+	if (!(user.getMode() & 0x0080))
 		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(), message.getCommand()).c_str());
 	if (message.getParams()[0].size() < 1){
 		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()).c_str());
-		return 1;
+		return false;
 	}
 	if (user.getNick() != message.getParams()[0]){
 		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
-		return 1;
+		return false;
 	}
 	if (message.getParams()[0].size() == 2){
 		user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
 			server.getModeStr(user)).c_str());
+		return false;
 	}
+	return true;
 }
 
 int cmd_mode(IRCServer& server, User& user, Message& message){
 
 	
-	if (!hasPermissions(server, user, message));
+	if (!hasPermissions(server, user, message))
 		return 1;
 		
 	std::vector<std::string>const & params = message.getParams();

@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/15 16:05:09 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/16 10:09:20 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,11 @@ SRC_FILES = CircularBuffer \
 			chan_cmd_join \
 			cmd_ping \
 			cmd_pong \
-			cmd_privmsg
-#			cmd_away
-#			cmd_kill
+			cmd_privmsg \
+			cmd_away \
+			cmd_kill \
+			cmd_mode \
+			commandUtils
 #			cmd_lusers
 #			cmd_notice
 #			cmd_who

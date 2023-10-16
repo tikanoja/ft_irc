@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:17 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 09:01:49 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:11:19 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 
 	User *toBeKilled = server.getUsers().findUserByNick(user.getNick());
 
-	if ((user.getMode() >> 0x0080) & 1){
+	if (user.getMode() & 0x0080){
 			user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
 				message.getCommand()).c_str());
 		return 1;
 	}
-	if ((user.getMode() >> 0x0010) & 1 || (user.getMode() >> 0x0020) & 1){
+	if ((user.getMode() & 0x0010) || (user.getMode() & 0x0020)){
 		user.getSendBuffer().addToBuffer(ERR_NOPRIVILEGES(server.getName()).c_str());
 		return 1;
 	}
@@ -42,5 +42,5 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 	/// when we close, we continue into the polling loop, and catch the closed fd
 	// with POLLERR or POLLNVAL. Alternatively, we can call a version of dropConnection
 	// and do the clean up right here.
-	return 0
+	return 0;
 }
