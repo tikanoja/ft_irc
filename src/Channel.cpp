@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/18 11:15:42 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ Uvector* Channel::getMembers()
 void Channel::broadcastToChannel(std::string message)
 {
 	for (size_t i = 0; i < p_members.size(); i++) {
-		p_members[i]->getRecvBuffer().addToBuffer(message.c_str());
+		p_members[i]->send(message);
 	}
 }

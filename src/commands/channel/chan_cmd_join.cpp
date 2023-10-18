@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/17 14:37:51 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:25:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,24 @@
 		RPL_TOPIC				//sent upon successful JOIN
 */
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
-	if (!(user.getMode() & IRCServer::registered)) {
-		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(), "JOIN").c_str());
-		return 1;
-	}
-
-
 	if (message.getParams().front() == "") { //irssi expects this reply for some reason w registering...
-		const char* toAdd = ":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.\r\n";
-		user.getSendBuffer().addToBuffer(toAdd);
+		user.send(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.\r\n");
 		return 1;
 	}
+	
+	if (!(user.getMode() & IRCServer::registered)) {
+		user.send(ERR_NOTREGISTERED(server.getName(), "JOIN"));
+		return 1;
+	}
+
 	//if user has already joined max limit of channels: ERR_TOOMANYCHANNELS
+
 	//check p_channels for the chan requested
 	if (message.getParams().front() == "") {
-		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(), "JOIN").c_str());
-		return 0;
+		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
+		return 1;
 	}
+	
 	Channel* toJoin = server.getChannels().findChannel(*message.getParams().begin());
 	//if yes join
 	if (toJoin != NULL) {
@@ -54,12 +55,15 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		//if key needed and key not provided? ERR_NEEDMOREPARAMS or ERR_BADCHANNELKEY ?
 		//if key needed and bad key: ERR_BADCHANNELKEY
 		toJoin->getMembers()->push_back(&user);
-		user.getSendBuffer().addToBuffer(RPL_TOPIC(server.getName(), toJoin->getName(), toJoin->getName()).c_str());
+		user.send(RPL_TOPIC(server.getName(), toJoin->getName(), toJoin->getName()));
+		toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
 		//notify other channel members that user joined!
 	} else {
 		//create channel
+		//check if the channel name is valid! If not, send err_nosuchchannel
 		toJoin = server.getChannels().createChannel(*message.getParams().begin());
 		toJoin->getMembers()->push_back(&user);
+		toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
 		//notify other channel members that user joined!
 	}
 	return 0;

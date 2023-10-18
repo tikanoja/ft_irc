@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 10:39:11 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:26:06 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void IRCServer::initCommands() {
 		"PING",
 		"PONG",
 		"PRIVMSG",
-		"KILL"
+		"KILL",
+		"PART"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -78,7 +79,8 @@ void IRCServer::initCommands() {
 		cmd_ping,
 		cmd_pong,
 		cmd_privmsg,
-		cmd_kill
+		cmd_kill,
+		chan_cmd_part
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -225,7 +227,7 @@ int IRCServer::pollingRoutine() {
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
 	signal(SIGINT, signalHandler);
 	while (1) {
-		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
+		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 50)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
 		for (nfds_t i = 0; i < p_fd_count; i++) {
 			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {
