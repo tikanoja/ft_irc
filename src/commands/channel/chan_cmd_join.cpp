@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/18 14:25:11 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:42:46 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,5 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	}
 	return 0;
 }
+
+//make this work with a list of channels
