@@ -6,13 +6,13 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 08:50:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:48:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
 #include "../inc/Commands.hpp"
-#include <fstream>
+#include "../inc/Utils.hpp"
 
 // void bitsToStream(short num, std::ostream& os) {
 //     int numBits = sizeof(num) * 8; // Number of bits in a short
@@ -51,6 +51,7 @@ void IRCServer::initServer() {
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	initCommands();
+	initOperators();
 	return ;
 }
 
@@ -137,6 +138,28 @@ void IRCServer::delFd(User& user) {
 		}
 	}
 }
+
+// void IRCServer::initOperators(){
+
+// 	std::ifstream operFile;
+
+// 	operFile.open("config/ooperators.config");
+// 	if (operFile.is_open() && !operFile.bad() && !operFile.peek() == 0)
+// 	{
+// 		std::cout << "Cannot set any operators" << std::endl;
+// 		return ;
+// 	}
+// 	char line[256];
+// 	std::vector<std::string> rawOper;
+// 	operFile.getline(line, '\n');
+// 	do {
+// 		if (!line)
+// 			break;
+// 		rawOper = split(line, ' ');
+// 		p_opers.push_back(Operator(rawOper[0], rawOper[1], rawOper[2]));
+// 		operFile.getline(line, '\n');
+// 	} while (line);
+// }
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
