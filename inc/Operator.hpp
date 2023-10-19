@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:21:34 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 13:07:26 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:13:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ class Operator
 {
 	public:
 		Operator();
-		Operator(std::string const & nick, std::string const & ip, std::string const & password);
+		Operator(std::string const nick, std::string const ip, std::string const password);
 		Operator(Operator const& src);
 		~Operator();
 
@@ -30,9 +30,9 @@ class Operator
 		void				setUser(User *user);
 
 	private:
-		std::string const & p_nick;
-		std::string const & p_ip;
-		std::string const & p_password;
+		std::string const p_nick;
+		std::string const p_ip;
+		std::string const p_password;
 		User*				p_user;
 };
 

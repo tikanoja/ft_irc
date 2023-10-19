@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/19 16:53:00 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/19 17:34:11 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ SRC_FILES = CircularBuffer \
 			User \
 			Uvector \
 			Cvector \
-			Operator \
 			Message \
 			IRCServer \
 			Channel \
 			connectToUser \
 			handleUser \
 			executeCommand \
-			Utils \
+			Operator \
+			split \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
@@ -62,7 +62,6 @@ SRC_FILES = CircularBuffer \
 
 INC_FILES = CircularBuffer \
 			User \
-			split \
 			Uvector \
 			Cvector \
 			Operator \
@@ -70,6 +69,7 @@ INC_FILES = CircularBuffer \
 			Error \
 			Reply \
 			Commands \
+			Utils \
 			IRCServer \
 			Channel
 
@@ -106,7 +106,7 @@ re: fclean all
 
 test: $(OBJ) test.cpp | $T
 	$(CC) $(FLAGS) -c test.cpp -o obj/test.o
-	$(CC) $(FLAGS) $(OBJ) obj/test.o -o $T/test
+	$(CC) $(FLAGS) $(OBJ) obj/test.o -o test
 
 $T:
 	@mkdir -p $@
