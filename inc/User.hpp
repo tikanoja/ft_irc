@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 09:18:30 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:37:34 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ class User
 		void	setRealName(std::string realname);
 		void	setUserName(std::string username);
 		void	setAwayMsg(std::string const & comment);
+		void 	send(std::string str);
 
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);
