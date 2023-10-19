@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 11:18:08 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:11:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 			if ((*it)->getNick() == user.getNick()) {
 				partFrom->getMembers()->erase(it);
 				user.send(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName());
-				std::cout << "HERE!!!!" << std::endl;
 				if (message.getTrailing() != "")
 					user.send(" :" + message.getTrailing() + "\r\n"); //add userhost? add trailing message? check out log from dalnet
 				else

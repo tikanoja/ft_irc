@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/18 14:47:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:00:01 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ class Channel
 		~Channel();
 		Channel &		operator=(Channel const& rhs);
 		std::string 	getName();
+		std::string 	getTopic();
 		Uvector*		getMembers();
+		void			setTopic(std::string newTopic);
 		void			broadcastToChannel(std::string message);
 
 	private:

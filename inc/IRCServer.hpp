@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/18 13:26:13 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:05:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # endif
 
 # ifndef N_COMMANDS
-#  define N_COMMANDS 11
+#  define N_COMMANDS 12
 # endif
 
 class User;

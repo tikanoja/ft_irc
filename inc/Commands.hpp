@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/18 13:23:13 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:06:23 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int cmd_pong(IRCServer& server, User &user, Message &message);
 
 int chan_cmd_join(IRCServer& server, User& user, Message& message);
 int chan_cmd_part(IRCServer& server, User& user, Message& message);
+int chan_cmd_topic(IRCServer& server, User& user, Message& message);
+
 
 // Utils
 void removeCommonCharacters(std::string& str1, std::string& str2);

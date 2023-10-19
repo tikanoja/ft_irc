@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 10:39:27 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:30:53 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,20 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			toJoin->getMembers()->push_back(&user);
 			user.send(RPL_TOPIC(server.getName(), toJoin->getName(), toJoin->getName()));
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//notify other channel members that user joined!
+			//send 332 if topic has been set! what is the topic
+			//send 333 if topic has been set! who set the topic
+			//send 353
+			//send 366
 		} else {
 			//create channel
 			//check if the channel name is valid! If not, send err_nosuchchannel
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//notify other channel members that user joined!
+			//send 332
+			//send 333
+			//send 353
+			//send 366
 		}
 	}
 	return 0;
