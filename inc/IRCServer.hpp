@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/16 10:20:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:32:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <map>
 # include <iostream>
 # include <sstream>
+# include <fstream>
 # include <cstdint>
 # include <cstring>
 # include <time.h>
 # include <string>
 # include <poll.h>
 # include <netdb.h>
-# include <sstream>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdexcept>
@@ -37,6 +37,7 @@
 # include "Message.hpp"
 # include "User.hpp"
 # include "Commands.hpp"
+# include "Operator.hpp"
 
 # define MAXCLIENTS 10
 
@@ -59,7 +60,7 @@ class IRCServer {
 		uint16_t					p_port;
 		std::string	const 			p_password;
 		Uvector						p_users;
-		Uvector						p_opers;
+		std::vector<Operator>		p_opers;
 		Cvector						p_channels;
 		nfds_t 						p_fd_count;
 
@@ -101,6 +102,7 @@ class IRCServer {
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 
+		void								initOperators(); //move
 		int					pollingRoutine();
 		int					executeCommand(User& user, Message& message);
 		std::string	const & getName();

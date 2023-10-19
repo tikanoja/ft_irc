@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:03:46 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 13:07:50 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:53:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ Operator::~Operator()
 {}
 
 std::string const & Operator::getNick() const{
-	return (p_nick);
+	return p_nick;
 }
 
 std::string const & Operator::getIP() const{
-	return (p_ip);
+	return p_ip;
 }
 
 std::string const & Operator::getPW() const{
-	return (p_password);
+	return p_password;
 }
 
 void Operator::setUser(User *user){
