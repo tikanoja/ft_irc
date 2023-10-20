@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:01:55 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ int IRCServer::acceptClient() {
 		p_fd_count++;
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 
-		p_users.push_back(new User());
-		p_users.back()->setIP(s);
-		p_users.back()->setSocket(new_fd);
+		p_users.push_back(new User(new_fd, s));
 		std::cout << "Server: new connection from: " << s << std::endl;
 	}
 	return (0);

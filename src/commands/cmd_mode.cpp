@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 12:20:07 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:03:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :";
 	reply += !additions.empty() ? ("+" + additions) : "";
 	reply += !removals.empty() ?  ("-" + removals) : "";
-	user.getSendBuffer().addToBuffer(reply.c_str());
+	user.send(reply + "\r\n");
 
 	return 0;
 }
