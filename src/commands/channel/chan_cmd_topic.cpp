@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 15:36:03 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 08:47:01 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		//check if they need OP to change topic if not send :punch.wa.us.dal.net 482 tuukka #test :You're not channel operator
 		//check if they are a part of the channel
 		chan->setTopic(message.getTrailing());
-		user.send(":" + user.getNick() + "!add_user_host_here TOPIC " + chan->getName() + " :" + message.getTrailing() + "\r\n");
-		user.send(RPL_TOPIC(server.getName(), chan->getName(), chan->getTopic()));
+		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here TOPIC " + chan->getName() + " :" + message.getTrailing() + "\r\n");
+		user.send(RPL_TOPIC(server.getName(), user.getNick(), chan->getName(), chan->getTopic()));
 	}
 	return 0;
 }
