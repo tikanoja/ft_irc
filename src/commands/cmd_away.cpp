@@ -14,17 +14,17 @@
 
 int cmd_away(IRCServer& server, User &user, Message &message){
 
-	if (user.getMode() & 0x0080){
-		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
-			message.getCommand()).c_str());
+	if (user.getMode() & IRCServer::registered){
+		user.send(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()));
 		return 1;
 	}
 	if (message.getParams()[0].empty()){
-		user.getSendBuffer().addToBuffer(RPL_UNAWAY(server.getName()).c_str());
-		user.unsetMode(0x0001);
+		user.send(RPL_UNAWAY(server.getName()));
+		user.unsetMode(IRCServer::away);
 	} else {
-		user.getSendBuffer().addToBuffer(RPL_NOWAWAY(server.getName()).c_str());
-		user.setMode(0x0001);
+		user.send(RPL_NOWAWAY(server.getName()));
+		user.setMode(IRCServer::away);
 	}
 	user.setAwayMsg(message.getParams()[0]);
 

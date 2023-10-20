@@ -51,7 +51,6 @@ void IRCServer::initServer() {
 	if (getListenerSocket())
 		throw std::runtime_error("Failed to create listener socket");
 	initCommands();
-	std::cout << "Calling that biotch" << std::endl;
 	initOperators();
 	return ;
 }
@@ -104,6 +103,10 @@ Cvector & IRCServer::getChannels(){
 
 std::vector<std::string> const &		IRCServer::getBlocked() const{
 	return p_blockeUserNames;
+}
+
+std::vector<Operator> const &	IRCServer::getOpers() const{
+	return p_opers;
 }
 
 void IRCServer::setBlocked(std::string nick){

@@ -84,6 +84,8 @@ class IRCServer {
 		int									checkSendBuffer(User* user);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 
+		void								initOperators(); //move
+
 		std::vector<std::string> const &	getBlocked() const;
 		void								setBlocked(std::string nick);
 
@@ -102,23 +104,23 @@ class IRCServer {
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 
-		void								initOperators(); //move
-		int					pollingRoutine();
-		int					executeCommand(User& user, Message& message);
-		std::string	const & getName();
-		std::string	const &	getPassword() const;
-		Uvector		const &	getUsers() const;
-		Cvector			  & getChannels();
-		bool				isBlocked(std::string nick) const;
-		void				delFd(User& user);
-		void				delUser(User& user);
+		int								pollingRoutine();
+		int								executeCommand(User& user, Message& message);
+		std::string	const & 			getName() const;
+		std::string	const &				getPassword() const;
+		Uvector		const &				getUsers() const;
+		Cvector			  & 			getChannels();
+		bool							isBlocked(std::string nick) const;
+		void							delFd(User& user);
+		void							delUser(User& user);
 
-		bool				getUserMode(User & user, e_uperm mode) const;
-		void				setUserMode(User & user, e_uperm mode);
-		void				unsetUserMode(User & user, e_uperm mode);
-		std::string			setBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			unsetBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			getModeStr(User const &user);
+		bool							getUserMode(User & user, e_uperm mode) const;
+		void							setUserMode(User & user, e_uperm mode);
+		void							unsetUserMode(User & user, e_uperm mode);
+		std::string						setBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string						unsetBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string						getModeStr(User const &user);
+		std::vector<Operator> const &	getOpers() const;
 };
 
 #endif
