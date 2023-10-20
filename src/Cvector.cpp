@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:06 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/20 10:25:00 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:51:27 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void Cvector::deleteChannel(Channel* toDelete)
 {
 	for (std::vector<Channel*>::iterator it = this->begin(); it != this->end(); it++){
 		if ((*it) == toDelete) {
-			this->erase(it); //remove channel from vector
 			delete *it; //delete channel
+			this->erase(it); //remove channel from vector
 			std::cout << "Channel removed from vector and deleted!" << std::endl;
 			break;
 		}
