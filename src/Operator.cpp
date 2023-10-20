@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:03:46 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 16:53:43 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:12:18 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Operator::Operator(): p_nick(""), p_ip(""), p_password("")
 {}
 
-Operator::Operator(std::string const & nick, std::string const & ip, std::string const & password) :
+Operator::Operator(std::string const nick, std::string const ip, std::string const password) :
 p_nick(nick), p_ip(ip), p_password(password)
 {}
 

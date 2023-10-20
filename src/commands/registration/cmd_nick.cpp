@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:56:55 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 	std::string new_nick = message.getParams()[0];
 
 	if (new_nick.empty()){
-		user.getSendBuffer().addToBuffer(ERR_NONICKNAMEGIVEN(server.getName()).c_str());
+		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 		return 1;
 	}
 	if (!isNickvalid(new_nick)){
-		user.getSendBuffer().addToBuffer(ERR_ERRONEUSNICKNAME(server.getName(),
-			new_nick).c_str());
+		user.send(ERR_ERRONEUSNICKNAME(server.getName(),
+			new_nick));
 		return 1;
 	}
 	if (server.getUsers().findUserByNick(new_nick) != NULL){
-		user.getSendBuffer().addToBuffer(ERR_NICKNAMEINUSE(server.getName(),
-			new_nick).c_str());
+		user.send(ERR_NICKNAMEINUSE(server.getName(),
+			new_nick));
 		return 1;
 	}
 	if (server.isBlocked(new_nick)){
-		user.getSendBuffer().addToBuffer(ERR_UNAVAILRESOURCE(server.getName(),
-			new_nick, "nick").c_str());
+		user.send(ERR_UNAVAILRESOURCE(server.getName(),
+			new_nick, "nick"));
 		return 1;
 	}
 	user.setNick(new_nick);

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 13:19:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:51:13 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 	
 	std::string targetNick = message.getParams().front();
 	
-	if (!(user.getMode() & 0x0080)){
+	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 		message.getCommand()).c_str());
 		return 1;
@@ -39,7 +39,7 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 				recipient->getNick(), "user").c_str());
 			return 1;
 		}
-		if ((recipient->getMode() >> 0x0001) & 1)
+		if ((recipient->getMode() >> IRCServer::away) & 1)
 			user.send(RPL_AWAY(server.getName(),
 				recipient->getNick(), recipient->getAwayMsg()).c_str());
 		if (message.getTrailing().empty()) {

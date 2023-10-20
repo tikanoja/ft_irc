@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/19 16:48:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:18:12 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void IRCServer::initCommands() {
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
 }
 
-std::string const & IRCServer::getName(){
+std::string const & IRCServer::getName() const{
 	return p_serverName;
 }
 
@@ -93,16 +93,20 @@ std::string const & IRCServer::getPassword() const{
 	return p_password;
 }
 
-Uvector		const &	IRCServer::getUsers() const{
+Uvector const &	IRCServer::getUsers() const{
 	return p_users;
 }
 
-Cvector			  & IRCServer::getChannels(){
+Cvector & IRCServer::getChannels(){
 	return p_channels;
 }
 
 std::vector<std::string> const &		IRCServer::getBlocked() const{
 	return p_blockeUserNames;
+}
+
+std::vector<Operator> const &	IRCServer::getOpers() const{
+	return p_opers;
 }
 
 void IRCServer::setBlocked(std::string nick){
@@ -139,27 +143,24 @@ void IRCServer::delFd(User& user) {
 	}
 }
 
-// void IRCServer::initOperators(){
+void IRCServer::initOperators(){
 
-// 	std::ifstream operFile;
+	std::ifstream operFile;
 
-// 	operFile.open("config/ooperators.config");
-// 	if (operFile.is_open() && !operFile.bad() && !operFile.peek() == 0)
-// 	{
-// 		std::cout << "Cannot set any operators" << std::endl;
-// 		return ;
-// 	}
-// 	char line[256];
-// 	std::vector<std::string> rawOper;
-// 	operFile.getline(line, '\n');
-// 	do {
-// 		if (!line)
-// 			break;
-// 		rawOper = split(line, ' ');
-// 		p_opers.push_back(Operator(rawOper[0], rawOper[1], rawOper[2]));
-// 		operFile.getline(line, '\n');
-// 	} while (line);
-// }
+	operFile.open("config/operators.config", std::fstream::in);
+	if (!operFile.good() || !operFile.is_open() || operFile.peek() < 0){
+		std::cout << "Cannot set any operators" << std::endl;
+		return ;
+	}
+	char line[256];
+	std::vector<std::string> rawOper;
+	while (operFile.getline(line, 256)){
+		std::cout << line << std::endl;
+		std::string string = line;
+		rawOper = split(string, ' ');
+		p_opers.push_back(Operator(rawOper[0], rawOper[1], rawOper[2]));
+	}
+}
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE];
@@ -170,10 +171,6 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-    // std::ofstream outFile;
-	// outFile.open("log", std::fstream::app);
-	// outFile << buf;
-	// outFile << "=============================" << std::endl;
 	if (numbytes == 1) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);

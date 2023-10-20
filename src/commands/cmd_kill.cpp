@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:17 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 10:23:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:57:52 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 
 	User *toBeKilled = server.getUsers().findUserByNick(user.getNick());
 
-	if (user.getMode() & 0x0080){
-		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(),
-			message.getCommand()).c_str());
+	if (user.getMode() & IRCServer::registered){
+		user.send(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()));
 		return 1;
 	}
-	if ((user.getMode() & 0x0010) || (user.getMode() & 0x0020)){
-		user.getSendBuffer().addToBuffer(ERR_NOPRIVILEGES(server.getName()).c_str());
+	if ((user.getMode() & IRCServer::Oper) || (user.getMode() & IRCServer::oper)){
+		user.send(ERR_NOPRIVILEGES(server.getName()));
 		return 1;
 	}
 	if (!toBeKilled){
-		user.getSendBuffer().addToBuffer(ERR_NOSUCHNICK(server.getName(),
-			user.getNick(), "user").c_str());
+		user.send(ERR_NOSUCHNICK(server.getName(),
+			user.getNick(), "user"));
 		return 1;
 	}
 	if (message.getParams()[0].empty() || message.getParams()[1].empty()){
-		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
-			message.getCommand()).c_str());
+		user.send(ERR_NEEDMOREPARAMS(server.getName(),
+			message.getCommand()));
 		return 1;
 	}
 	close(user.getSocket()); //might need refinement, my hope is that
