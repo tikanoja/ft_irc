@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/19 14:05:11 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:19:34 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <map>
 # include <iostream>
 # include <sstream>
+# include <fstream>
 # include <cstdint>
 # include <cstring>
 # include <time.h>
 # include <string>
 # include <poll.h>
 # include <netdb.h>
-# include <sstream>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdexcept>
@@ -37,6 +37,7 @@
 # include "Message.hpp"
 # include "User.hpp"
 # include "Commands.hpp"
+# include "Operator.hpp"
 
 # define MAXCLIENTS 10
 
@@ -59,7 +60,7 @@ class IRCServer {
 		uint16_t					p_port;
 		std::string	const 			p_password;
 		Uvector						p_users;
-		Uvector						p_opers;
+		std::vector<Operator>		p_opers;
 		Cvector						p_channels;
 		nfds_t 						p_fd_count;
 
@@ -83,6 +84,8 @@ class IRCServer {
 		int									checkSendBuffer(User* user);
 		void								dropConnection(ssize_t numbytes, nfds_t i);
 
+		void								initOperators(); //move
+
 		std::vector<std::string> const &	getBlocked() const;
 		void								setBlocked(std::string nick);
 
@@ -95,28 +98,29 @@ class IRCServer {
 			oper = 0x0010,			// operator flag;
 			Oper = 0x0020,			// local operator flag;
 			server_notice = 0x0040,	// marks a user for receipt of server notices.
-			registered = 0x0080	// user has completed registration
+			registered = 0x0080		// user has completed registration
 		};
 
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 
-		int					pollingRoutine();
-		int					executeCommand(User& user, Message& message);
-		std::string	const & getName();
-		std::string	const &	getPassword() const;
-		Uvector		const &	getUsers() const;
-		Cvector			  & getChannels();
-		bool				isBlocked(std::string nick) const;
-		void				delFd(User& user);
-		void				delUser(User& user);
+		int								pollingRoutine();
+		int								executeCommand(User& user, Message& message);
+		std::string	const & 			getName() const;
+		std::string	const &				getPassword() const;
+		Uvector		const &				getUsers() const;
+		Cvector			  & 			getChannels();
+		bool							isBlocked(std::string nick) const;
+		void							delFd(User& user);
+		void							delUser(User& user);
 
-		bool				getUserMode(User & user, e_uperm mode) const;
-		void				setUserMode(User & user, e_uperm mode);
-		void				unsetUserMode(User & user, e_uperm mode);
-		std::string			setBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			unsetBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string			getModeStr(User const &user);
+		bool							getUserMode(User & user, e_uperm mode) const;
+		void							setUserMode(User & user, e_uperm mode);
+		void							unsetUserMode(User & user, e_uperm mode);
+		std::string						setBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string						unsetBatchMode(User & user, std::string const & modes, size_t *index);
+		std::string						getModeStr(User const &user);
+		std::vector<Operator> const &	getOpers() const;
 };
 
 #endif

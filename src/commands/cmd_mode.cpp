@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 11:21:59 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:20:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,23 @@
 
 static bool hasPermissions(IRCServer& server, User& user, Message& message){
 	
-	if (!(user.getMode() & 0x0080))
-		user.getSendBuffer().addToBuffer(ERR_NOTREGISTERED(server.getName(), message.getCommand()).c_str());
+	if (!(user.getMode() & IRCServer::registered)){
+		user.send(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()));
+		return false;
+	}
 	if (message.getParams()[0].size() < 1){
-		user.getSendBuffer().addToBuffer(ERR_NEEDMOREPARAMS(server.getName(),
-			message.getCommand()).c_str());
+		user.send(ERR_NEEDMOREPARAMS(server.getName(),
+			message.getCommand()));
 		return false;
 	}
 	if (user.getNick() != message.getParams()[0]){
-		user.getSendBuffer().addToBuffer(ERR_USERSDONTMATCH(server.getName()).c_str());
+		user.send(ERR_USERSDONTMATCH(server.getName()));
 		return false;
 	}
 	if (message.getParams()[0].size() == 2){
-		user.getSendBuffer().addToBuffer(RPL_UMODEIS(server.getName(),
-			server.getModeStr(user)).c_str());
+		user.send(RPL_UMODEIS(server.getName(),
+			server.getModeStr(user)));
 		return false;
 	}
 	return true;
@@ -61,7 +64,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 		forbidden = params[i].find_first_not_of(ALL_MODES);
 		std::cout << std::boolalpha << (forbidden == std::string::npos) << std::endl;
 		if (forbidden != std::string::npos)
-			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
+			user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
 	}
 
 	std::string additions;
@@ -84,7 +87,6 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :";
 	reply += !additions.empty() ? ("+" + additions) : "";
 	reply += !removals.empty() ?  ("-" + removals) : "";
-	reply += "\r\n"; 
 	user.getSendBuffer().addToBuffer(reply.c_str());
 
 	return 0;

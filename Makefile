@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/19 14:05:34 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/20 12:18:53 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ T = test_dir
 CC = c++
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
-	-Wconversion -Wshadow -I $I -g #-fsanitize=address -static-libsan
+	-Wconversion -Wshadow -I $I -g -fsanitize=address -static-libsan
 
 SRC_FILES = CircularBuffer \
 			User \
@@ -32,6 +32,8 @@ SRC_FILES = CircularBuffer \
 			connectToUser \
 			handleUser \
 			executeCommand \
+			Operator \
+			split \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
@@ -62,10 +64,12 @@ INC_FILES = CircularBuffer \
 			User \
 			Uvector \
 			Cvector \
+			Operator \
 			Message \
 			Error \
 			Reply \
 			Commands \
+			Utils \
 			IRCServer \
 			Channel
 
@@ -86,11 +90,11 @@ print: $(TST)
 	@echo $^
 
 $O/%.o: $S/%.cpp $(HEADER) | $O
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) src/main.cpp
-	$(CC) $(FLAGS) -c src/main.cpp -o obj/main.o
-	$(CC) $(FLAGS) $^ -o $@
+	@$(CC) $(FLAGS) -c src/main.cpp -o obj/main.o
+	@$(CC) $(FLAGS) $^ -o $@
 
 clean:
 	rm -rf $O $T
@@ -100,9 +104,9 @@ fclean: clean
 
 re: fclean all
 
-test: $(OBJ) test.cpp | $T
-	$(CC) $(FLAGS) -c test.cpp -o obj/test.o
-	$(CC) $(FLAGS) $(OBJ) obj/test.o -o $T/test
+test: $(OBJ) $T/test.cpp | $T
+	@$(CC) $(FLAGS) -c $T/test.cpp -o $T/test.o
+	@$(CC) $(FLAGS) $(OBJ) $T/test.o -o $T/test
 
 $T:
 	@mkdir -p $@

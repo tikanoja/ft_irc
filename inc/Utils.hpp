@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_pong.cpp                                       :+:      :+:    :+:   */
+/*   Utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 09:43:30 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 12:20:26 by ttikanoj         ###   ########.fr       */
+/*   Created: 2023/10/17 15:25:37 by djagusch          #+#    #+#             */
+/*   Updated: 2023/10/19 09:38:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/Commands.hpp"
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
-int cmd_pong(IRCServer& server, User& user, Message& message){
-	user.send(":127.0.0.1 PONG 127.0.0.1 :" + user.getUserName() + "\r\n");
-	(void)server;
-	(void)message;
-	return 0;
-}
+#include <vector>
+#include <string>
+#include <sstream>
+
+std::vector<std::string> split( const std::string& str, char c );
+
+#endif
