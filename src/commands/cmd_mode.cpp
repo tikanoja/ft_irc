@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 10:23:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:58:13 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 		forbidden = params[i].find_first_not_of(ALL_MODES);
 		std::cout << std::boolalpha << (forbidden == std::string::npos) << std::endl;
 		if (forbidden != std::string::npos)
-			user.getSendBuffer().addToBuffer(ERR_UMODEUNKNOWNFLAG(server.getName()).c_str());
+			user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
 	}
 
 	std::string additions;
@@ -87,7 +87,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :";
 	reply += !additions.empty() ? ("+" + additions) : "";
 	reply += !removals.empty() ?  ("-" + removals) : "";
-	user.getSendBuffer().addToBuffer(reply.c_str());
+	user.send(reply);
 
 	return 0;
 }

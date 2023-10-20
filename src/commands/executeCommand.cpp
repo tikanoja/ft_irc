@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:52:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 07:22:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:58:41 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int IRCServer::executeCommand(User& user, Message& message) {
 		return func(*this, user, message);
 	} else {
 		std::cout << "Command not found...!" << std::endl; //remove
-		user.getSendBuffer().addToBuffer(ERR_UNKNOWNCOMMAND(getName(), message.getCommand()).c_str());
+		user.send(ERR_UNKNOWNCOMMAND(getName(), message.getCommand()));
 		return 1;
 	}
 }
