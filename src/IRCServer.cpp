@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/20 10:18:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:19:54 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void IRCServer::initCommands() {
 		"PING",
 		"PONG",
 		"PRIVMSG",
-		"KILL"
+		"KILL",
+		"PART",
+		"TOPIC"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -79,7 +81,9 @@ void IRCServer::initCommands() {
 		cmd_ping,
 		cmd_pong,
 		cmd_privmsg,
-		cmd_kill
+		cmd_kill,
+		chan_cmd_part,
+		chan_cmd_topic
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -188,6 +192,7 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 	Message m(msg);
 	std::cout << std::endl << "RECEIVED: ";
 	m.printContent();
+	std::cout << std::endl;
 	executeCommand(*user, m);
 	(void)i;
 	return 0;
@@ -198,6 +203,7 @@ int IRCServer::checkSendBuffer(User* user) {
 		return 0;
 	} if (user->getSendBuffer().emptyCheck() == 1) {
 		std::string toSend = user->getSendBuffer().extractBuffer();
+		std::cout << "SENDING: " << std::endl << toSend << std::endl;
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
 		char* toSendC = new char[toSendLen];
 		memset(toSendC, '\0', static_cast<size_t>(toSendLen)); //this fixed the buffer duplicating...
@@ -243,7 +249,7 @@ int IRCServer::pollingRoutine() {
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
 	signal(SIGINT, signalHandler);
 	while (1) {
-		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 200)) == -1) //!!!!!!!!!!!! TIMEOUT
+		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 50)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
 		for (nfds_t i = 0; i < p_fd_count; i++) {
 			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {

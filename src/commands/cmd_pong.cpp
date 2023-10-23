@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pong.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:30 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:58:23 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:20:26 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Commands.hpp"
 
 int cmd_pong(IRCServer& server, User& user, Message& message){
-	Message me(":127.0.0.1 PONG 127.0.0.1 :" + user.getUserName()); //?????
-	me.printContent();
-	const char* toAdd = me.toString();
-	user.send(toAdd);
-	delete[] toAdd;
+	user.send(":127.0.0.1 PONG 127.0.0.1 :" + user.getUserName() + "\r\n");
 	(void)server;
 	(void)message;
 	return 0;

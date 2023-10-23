@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 13:27:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 08:41:26 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define RPL_CHANNELMODEIS(servername, cannel, mode, mode_params)(":" + servername + " 324 " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
-# define RPL_TOPIC(servername, channel, topic)(":" + servername + " 332 " + channel + " :" + topic + "\r\n") //332
+# define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332
 # define RPL_INVITING(servername, channel, nick)(":" + servername + " 341 " + channel + " " + nick + "\r\n") //341
 # define RPL_SUMMONING(servername, user)(":" + servername + " 342 " +  user + " :Summoning user to IRC\r\n") //342
 # define RPL_INVITELIST(servername)(":" + servername + " 346 \r\n") //346 ???????
@@ -83,7 +83,7 @@
 # define RPL_EXCEPTLIST(servername)(":" + servername + " 348 \r\n") //348 ??????
 # define RPL_ENDOFEXCEPTLIST(servername, channel)(":" + servername + " 349 " + channel + " :End of channel exception list\r\n") //349
 # define RPL_VERSION(servername, version, debuglevel, server, comments)(":" + servername + " 351 " + version + "." + debuglevel + " " + server + " :" + comments + "\r\n") //351
-# define RPL_WHOREPLY(servername)(":" + servername + " 352 \r\n") //352 ??????
+# define RPL_WHOREPLY(servername)(":" + servername + " 352 " + nick + " " + channel + " " + username + " " + host + " " + servername + " " + nick + " " + status + " :0 " + realname + "\r\n")
 # define RPL_NAMREPLY(servername)(":" + servername + " 353 \r\n") //353 ???????
 # define RPL_LINKS(servername, mask, server, hopcount, serverinfo)(":" + servername + " 364 " + mask +  + " " + server + " :" + hopcount + " " + serverinfo + "\r\n") //364 ????? not sure we need it
 # define RPL_ENDOFLINKS(servername, mask)(":" + servername + " 365 " +  mask + " :End of LINKS list\r\n") //365

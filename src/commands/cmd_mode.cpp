@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:58:13 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:03:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //		registered = 0x0080,	// user is registered	NOT SELF
 //		online = 0x0100			// user is online		NOT SELF
 
-# define ALL_MODES "awiroOs"
+# define ALL_MODES "+-awiroOs"
 
 static bool hasPermissions(IRCServer& server, User& user, Message& message){
 	
@@ -87,7 +87,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string reply = ":" + user.getNick() + " MODE " +  user.getNick() + " :";
 	reply += !additions.empty() ? ("+" + additions) : "";
 	reply += !removals.empty() ?  ("-" + removals) : "";
-	user.send(reply);
+	user.send(reply + "\r\n");
 
 	return 0;
 }

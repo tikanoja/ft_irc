@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/20 09:49:46 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/20 12:18:53 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,9 @@ SRC_FILES = CircularBuffer \
 			cmd_away \
 			cmd_kill \
 			cmd_mode \
-			commandUtils
+			commandUtils \
+			chan_cmd_part \
+			chan_cmd_topic
 #			cmd_lusers
 #			cmd_notice
 #			cmd_who
@@ -57,8 +59,6 @@ SRC_FILES = CircularBuffer \
 #			chan_list
 #			chan_mode
 #			chan_names
-#			chan_part
-#			chan_topic
 
 INC_FILES = CircularBuffer \
 			User \
