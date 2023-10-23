@@ -30,7 +30,6 @@ CircularBuffer&	CircularBuffer::operator=( CircularBuffer const & rhs ) {
 }
 
 int CircularBuffer::emptyCheck() {
-	//empty or full check for null heh rhymes!
 	if (p_tail == p_head)
 		return 0;
 	return 1;
@@ -85,8 +84,7 @@ std::string CircularBuffer::extractBuffer() {
 	return (bufferString);
 }
 
-
-void CircularBuffer::clear(){
+void CircularBuffer::clear() {
 	memset(this, 0, MAXDATASIZE);
 	p_head = 0;
 	p_tail = 0;

@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/23 10:40:21 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:47:11 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void IRCServer::initCommands() {
 		"PRIVMSG",
 		"KILL",
 		"PART",
-		"TOPIC"
+		"TOPIC",
+		"KICK"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -83,7 +84,8 @@ void IRCServer::initCommands() {
 		cmd_privmsg,
 		cmd_kill,
 		chan_cmd_part,
-		chan_cmd_topic
+		chan_cmd_topic,
+		chan_cmd_kick
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
