@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/20 12:19:54 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:40:21 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,26 +221,6 @@ int IRCServer::checkSendBuffer(User* user) {
 	}
 	return 0;
 }
-
-// void IRCServer::replyToMsg(User* user, Message *msg) {
-// 	if (user->getSendBuffer().emptyCheck() == 0) {
-// 		const char* msgc = msg->toString();
-// 		user->getSendBuffer().addToBuffer(msgc);
-// 		delete msgc;
-// 	} if (user->getSendBuffer().emptyCheck() == 1) {
-// 		std::string toSend = user->getSendBuffer().extractBuffer();
-// 		const char* toSendC = toSend.c_str();
-// 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
-// 		ssize_t n_sent = 0;
-// 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
-// 			std::cerr << "Send failed" << std::endl;
-// 		if (n_sent > 0 && n_sent < toSendLen) {
-// 			toSend.erase(0, static_cast<size_t>(n_sent));
-// 			const char* toBuffer = toSend.c_str();
-// 			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
-// 		}
-// 	}
-// }
 
 //check for POLLNVAL & POLLERR
 int IRCServer::pollingRoutine() {

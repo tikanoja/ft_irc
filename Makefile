@@ -6,7 +6,7 @@
 #    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/20 12:48:40 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/23 09:38:52 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRC_FILES = CircularBuffer \
 			cmd_mode \
 			commandUtils \
 			chan_cmd_part \
-			chan_cmd_topic
+			chan_cmd_topic \
+			chan_cmd_kick
 #			cmd_lusers
 #			cmd_notice
 #			cmd_who

@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_list.cpp                                       :+:      :+:    :+:   */
+/*   chan_cmd_list.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:44 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 09:42:50 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/23 09:35:16 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Channel.hpp"
+#include "../../../inc/Commands.hpp"
 
-
+//not required by the client, do this later!

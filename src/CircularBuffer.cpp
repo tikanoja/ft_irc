@@ -40,7 +40,7 @@ void CircularBuffer::addToBuffer(const char* buf, ssize_t numbytes) {
 	for (ssize_t i = 0; i < numbytes; i++) {
 		p_buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;
-		if (p_head == MAXDATASIZE * 2)
+		if (p_head == MAXDATASIZE * 2 - 1)
 			p_head = 0;
 	}
 }
@@ -50,7 +50,7 @@ void CircularBuffer::addToBuffer(const char* buf) {
 	for (size_t i = 0; i <  len; i++) {
 		p_buffer[p_head] = static_cast<unsigned char> (buf[i]);
 		p_head++;
-		if (p_head == MAXDATASIZE * 2)
+		if (p_head == MAXDATASIZE * 2 - 1)
 			p_head = 0;
 	}
 }
@@ -63,46 +63,12 @@ int CircularBuffer::findCRLF() const {
 	return (-1);
 }
 
-// std::string CircularBuffer::extractBuffer() {
-// 	int templen = 0;
-// 	int tail_backup = p_tail;
-// 	while (p_tail != p_head) { //calculating len of the buffered msg
-// 		p_tail++;
-// 		if (p_tail == MAXDATASIZE * 2)
-// 			p_tail = 0;
-// 		templen++;
-// 		if (p_buffer[p_tail] == '\n') {
-// 			p_tail++;
-// 			templen++;
-// 			break ;
-// 		}
-// 	}
-
-// 	unsigned char* tempbuffer = new unsigned char[templen];
-// 	for (int i = 0; tail_backup != p_tail; i++) { //copy p_buffer to temp & zero p_buffer
-// 		tempbuffer[i] = p_buffer[tail_backup];
-// 		p_buffer[tail_backup] = '\0';
-// 		tail_backup++;
-// 		if (tail_backup == MAXDATASIZE * 2)
-// 			tail_backup = 0;
-// 	}
-
-// 	std::string bufferString(reinterpret_cast<char*>(tempbuffer)); //cast and save as string
-// 	delete[] tempbuffer; //free temp
-
-// 	size_t index = 0;
-//     while ((index = bufferString.find("^D", index)) != std::string::npos) // find "^D"
-//         bufferString.replace(index, 2, ""); //replace "^D" with ""
-
-// 	return (bufferString);
-// }
-
 std::string CircularBuffer::extractBuffer() {
 	std::string bufferString;
 	while (p_tail != p_head) { //calculating len of the buffered msg
-		bufferString.push_back(static_cast<char>(p_buffer[p_tail]));
-		if (p_tail == MAXDATASIZE * 2)
+		if (p_tail == MAXDATASIZE * 2 - 1)
 			p_tail = 0;
+		bufferString.push_back(static_cast<char>(p_buffer[p_tail]));
 		if (p_buffer[p_tail] == '\n') {
 			p_buffer[p_tail] = '\0';
 			p_tail++;
@@ -130,7 +96,7 @@ void CircularBuffer::printbuf() {
 	std::cout << "Tail is at: " << p_tail << ", Head is at: " << p_head << std::endl;
 	std::cout << "In buffer: ";
 	for (int i = p_tail; i != p_head; i++) {
-		if (i == MAXDATASIZE * 2) {
+		if (i == MAXDATASIZE * 2 - 1) {
 			i = 0;
 		}
 		std::cout << p_buffer[i];
