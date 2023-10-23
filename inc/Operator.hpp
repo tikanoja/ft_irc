@@ -33,14 +33,15 @@ class Operator
 		std::string const & getIP() const;
 		std::string const & getPW() const;
 		void				setUser(User *user);
+		std::string			convertToIPv6(std::string const& configAddress);
 
 		typedef std::string const & (Operator::*OperFunct)() const;
 
 	private:
-		std::string const p_nick;
-		std::string const p_ip;
-		std::string const p_password;
-		User*			p_user;
+		std::string const	p_nick;
+		std::string			p_ip;
+		std::string const	p_password;
+		User*				p_user;
 };
 
 #endif

@@ -57,7 +57,6 @@ class Message;
 
 class IRCServer {
 	private:
-
 		uint16_t					p_port;
 		std::string	const 			p_password;
 		Uvector						p_users;
@@ -102,6 +101,11 @@ class IRCServer {
 			registered = 0x0080		// user has completed registration
 		};
 
+		// class UserNotFound : public std::exception{
+		// 	public:
+		// 		virtual char const * what() const throw();
+		// };
+
 		IRCServer(uint16_t port);
 		~IRCServer(void);
 
@@ -122,6 +126,7 @@ class IRCServer {
 		std::string						unsetBatchMode(User & user, std::string const & modes, size_t *index);
 		std::string						getModeStr(User const &user);
 		std::vector<Operator> const &	getOpers() const;
+		Operator &						getOperByNick(std::string nick);
 };
 
 #endif

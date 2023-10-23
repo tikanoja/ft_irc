@@ -54,7 +54,7 @@ std::string	IRCServer::getModeStr(User const & user){
 	std::string result = "+";
 	int mode = user.getMode();
 
-	for(size_t i = 0; i < N_COMMANDS; i++) {
+	for(size_t i = 0; i < characters.size(); i++) {
 		if (mode & permissions[i])
 			result += characters[i];
 	}
@@ -133,4 +133,16 @@ std::string		IRCServer::unsetBatchMode(User & user, std::string const & modes, s
 		}
 	}
 	return opsdone;
+}
+
+Operator & IRCServer::getOperByNick(std::string nick){
+	
+	size_t i = 0;
+	for ( ; i < p_opers.size(); i++){
+		if (nick == p_opers[i].getNick())
+			break;
+	}
+	// if (i == p_opers.size())
+	// 	throw UserNotFound();
+	return p_opers[i];
 }

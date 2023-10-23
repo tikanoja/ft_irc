@@ -1,0 +1,25 @@
+<< CAP LS 302
+<< JOIN :
+>> : 421 CAP :Unknown command
+>> : 451 * JOIN :You have not registered
+<< NICK djagusch
+<< USER djagusch djagusch 127.0.0.1 :Dorian Jagusch
+>> : 433 djagusch :Nickname is already in use
+<< NICK Nickname1is already in use
+>> : 001  Welcome to the Internet Relay Network !djagusch@127.0.0.1
+<< MODE Welcome +i
+>> : 502 :Cannot change mode for other users
+<< WHOIS djagusch
+>> : 421 WHOIS :Unknown command
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong
+<< OPER djagusch password
+>> : 491 :No O-lines for your host
+<< OPER djagusch password
+>> : 491 :No O-lines for your host
+<< OPER Welcome pwd
+>> : 491 :No O-lines for your host
+<< OPER djagusch password
+>> : 491 :No O-lines for your host
+<< QUIT :leaving

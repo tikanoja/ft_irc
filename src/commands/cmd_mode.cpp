@@ -57,12 +57,17 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	
 	if (!hasPermissions(server, user, message))
 		return 1;
-		
 	std::vector<std::string>const & params = message.getParams();
+	if (params.size() == 1){
+		std::string mode = server.getModeStr(user);
+		std::string reply = server.getName();
+		std::cout << reply << std::endl;
+		user.send(RPL_UMODEIS(server.getName(), mode));
+		return 0;
+	}
 	size_t forbidden;
 	for (size_t i = 1; i < params.size(); i++){
 		forbidden = params[i].find_first_not_of(ALL_MODES);
-		std::cout << std::boolalpha << (forbidden == std::string::npos) << std::endl;
 		if (forbidden != std::string::npos)
 			user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
 	}

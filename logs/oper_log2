@@ -704,3 +704,40 @@
 << PING serenity.fl.us.dal.net
 >> :serenity.fl.us.dal.net PONG serenity.fl.us.dal.net :djagusch
 --> lag pong
+<< CAP LS 302
+<< JOIN :
+>> : 421 CAP :Unknown command
+>> : 451 * JOIN :You have not registered
+<< NICK djagusch
+<< USER djagusch djagusch 127.0.0.1 :Dorian Jagusch
+>> : 001 djagusch Welcome to the Internet Relay Network djagusch!djagusch@127.0.0.1
+<< MODE djagusch +i
+>> :djagusch MODE djagusch :+i
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong
+<< OPER djagusch password
+>> : 491 :No O-lines for your host
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong
+<< CAP LS 302
+<< JOIN :
+>> : 421 CAP :Unknown command
+>> : 451 * JOIN :You have not registered
+<< NICK djagusch
+<< USER djagusch djagusch 127.0.0.1 :Dorian Jagusch
+>> : 001 djagusch Welcome to the Internet Relay Network djagusch!djagusch@127.0.0.1
+<< MODE djagusch +i
+>> :djagusch MODE djagusch :+i
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong
+<< OPER djagusch password
+>> : 477  :Channel doesn't support modes
+<< PING 
+>> :127.0.0.1 PONG 127.0.0.1 :djagusch
+--> lag pong

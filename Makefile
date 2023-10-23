@@ -37,6 +37,7 @@ SRC_FILES = CircularBuffer \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
+			cmd_oper \
 			cmd_quit \
 			chan_cmd_join \
 			cmd_ping \
@@ -46,19 +47,14 @@ SRC_FILES = CircularBuffer \
 			cmd_kill \
 			cmd_mode \
 			commandUtils \
-			chan_cmd_part \
-			chan_cmd_topic
-#			cmd_lusers
+			chan_cmd_part 
+#			chan_cmd_topic
 #			cmd_notice
-#			cmd_who
-#			cmd_whois
 #			cmd_mode
-#			cmd_oper
 #			cmd_squit
 #			chan_invite
-#			chan_list
 #			chan_mode
-#			chan_names
+
 
 INC_FILES = CircularBuffer \
 			User \

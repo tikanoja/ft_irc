@@ -52,6 +52,7 @@ void IRCServer::initServer() {
 		throw std::runtime_error("Failed to create listener socket");
 	initCommands();
 	initOperators();
+	std::cout << "SERVERNAME: " << this->getName() << std::endl;
 	return ;
 }
 
@@ -61,14 +62,15 @@ void IRCServer::initCommands() {
 		"NICK",
 		"USER",
 		"MODE",
+		"OPER",
 		"QUIT",
 		"JOIN",
 		"PING",
 		"PONG",
 		"PRIVMSG",
 		"KILL",
-		"PART",
-		"TOPIC"
+		"PART"
+	//	"TOPIC"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -76,14 +78,15 @@ void IRCServer::initCommands() {
 		cmd_nick,
 		cmd_user,
 		cmd_mode,
+		cmd_oper,
 		cmd_quit,
 		chan_cmd_join,
 		cmd_ping,
 		cmd_pong,
 		cmd_privmsg,
 		cmd_kill,
-		chan_cmd_part,
-		chan_cmd_topic
+		chan_cmd_part
+		//chan_cmd_topic
 	};
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
@@ -159,7 +162,6 @@ void IRCServer::initOperators(){
 	char line[256];
 	std::vector<std::string> rawOper;
 	while (operFile.getline(line, 256)){
-		std::cout << line << std::endl;
 		std::string string = line;
 		rawOper = split(string, ' ');
 		p_opers.push_back(Operator(rawOper[0], rawOper[1], rawOper[2]));

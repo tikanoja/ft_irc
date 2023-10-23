@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Uvector.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/12 14:27:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:04:36 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Uvector.hpp"
 
 char const * Uvector::UserNotFound::what() const throw(){
-		return "User not found";
+		return "Exception: User not found";
 }
 
 Uvector::Uvector()
@@ -51,6 +51,7 @@ User*		Uvector::findUserBySocket(int const socket_fd) const
 			return (*it);
 	}
 	return NULL;
+	// throw UserNotFound();
 }
 
 User*		Uvector::findUserByNick(std::string const & nick) const
@@ -60,6 +61,7 @@ User*		Uvector::findUserByNick(std::string const & nick) const
 			return (*it);
 	}
 	return NULL;
+	// throw UserNotFound();
 }
 
 User*		Uvector::findUserByIP(std::string const & ip_address) const
@@ -68,5 +70,6 @@ User*		Uvector::findUserByIP(std::string const & ip_address) const
 		if ((*it)->getIP() == ip_address)
 			return (*it);
 	}
-	return (NULL);
+	return NULL;
+	// throw UserNotFound();
 }
