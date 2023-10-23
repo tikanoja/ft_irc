@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 14:06:23 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:34:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMANDS_HPP
 # define COMMANDS_HPP
 
+#include <string>
+#include <iterator>
 #include "IRCServer.hpp"
 #include "Message.hpp"
 #include "Uvector.hpp"
@@ -27,6 +29,7 @@ class User;
 class Uvector;
 class Cvector;
 class Message;
+class Operator;
 
 //Registration functions
 

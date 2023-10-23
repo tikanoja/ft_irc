@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/20 12:19:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:33:12 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdexcept>
+# include <exception>
 # include <netinet/in.h>
 # include <arpa/inet.h> //inet
 # include <sys/types.h> //types needed for socket() functions
@@ -36,8 +37,8 @@
 # include "Cvector.hpp"
 # include "Message.hpp"
 # include "User.hpp"
-# include "Commands.hpp"
 # include "Operator.hpp"
+# include "Commands.hpp"
 
 # define MAXCLIENTS 10
 

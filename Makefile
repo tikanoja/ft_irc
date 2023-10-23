@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
+#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/20 12:18:53 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/23 12:51:05 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,8 +104,8 @@ fclean: clean
 
 re: fclean all
 
-test: $(OBJ) $T/test.cpp | $T
-	@$(CC) $(FLAGS) -c $T/test.cpp -o $T/test.o
+test: $(OBJ) test.cpp | $T
+	@$(CC) $(FLAGS) -c test.cpp -o $T/test.o
 	@$(CC) $(FLAGS) $(OBJ) $T/test.o -o $T/test
 
 $T:

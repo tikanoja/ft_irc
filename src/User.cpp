@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/17 14:21:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:56:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
 	std::cout << "User param constructor called" << std::endl;
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
+
 	p_mode = 0;
 }
 

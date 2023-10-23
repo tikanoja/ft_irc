@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 08:41:26 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:01:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define RPL_CHANNELMODEIS(servername, cannel, mode, mode_params)(":" + servername + " 324 " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
-# define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332
+# define RPL_TOPIC(servername, channel, topic)(":" + servername + " 332 " + channel + " :" + topic + "\r\n") //332
 # define RPL_INVITING(servername, channel, nick)(":" + servername + " 341 " + channel + " " + nick + "\r\n") //341
 # define RPL_SUMMONING(servername, user)(":" + servername + " 342 " +  user + " :Summoning user to IRC\r\n") //342
 # define RPL_INVITELIST(servername)(":" + servername + " 346 \r\n") //346 ???????
