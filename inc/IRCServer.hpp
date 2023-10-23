@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/23 12:33:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:28:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@ class IRCServer {
 		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
 		std::map<std::string, CommandFunction>	p_commandMap;
 
-		int									getListenerSocket();
 		void								initServer();
 		void 								initCommands();
+		void								initOperators();
+		
+		int									getListenerSocket();
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
+		void								dropConnection(ssize_t numbytes, nfds_t i);
+		
 		int									receiveMsg(User* user, nfds_t i);
 		int									checkRecvBuffer(User* user, nfds_t i);
 		int									checkSendBuffer(User* user);
-		void								dropConnection(ssize_t numbytes, nfds_t i);
-
-		void								initOperators(); //move
 
 		std::vector<std::string> const &	getBlocked() const;
 		void								setBlocked(std::string nick);
@@ -110,23 +111,25 @@ class IRCServer {
 		~IRCServer(void);
 
 		int								pollingRoutine();
-		int								executeCommand(User& user, Message& message);
+		
 		std::string	const & 			getName() const;
 		std::string	const &				getPassword() const;
 		Uvector		const &				getUsers() const;
-		Cvector			  & 			getChannels();
+		Cvector			  &				getChannels();
+		std::string						getModeStr(User const &user);
+		std::vector<Operator> const &	getOpers() const;
+		Operator &						getOperByNick(std::string nick);
+		bool							getUserMode(User & user, e_uperm mode) const;
+
 		bool							isBlocked(std::string nick) const;
 		void							delFd(User& user);
 		void							delUser(User& user);
 
-		bool							getUserMode(User & user, e_uperm mode) const;
+		int								executeCommand(User& user, Message& message);
 		void							setUserMode(User & user, e_uperm mode);
 		void							unsetUserMode(User & user, e_uperm mode);
 		std::string						setBatchMode(User & user, std::string const & modes, size_t *index);
 		std::string						unsetBatchMode(User & user, std::string const & modes, size_t *index);
-		std::string						getModeStr(User const &user);
-		std::vector<Operator> const &	getOpers() const;
-		Operator &						getOperByNick(std::string nick);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/23 17:01:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:50:45 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void signalHandler(int signum) {
 
 IRCServer::IRCServer(uint16_t port) : p_port(port){
 	// std::cout << "IRCServer constructor called" << std::endl;
+	p_serverName = "ircserv";
 	p_pfds.reserve(MAXCLIENTS);
 	p_users.reserve(MAXCLIENTS);
 	initServer();
@@ -52,7 +53,6 @@ void IRCServer::initServer() {
 		throw std::runtime_error("Failed to create listener socket");
 	initCommands();
 	initOperators();
-	std::cout << "SERVERNAME: " << this->getName() << std::endl;
 	return ;
 }
 
@@ -63,14 +63,15 @@ void IRCServer::initCommands() {
 		"USER",
 		"MODE",
 		"OPER",
+		"AWAY",
 		"QUIT",
-		"JOIN",
 		"PING",
 		"PONG",
 		"PRIVMSG",
 		"KILL",
-		"PART"
-	//	"TOPIC"
+		"JOIN",
+		"PART",
+		"TOPIC"
 	};
 
 	static const CommandFunction cmdFunctions[] = {
@@ -79,15 +80,17 @@ void IRCServer::initCommands() {
 		cmd_user,
 		cmd_mode,
 		cmd_oper,
+		cmd_away,
 		cmd_quit,
-		chan_cmd_join,
 		cmd_ping,
 		cmd_pong,
 		cmd_privmsg,
 		cmd_kill,
-		chan_cmd_part
-		//chan_cmd_topic
+		chan_cmd_join,
+		chan_cmd_part,
+		chan_cmd_topic,
 	};
+	
 	for (size_t i = 0; i < N_COMMANDS; i++)
 		p_commandMap[cmdNames[i]] = cmdFunctions[i];
 }
@@ -186,8 +189,7 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 }
 
 int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
-	if (user->getRecvBuffer().findCRLF() == -1) { //do we have a complete msg ???
-		// std::cout << "did not detect CRLF" << std::endl;
+	if (user->getRecvBuffer().findCRLF() == -1) {
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();

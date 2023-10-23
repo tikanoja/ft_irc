@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 17:06:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:46:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ static bool hasPermissions(IRCServer& server, User& user, Message& message){
 		user.send(ERR_USERSDONTMATCH(server.getName()));
 		return false;
 	}
-	if (message.getParams()[0].size() == 2){
-		user.send(RPL_UMODEIS(server.getName(),
-			server.getModeStr(user)));
-		return false;
-	}
 	return true;
 }
 
@@ -60,9 +55,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	std::vector<std::string>const & params = message.getParams();
 	if (params.size() == 1){
 		std::string mode = server.getModeStr(user);
-		std::string reply = server.getName();
-		std::cout << reply << std::endl;
-		user.send(RPL_UMODEIS(server.getName(), mode));
+		user.send(RPL_UMODEIS(server.getName(), user.getNick(), mode));
 		return 0;
 	}
 	size_t forbidden;

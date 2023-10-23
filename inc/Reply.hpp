@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/16 13:01:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:44:22 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@
 # define RPL_TRACESERVICE(servername, class, name, type, activetype)(":" + servername + " 207 Service " + class + " " + name + " " + type + " " + activetype + "\r\n") //207
 # define RPL_TRACENEWTYPE(servername, newtype, client_name)(":" + servername + " 208 " + newtype + " 0 " + client_name + "\r\n") //208
 # define RPL_TRACECLASS(servername, class, count)(":" + servername + " 209 Class " + class + " " + count + "\r\n") //209
-# define RPL_STATSLINKINFO(servername, linkname, sendq, sentmsg, sentkbyte, recvmsg, recvkbyte, timme_open)\
-(linkname + " " + sendq + " " + sentmsg + sentkbyte + " " + recvmsg + recvkbyte + " " + time_open + "\r\n") //211
+# define RPL_STATSLINKINFO(servername, linkname, sendq, sentmsg, sentkbyte, recvmesg, recvkbyte, timme_open)\
+(linkname + " " + sendq + " " + sentmsg + sentkbyte + " " + recvmesg + recvkbyte + " " + time_open + "\r\n") //211
 # define RPL_STATSCOMMANDS(servername, command, count, b_byte, remote_count)(":" + servername + " 212 " + command + " " + count + " " + n_byte + " " + remote_count + "\r\n") //212
 # define RPL_ENDOFSTATS(servername, stats_letter)(":" + servername + " 219 " + stats_letter + " :End of STATS report\r\n") //219
-# define RPL_UMODEIS(servername, usermodestring)(":" + servername + " 221 " + usermodestring + "\r\n") //221
+# define RPL_UMODEIS(servername, user, modestring)(":" + servername + " 221 " + user + " " + modestring + "\r\n") //221
 # define RPL_SERVLIST(servername, name, server, mask, type, hopcount, info)(":" + servername + " 234 " + name + " " + server + " " + mask + " " + type + " " + hopcount + " " + info + "\r\n") //234
 # define RPL_SERVLISTEND(servername, mask, type)(":" + servername + " 235 " + mask + " " + type + " :End of service listing\r\n") //235
 # define RPL_STATSUPTIME(servername, serveruptime)(":" + servername + " 242 :Server Up serveruptime\r\n") //242 as %d days %d:%02d:%02d
@@ -75,7 +75,7 @@
 # define RPL_CHANNELMODEIS(servername, cannel, mode, mode_params)(":" + servername + " 324 " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
-# define RPL_TOPIC(servername, channel, topic)(":" + servername + " 332 " + channel + " :" + topic + "\r\n") //332
+# define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332
 # define RPL_INVITING(servername, channel, nick)(":" + servername + " 341 " + channel + " " + nick + "\r\n") //341
 # define RPL_SUMMONING(servername, user)(":" + servername + " 342 " +  user + " :Summoning user to IRC\r\n") //342
 # define RPL_INVITELIST(servername)(":" + servername + " 346 \r\n") //346 ???????

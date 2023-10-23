@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 10:39:27 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:25:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,33 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	while (std::getline(ss, chan, ',')) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		//if yes join
-		if (toJoin != NULL) {
+		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
 			//if chan full: ERR_CHANNELISFULL
 			//if invite only chan & no invite
 			//if banned from chan: ERR_BANNEDFROMCHAN && return ;
 			//if key needed and key not provided? ERR_NEEDMOREPARAMS or ERR_BADCHANNELKEY ?
 			//if key needed and bad key: ERR_BADCHANNELKEY
 			toJoin->getMembers()->push_back(&user);
-			user.send(RPL_TOPIC(server.getName(), toJoin->getName(), toJoin->getName()));
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//notify other channel members that user joined!
-		} else {
-			//create channel
+			if (toJoin->getTopic() != "")
+				user.send(RPL_TOPIC(server.getName(), user.getNick(), toJoin->getName(), toJoin->getTopic()));
+			else
+				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
+			//send 332 if topic has been set! what is the topic
+
+			//send 353
+			//send 366
+		} else { //CREATING NEW CHANNEL
 			//check if the channel name is valid! If not, send err_nosuchchannel
+			//check that the channel name is unique
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//notify other channel members that user joined!
+			//send 332
+			//send 333
+			//send 353
+			//send 366
 		}
 	}
 	return 0;
 }
-
-//make this work with a list of channels

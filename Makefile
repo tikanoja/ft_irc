@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/23 12:51:05 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/23 18:29:04 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,11 +47,10 @@ SRC_FILES = CircularBuffer \
 			cmd_kill \
 			cmd_mode \
 			commandUtils \
-			chan_cmd_part 
-#			chan_cmd_topic
+			chan_cmd_part \
+			chan_cmd_topic
 #			cmd_notice
-#			cmd_mode
-#			cmd_squit
+#			chan_cmd_mode
 #			chan_invite
 #			chan_mode
 
