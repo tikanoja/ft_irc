@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 14:50:07 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:10:06 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 */
 
 int chan_cmd_part(IRCServer& server, User& user, Message& message){
-	if (message.getParams().front() == "") {
+	if (message.getParams().size() < 1) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "PART"));
 		return 1;
 	}

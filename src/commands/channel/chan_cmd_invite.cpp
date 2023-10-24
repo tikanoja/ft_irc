@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:21 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/24 10:00:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:25:21 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 */
 
 int chan_cmd_invite(IRCServer& server, User& user, Message& message){
+	if (!(user.getMode() & IRCServer::registered)) {
+		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
+		return 1;
+	}
+
 	if (message.getParams().size() < 2) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
 		return 1;
@@ -46,21 +51,26 @@ int chan_cmd_invite(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHNICK(server.getName(), message.getParams()[1], "channel"));
 		return 1;
 	}
-	User* invited = chan->getMembers()->findUserByNick(message.getParams().front());
+	User* invited = server.getUsers().findUserByNick(message.getParams().front());
 	if (invited == NULL) { //does nick exist
 		user.send(ERR_NOSUCHNICK(server.getName(), message.getParams().front(), "nick"));
 		return 1;
 	}
-	if (chan->getMembers()->findUserByNick(message.getParams().front()) != NULL) { //is the user already on the channel
-		user.send(ERR_USERONCHANNEL(server.getName(), message.getParams().front(), chan->getName()));
+	if (chan->getMembers()->findUserByNick(invited->getNick()) != NULL) { //is the user already on the channel
+		user.send(ERR_USERONCHANNEL(server.getName(), invited->getNick(), chan->getName()));
 		return 1;
 	}
 	
 	//perform the invite!
-	//check if user is already on the guestlist
-	if (chan->getGuestlist()->findUserByNick(message.getParams().front()) != NULL) {
+	//check if user is already on the invitelist
+	if (chan->getInvitelist()->findUserByNick(invited->getNick()) != NULL) {
 		return 1;
 	}
-	chan->getGuestlist()->push_back(invited); //add user to guestlist
+	chan->getInvitelist()->push_back(invited); //add user to invitelist
+	user.send(RPL_INVITING(server.getName(), user.getNick(), invited->getNick(), chan->getName()));
+	invited->send(":" + user.getNick() + "!add_user_host_here " + "INVITE " + invited->getNick() + " :" + chan->getName() + "\r\n");
+
 	return 0;
 }
+
+//confirmation to the inviter and notice to the invited!

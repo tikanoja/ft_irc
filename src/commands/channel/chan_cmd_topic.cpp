@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 12:14:15 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:18:27 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,25 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 	}
 	if (message.getTrailing() == "") { //no trailing: they want current topic
 		if (chan->getTopic() == "") { //topic has not been set
-			user.send(RPL_NOTOPIC(server.getName(), message.getParams().front()));
+			user.send(RPL_NOTOPIC(server.getName(), \
+			message.getParams().front()));
 			return 0;
 		}
 		user.send(RPL_NOTOPIC(server.getName(), chan->getName())); //sending topic info
-		//send 333 to inform who has set the topic
-		return 1;
+		return 0;
 	} else { //we have trailing: they want to change topic to a new one
 		//check if the new topic complies w protocol
+		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) { //check if they are a part of the channel
+			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
+			return 1;
+		}
 		//check OP mode & send and return if no good :punch.wa.us.dal.net 482 tuukka #test :You're not channel operator
-		//check if they are a part of the channel
 		chan->setTopic(message.getTrailing());
-		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here TOPIC " + chan->getName() + " :" + message.getTrailing() + "\r\n");
-		user.send(RPL_TOPIC(server.getName(), user.getNick(), chan->getName(), chan->getTopic()));
+		chan->broadcastToChannel(":" + user.getNick() + \
+		"!add_user_host_here TOPIC " + chan->getName() + \
+		" :" + message.getTrailing() + "\r\n");
+		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
+		chan->getName(), chan->getTopic()));
 	}
 	return 0;
 }

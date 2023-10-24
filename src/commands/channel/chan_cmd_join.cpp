@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/24 10:14:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:07:16 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			//if key needed and key not provided? ERR_NEEDMOREPARAMS or ERR_BADCHANNELKEY ?
 			//if key needed and bad key: ERR_BADCHANNELKEY
 			//if invite only
-				//check channel guestlist for user
+				//check channel invitelist for user
 					//if no match tell them off
 					//if yes match erase name from the list
 			toJoin->getMembers()->push_back(&user);

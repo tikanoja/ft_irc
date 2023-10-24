@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/23 13:59:37 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:10:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@
 */
 
 int chan_cmd_kick(IRCServer& server, User& user, Message& message){
-	
+	if (!(user.getMode() & IRCServer::registered)) {
+		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
+		return 1;
+	}
 	//check user permissions and send 482 & return 1 if necessary!
 
 	if (message.getParams().size() < 2) { //we need at least a chan & an user!
