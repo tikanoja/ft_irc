@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 10:25:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:14:47 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,26 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		//if yes join
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
 			//if chan full: ERR_CHANNELISFULL
-			//if invite only chan & no invite
-			//if banned from chan: ERR_BANNEDFROMCHAN && return ;
 			//if key needed and key not provided? ERR_NEEDMOREPARAMS or ERR_BADCHANNELKEY ?
 			//if key needed and bad key: ERR_BADCHANNELKEY
+			//if invite only
+				//check channel guestlist for user
+					//if no match tell them off
+					//if yes match erase name from the list
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
 			if (toJoin->getTopic() != "")
 				user.send(RPL_TOPIC(server.getName(), user.getNick(), toJoin->getName(), toJoin->getTopic()));
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
-			//send 332 if topic has been set! what is the topic
-
-			//send 353
-			//send 366
+			//send 353 (???)
 		} else { //CREATING NEW CHANNEL
-			//check if the channel name is valid! If not, send err_nosuchchannel
+			//check if the channel name is valid! If not, send err_nosuchchannel(???)
 			//check that the channel name is unique
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
+			//add chop to user?
 			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//send 332
-			//send 333
-			//send 353
-			//send 366
 		}
 	}
 	return 0;

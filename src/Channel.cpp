@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/20 10:22:19 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 09:58:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ void Channel::setTopic(std::string newTopic)
 
 Uvector* Channel::getMembers()
 {
-	return &(this->p_members);
+	return &this->p_members;
+}
+
+Uvector* Channel::getGuestlist()
+{
+	return &this->p_guestlist;
 }
 
 void Channel::broadcastToChannel(std::string message)
