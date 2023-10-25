@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/24 13:04:57 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:34:52 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 
 void signalHandler(int signum) {
 	if (signum == SIGINT) {
-		std::cout << std::endl << "Server quit." << std::endl;
 		//delete p_users
 			//(and their buffers ?)
 		//delete p_channels
+		std::cout << std::endl << "Server quit." << std::endl;
 		exit(0);
 	}
 }

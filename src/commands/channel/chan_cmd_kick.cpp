@@ -6,11 +6,12 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/24 12:10:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:42:31 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/Commands.hpp"
+#include "../../../inc/Utils.hpp"
 
 /*
 	ERRORS
@@ -35,45 +36,50 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	//check user permissions and send 482 & return 1 if necessary!
-
 	if (message.getParams().size() < 2) { //we need at least a chan & an user!
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
 		return 1;
 	}
-	Channel* chan = server.getChannels().findChannel(message.getParams().front());
-	if (chan == NULL) { //does the channel they asked for exist ?
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
-		return 1;
-	}
-	if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) { //are we a part of that channel?
-		user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
-		return 1;
-	}
-	//do we have oper????????
-	User* toKick = chan->getMembers()->findUserByNick(message.getParams()[1]);
-	if (toKick == NULL) { //could we find the kickee on the channel ?
-		user.send(ERR_NOSUCHNICK(server.getName(), message.getParams()[1], "nick"));
-		return 1;
-	}
 
-	//perform the kick!
-		//let the channel know about the kick
-	chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here KICK " + chan->getName() + " " + toKick->getNick());
-	if (message.getTrailing() == "")
-		chan->broadcastToChannel("\r\n");
+	std::vector<std::string> channels = split(message.getParams().front(), ',');
+	std::vector<std::string> users = split(message.getParams()[1], ',');
+	size_t limit;
+	if (channels.size() < users.size())
+		limit = channels.size();
 	else
-		chan->broadcastToChannel(" " + message.getTrailing() + "\r\n");
-	
-		//remove user from the channel vector
-		//make a channel function to remove user by name...! can be reused in part
-	for (std::vector<User*>::iterator it = chan->getMembers()->begin();\
-		it != chan->getMembers()->end(); it++) {
-		if ((*it)->getNick() == message.getParams()[1]) {
-			chan->getMembers()->erase(it);
-			break ;
+		limit = users.size();
+	for (size_t i = 0; i < limit; i++) {
+		Channel* chan = server.getChannels().findChannel(channels[i]);
+		if (chan == NULL) { //does the channel they asked for exist ?
+			user.send(ERR_NOSUCHCHANNEL(server.getName(), channels[i]));
+			continue ;
+		}
+		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) { //are we a part of that channel?
+			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
+			continue ;
+		}
+
+		//CHECK IF WE HAVE OPER ON THE CHANNEL!
+
+		User* toKick = chan->getMembers()->findUserByNick(users[i]);
+		if (toKick == NULL) { //could we find the kickee on the channel ?
+			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
+			continue ;
+		}
+		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here KICK " + chan->getName() + " " + toKick->getNick());
+		if (message.getTrailing() == "")
+			chan->broadcastToChannel("\r\n");
+		else
+			chan->broadcastToChannel(" " + message.getTrailing() + "\r\n");
+		for (std::vector<User*>::iterator it = chan->getMembers()->begin();\
+			it != chan->getMembers()->end(); it++) {
+			if ((*it)->getNick() == users[i]) {
+				chan->getMembers()->erase(it);
+				break ;
+			}
 		}
 	}
 
-	//make this work in a loop!!!!!!!!!!!!!
+	//if the user & channels do not match in size, send appropriate error?
 	return 0;
 }

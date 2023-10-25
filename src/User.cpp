@@ -6,14 +6,14 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/20 12:38:16 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:37:41 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/User.hpp"
 
 User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
-	std::cout << "User param constructor called" << std::endl;
+	// std::cout << "User param constructor called" << std::endl;
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 	p_mode = 0;
 }
