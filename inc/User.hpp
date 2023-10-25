@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/17 14:37:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:35:07 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class User
 		int					getSocket(void) const;
 		int					getMode(void) const;
 		std::string	const &	getNick(void) const;
+		std::string	const &	getOldNick(void) const;
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
 		std::string	const &	getAwayMsg(void) const;
@@ -39,6 +40,7 @@ class User
 		void	setSocket(int socketfd);
 		bool	setMode(int mode);
 		void	setNick(std::string nickname);
+		void	setOldNick(std::string nickname);
 		bool	unsetMode(int mode);
 		void	setRealName(std::string realname);
 		void	setUserName(std::string username);
@@ -51,6 +53,7 @@ class User
 
 	private:
 		std::string		p_nickname;
+		std::string		p_oldNick;
 		std::string		p_username;
 		std::string		p_realname;
 		std::string		p_awaymsg;

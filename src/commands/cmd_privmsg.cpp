@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:51:13 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/25 09:36:42 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 	
 	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
-		message.getCommand()).c_str());
+		message.getCommand()));
 		return 1;
 	}
 	if (targetNick == "") {
 			user.send(ERR_NORECIPIENT(server.getName(),
-			message.getCommand()).c_str());
+			message.getCommand()));
 		return 1;
 	}
 	
@@ -36,23 +36,23 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 		recipient = server.getUsers().findUserByNick(targetNick);
 		if (recipient == NULL) {
 			user.send(ERR_NOSUCHNICK(server.getName(),
-				recipient->getNick(), "user").c_str());
+				message.getParams()[0], "user"));
 			return 1;
 		}
-		if ((recipient->getMode() >> IRCServer::away) & 1)
+		if (recipient->getMode() & IRCServer::away)
 			user.send(RPL_AWAY(server.getName(),
-				recipient->getNick(), recipient->getAwayMsg()).c_str());
+				recipient->getNick(), recipient->getAwayMsg()));
 		if (message.getTrailing().empty()) {
-			user.send(ERR_NOTEXTTOSEND(server.getName()).c_str());
+			user.send(ERR_NOTEXTTOSEND(server.getName()));
 			return 1;
 		}
 		
 		//tee stringgi
 		std::string msg;
-		msg = ":" + message.getPrefix() + " PRIVMSG " + targetNick + " :" + message.getTrailing();
+		msg = ":" + message.getPrefix() + " PRIVMSG " + targetNick + " :" + message.getTrailing() + "\r\n";
 
 		//tunge se stringi tanne
-		recipient->send(msg.c_str());
+		recipient->send(msg);
 		(void)user;
 	}
 	return 0;

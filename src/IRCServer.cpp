@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/23 18:50:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:39:25 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,42 +57,25 @@ void IRCServer::initServer() {
 }
 
 void IRCServer::initCommands() {
-	static const std::string cmdNames[] = {
-		"PASS",
-		"NICK",
-		"USER",
-		"MODE",
-		"OPER",
-		"AWAY",
-		"QUIT",
-		"PING",
-		"PONG",
-		"PRIVMSG",
-		"KILL",
-		"JOIN",
-		"PART",
-		"TOPIC"
-	};
-
-	static const CommandFunction cmdFunctions[] = {
-		cmd_pass,
-		cmd_nick,
-		cmd_user,
-		cmd_mode,
-		cmd_oper,
-		cmd_away,
-		cmd_quit,
-		cmd_ping,
-		cmd_pong,
-		cmd_privmsg,
-		cmd_kill,
-		chan_cmd_join,
-		chan_cmd_part,
-		chan_cmd_topic,
+	
+	std::pair<std::string, CommandFunction> cmdPairs[] = {
+		std::make_pair("PASS", cmd_pass),
+		std::make_pair("NICK", cmd_nick),
+		std::make_pair("USER", cmd_user),
+		std::make_pair("MODE", cmd_mode),
+		std::make_pair("OPER", cmd_oper),
+		std::make_pair("AWAY", cmd_away),
+		std::make_pair("QUIT", cmd_quit),
+		std::make_pair("PING", cmd_ping),
+		std::make_pair("PONG", cmd_pong),
+		std::make_pair("PRIVMSG", cmd_privmsg),
+		std::make_pair("KILL", cmd_kill),
+		std::make_pair("JOIN", chan_cmd_join),
+		std::make_pair("PART", chan_cmd_part),
+		std::make_pair("TOPIC", chan_cmd_topic)
 	};
 	
-	for (size_t i = 0; i < N_COMMANDS; i++)
-		p_commandMap[cmdNames[i]] = cmdFunctions[i];
+	p_commandMap.insert(cmdPairs, cmdPairs + sizeof(cmdPairs) / sizeof(cmdPairs[0]));
 }
 
 std::string const & IRCServer::getName() const{
@@ -111,11 +94,11 @@ Cvector & IRCServer::getChannels(){
 	return p_channels;
 }
 
-std::vector<std::string> const &		IRCServer::getBlocked() const{
+std::vector<std::string> const & IRCServer::getBlocked() const{
 	return p_blockeUserNames;
 }
 
-std::vector<Operator> const &	IRCServer::getOpers() const{
+std::vector<Operator> const & IRCServer::getOpers() const{
 	return p_opers;
 }
 

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/23 13:56:08 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:34:53 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	User::setNick(std::string nickname){
 		p_nickname = nickname.substr(0, 9);
 }
 
+void	User::setOldNick(std::string nickname){
+		p_oldNick = nickname.substr(0, 9);
+}
+
 bool	User::setMode(int mode){
 	if (!(p_mode & mode)){
 		p_mode |= mode;
@@ -94,6 +98,10 @@ int User::getSocket(void) const {
 
 std::string	const &	User::getNick(void) const {
 	return p_nickname;
+}
+
+std::string	const &	User::getOldNick(void) const {
+	return p_oldNick;
 }
 
 int	User::getMode(void) const {

@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/19 11:18:08 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:10:06 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 */
 
 int chan_cmd_part(IRCServer& server, User& user, Message& message){
-	if (message.getParams().front() == "") {
+	if (message.getParams().size() < 1) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "PART"));
 		return 1;
 	}
@@ -42,13 +42,16 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\
 		it != partFrom->getMembers()->end(); it++) {
 			if ((*it)->getNick() == user.getNick()) {
-				partFrom->getMembers()->erase(it);
-				user.send(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName());
-				std::cout << "HERE!!!!" << std::endl;
+				partFrom->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName());
 				if (message.getTrailing() != "")
-					user.send(" :" + message.getTrailing() + "\r\n"); //add userhost? add trailing message? check out log from dalnet
+					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n"); //add userhost? add trailing message? check out log from dalnet
 				else
-					user.send("\r\n");
+					partFrom->broadcastToChannel("\r\n");
+				partFrom->getMembers()->erase(it);
+				if (partFrom->getMembers()->size() == 0) {
+					std::cout << "Channel is empty, deleting..." << std::endl;
+					server.getChannels().deleteChannel(partFrom);
+				}
 				user_found = 1;
 				break ;
 			}
@@ -57,8 +60,5 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTONCHANNEL(server.getName(), partFrom->getName()));
 		user_found = 0;
 	}
-	//if yes then get rid of them
 	return 1;
 }
-
-//make this work with a list of channels to part from!!!!!!!!!!

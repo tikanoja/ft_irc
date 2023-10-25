@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 18:44:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:30:30 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <string>
 
-//void	sendRPL(int const client_fd, std::string client_buffer);
+//void	sendRPL(int const user_fd, std::string user_buffer);
 
 # define USER_ID(nickname, username, host) (":" + nickname + "!" + username + "@" + host)
 
@@ -57,7 +57,7 @@
 # define RPL_TRACELOG(servername, logfile, debuglevel)(":" + servername + " 261 File " + logfile + " " + debuglevel + "\r\n") //261
 # define RPL_TRACEEND(servername, version, debuglevel)(":" + servername + " 262 " + servername +  + " " + version + "" & debuglevel + " :End of TRACE\r\n") //262
 # define RPL_TRYAGAIN(servername, command)(":" + servername + " 263 " + command + " :Please wait a while and try again.\r\n") //263
-# define RPL_AWAY(servername, nick, message)(":" + servername + " 301 " + nick + ": " + message + "\r\n") //301
+# define RPL_AWAY(servername, nick, message)(":" + servername + " 301 " + nick + " :" + message + "\r\n") //301
 # define RPL_USERHOST(servername)(":" + servername + " 302 \r\n") //302 ??????
 # define RPL_ISON(servername)(":" + servername + " 303 \r\n") //303 ??????????
 # define RPL_UNAWAY(servername)(":" + servername + " 305 :You are no longer marked as being away\r\n") //305
@@ -105,5 +105,7 @@
 # define RPL_USERS(servername, userbame, ttyline, hostname)(":" + servername + " 393 :" + username + " " + ttyline + " " + hostname + "\r\n") //393
 # define RPL_ENDOFUSERS(servername)(":" + servername + " 394 :End of users\r\n") //394
 # define RPL_NOUSERS(servername)(":" + servername + " 395 :Nobody logged in\r\n") //395
+
+# define RPL_NICK(ouser, uuser, host, user)(":" + ouser + "!" + uuser + "@" + host + " NICK " +  user + "\r\n")
 
 #endif

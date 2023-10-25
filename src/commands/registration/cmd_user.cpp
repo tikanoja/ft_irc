@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_user.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 12:18:19 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:26:36 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 	}
 	if (server.getUserMode(user, IRCServer::registered)){
 		user.send(ERR_ALREADYREGISTRED(server.getName()));
+		return 1;
+	}
+	if (user.getNick().empty()){
+		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 		return 1;
 	}
 	user.setUserName(message.getParams()[0]);

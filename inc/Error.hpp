@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Error.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 12:19:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 09:48:39 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define ERR_NOMOTD(servername)(":" + servername + " 422 :MOTD File is missing" + "\r\n") //422
 # define ERR_NOADMININFO(servername, server)(":" + servername + " 423 " + server + " :No administrative info available" + "\r\n") //423
 # define ERR_FILEERROR(servername, fileop, file)(":" + servername + " 424 :File error doing " + fileop + " on " + file + "" + "\r\n") //424
-# define ERR_NONICKNAMEGIVEN(servername)(":" + servername + " 431 :No nickname given" + "\r\n") //431
+# define ERR_NONICKNAMEGIVEN(servername)(":" + servername + " 431  :No nickname given" + "\r\n") //431
 # define ERR_ERRONEUSNICKNAME(servername, nick)(":" + servername + " 432 " + nick + " :Erroneous nickname" + "\r\n") //432
 # define ERR_NICKNAMEINUSE(servername, nick)(":" + servername + " 433 " + nick + " :Nickname is already in use" + "\r\n") //433
 # define ERR_NICKCOLLISION(servername, nick, user, host)(":" + servername + " 436 " + nick + " :Nickname collision KILL from " + user + "@" + host + "" + "\r\n") //436
