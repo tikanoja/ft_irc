@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/25 09:48:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:26:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERR_FILEERROR(servername, fileop, file)(":" + servername + " 424 :File error doing " + fileop + " on " + file + "" + "\r\n") //424
 # define ERR_NONICKNAMEGIVEN(servername)(":" + servername + " 431  :No nickname given" + "\r\n") //431
 # define ERR_ERRONEUSNICKNAME(servername, nick)(":" + servername + " 432 " + nick + " :Erroneous nickname" + "\r\n") //432
-# define ERR_NICKNAMEINUSE(servername, nick)(":" + servername + " 433 " + nick + " :Nickname is already in use" + "\r\n") //433
+# define ERR_NICKNAMEINUSE(servername, nick)(":" + servername + " 433 * " + nick + " :Nickname is already in use" + "\r\n") //433
 # define ERR_NICKCOLLISION(servername, nick, user, host)(":" + servername + " 436 " + nick + " :Nickname collision KILL from " + user + "@" + host + "" + "\r\n") //436
 # define ERR_UNAVAILRESOURCE(servername, nick, label)(":" + servername + " 437 " +  nick + " :" + label + " is temporarily unavailable" + "\r\n") //437
 # define ERR_USERNOTINCHANNEL(servername, nick, channel)(":" + servername + " 441 " + nick + "" + channel + " :They aren't on that channel" + "\r\n") //441
@@ -65,6 +65,6 @@
 # define ERR_UNIQOPPRIVSNEEDED(servername)(":" + servername + " 485 :You're not the original channel operator" + "\r\n") //485
 # define ERR_NOOPERHOST(servername)(":" + servername + " 491 :No O-lines for your host" + "\r\n") //491
 # define ERR_UMODEUNKNOWNFLAG(servername)(":" + servername + " 501 :Unknown MODE flag" + "\r\n") //501
-# define ERR_USERSDONTMATCH(servername)(":" + servername + " 502 :Cannot change mode for other users" + "\r\n") //502
+# define ERR_USERSDONTMATCH(servername, user)(":" + servername + " 502 " + user + " :Cannot change mode for other users" + "\r\n") //502
 
 #endif

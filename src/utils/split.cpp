@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:23:55 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:47:32 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 08:58:02 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ std::vector<std::string> split(const std::string& str, char c){
 
 	for (; i < 3 && std::getline(stream, token, c); i++)
 		tokens.push_back(token);
-	std::cout << token << std::endl;
 	return (tokens);
 }

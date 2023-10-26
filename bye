@@ -1,0 +1,8 @@
+<< CAP LS 302
+<< JOIN :
+>> :@localhost 421  CAP :Unknown command
+>> :@localhost 451  :You have not registered
+<< NICK djajaja
+<< USER djagusch djagusch 127.0.0.1 :Dorian Jagusch
+>> :@localhost 433   :Nickname is already in use
+<< NICK _

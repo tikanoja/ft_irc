@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/25 10:39:25 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 09:52:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ int IRCServer::pollingRoutine() {
 					std::cout << "p_pfds.size(): " << p_pfds.size() << std::endl;
 					std::cout << "p_users.size() " << p_users.size() << std::endl;
 					dropConnection(-1, i);
+					continue;
 				}
 				// std::cout << "our bits: ";
 				// bitsToStream(p_pfds[i].revents, std::cout);
