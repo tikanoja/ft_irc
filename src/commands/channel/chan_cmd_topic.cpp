@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/24 12:18:27 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:47:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 	Channel* chan = server.getChannels().findChannel(message.getParams().front());
 	if (chan == NULL) {
-		std::cout << "Channel not found! (in chan_cmd_topic())" << std::endl;
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
 		return 1;
 	}
 	if (message.getTrailing() == "") { //no trailing: they want current topic
@@ -43,11 +43,13 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
 			return 1;
 		}
-		//check OP mode & send and return if no good :punch.wa.us.dal.net 482 tuukka #test :You're not channel operator
+		
+		//Check operator! If they are not op, check if channel has mode t enabled
+		
 		chan->setTopic(message.getTrailing());
 		chan->broadcastToChannel(":" + user.getNick() + \
 		"!add_user_host_here TOPIC " + chan->getName() + \
-		" :" + message.getTrailing() + "\r\n");
+		" :" + message.getTrailing() + "\r\n", NULL);
 		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 		chan->getName(), chan->getTopic()));
 	}

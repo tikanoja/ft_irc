@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/24 12:10:06 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:47:34 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\
 		it != partFrom->getMembers()->end(); it++) {
 			if ((*it)->getNick() == user.getNick()) {
-				partFrom->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName());
+				partFrom->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName(), NULL);
 				if (message.getTrailing() != "")
-					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n"); //add userhost? add trailing message? check out log from dalnet
+					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n", NULL); //add userhost? add trailing message? check out log from dalnet
 				else
-					partFrom->broadcastToChannel("\r\n");
+					partFrom->broadcastToChannel("\r\n", NULL);
 				partFrom->getMembers()->erase(it);
 				if (partFrom->getMembers()->size() == 0) {
 					std::cout << "Channel is empty, deleting..." << std::endl;

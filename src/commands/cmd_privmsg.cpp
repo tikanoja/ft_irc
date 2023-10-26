@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/25 14:31:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:46:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 				continue ;
 			}
 			std::string msg = ":" + user.getNick() + "!add_user_host_here" + " PRIVMSG " + target + " :" + message.getTrailing() + "\r\n";
-			chan->broadcastToChannel(msg);
+			chan->broadcastToChannel(msg, &user);
 		} else {
 			User* recipient = server.getUsers().findUserByNick(target);
 			if (recipient == NULL) {

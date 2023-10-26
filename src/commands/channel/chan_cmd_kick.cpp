@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/25 13:42:31 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:47:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
 			continue ;
 		}
-		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here KICK " + chan->getName() + " " + toKick->getNick());
+		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here KICK " + chan->getName() + " " + toKick->getNick(), NULL);
 		if (message.getTrailing() == "")
-			chan->broadcastToChannel("\r\n");
+			chan->broadcastToChannel("\r\n", NULL);
 		else
-			chan->broadcastToChannel(" " + message.getTrailing() + "\r\n");
+			chan->broadcastToChannel(" " + message.getTrailing() + "\r\n", NULL);
 		for (std::vector<User*>::iterator it = chan->getMembers()->begin();\
 			it != chan->getMembers()->end(); it++) {
 			if ((*it)->getNick() == users[i]) {

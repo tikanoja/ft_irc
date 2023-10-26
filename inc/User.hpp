@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/17 14:37:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:25:31 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <string>
 # include <netinet/in.h>
 # include "../inc/CircularBuffer.hpp"
+
+class IRCServer;
 
 class User
 {
@@ -45,6 +47,8 @@ class User
 		void	setAwayMsg(std::string const & comment);
 		void 	send(std::string str);
 
+		void	setRegistrationFlag(int i, User& user, IRCServer& server);
+
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);
 		void				resetBuffers(void);
@@ -60,6 +64,10 @@ class User
 		CircularBuffer	p_recvBuffer;
 		CircularBuffer	p_sendBuffer;
 
+		bool			nickFlag;
+		bool			userFlag;
+		bool			passFlag;
+		bool			welcomeFlag;
 };
 
 std::ostream & operator<<( std::ostream & o, User const & user);
