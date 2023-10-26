@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/19 15:00:01 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:42:49 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ class Channel
 		std::string 	getName();
 		std::string 	getTopic();
 		Uvector*		getMembers();
+		Uvector*		getInvitelist();
 		void			setTopic(std::string newTopic);
-		void			broadcastToChannel(std::string message);
+		void			broadcastToChannel(std::string message, User* sender);
 
 	private:
 		Channel();
 		std::string	p_name;
 		std::string p_topic;
 		Uvector		p_members;
+		Uvector		p_invitelist;
 		//wrapper for the members to have permissions etc :)
 		Uvector		p_chopers;
 		//channel mode

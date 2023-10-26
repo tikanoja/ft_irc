@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pass.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:05:53 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:57:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:20:35 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,8 @@ int cmd_pass(IRCServer& server, User& user, Message& message){
 		user.send(ERR_ALREADYREGISTRED(server.getName()));
 		return 1;
 	}
+	//if not registered
+	user.setRegistrationFlag(3, user, server);
+		//welcome
 	return 0;
 }

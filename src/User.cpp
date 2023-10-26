@@ -6,17 +6,24 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/25 14:34:53 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:47:39 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../inc/User.hpp"
+#include "../inc/IRCServer.hpp"
+#include "../inc/Reply.hpp"
 
 User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
-	std::cout << "User param constructor called" << std::endl;
+	// std::cout << "User param constructor called" << std::endl;
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 
 	p_mode = 0;
+	nickFlag = false;
+	userFlag = false;
+	passFlag = false;
+	welcomeFlag = false;
 }
 
 User::User()
@@ -152,4 +159,19 @@ std::string	const &	User::getAwayMsg(void) const{
 
 void User::send(std::string str) {
 	this->getSendBuffer().addToBuffer(str.c_str());
+}
+
+void	User::setRegistrationFlag(int i, User& user, IRCServer& server) {
+	if (i == 1)
+		nickFlag = true;
+	else if (i == 2)
+		userFlag = true;
+	else if (i == 3)
+		passFlag = true;
+
+	if (welcomeFlag == false && nickFlag == true && userFlag == true && passFlag == true) {
+		welcomeFlag = true;
+		user.setMode(IRCServer::registered);
+		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+	}
 }

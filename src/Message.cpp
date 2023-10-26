@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 09:53:43 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:40:38 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ Message::Message()
 Message::Message(std::string msg)
 {
 	size_t in = 0;
-	// while ((in = msg.find('\n', in)) != std::string::npos) // find "\n"
-    //     msg.replace(in, 1, "");
 	while ((in = msg.find('\r', in)) != std::string::npos) // find "\r"
         msg.replace(in, 1, "");
 	std::istringstream iss(msg);

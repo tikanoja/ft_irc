@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 10:33:23 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:46:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.setMode(IRCServer::wallops);
 	if (message.getParams()[2] == "8")
 		user.setMode(IRCServer::invisible);
-	user.setMode(IRCServer::registered);
-	if (!user.getNick().empty())
-		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+	// user.setMode(IRCServer::registered);
+	// user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+
+	user.setRegistrationFlag(2, user, server);
+
 	return 0;
 }

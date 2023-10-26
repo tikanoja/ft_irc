@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 10:25:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:46:41 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,54 +27,62 @@
 	REPLIES
 		RPL_TOPIC				//sent upon successful JOIN
 */
+int checkChannelName(std::string name) {
+	if (name.length() > 50)
+		return 1;
+	if (name.empty() || (name[0] != '#' && name[0] != '&' && name[0] != '!' \
+		&& name[0] != '+'))
+		return 1;
+	size_t limit = name.length();
+	for (size_t i = 0; i < limit; i++) {
+		if (name[i] == 7 || name[i] == ',' || std::isspace(name[i]))
+			return 1;
+	}	
+	return 0;
+}
+
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	if (!(user.getMode() & IRCServer::registered)) {
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	if (message.getParams().front() == "") { //irssi expects this reply for some reason w registering...
-		user.send(":127.0.0.1 451 * JOIN :You must finish connecting with another nickname first.\r\n");
+	
+	if (message.getParams().size() < 1) { //maybe when missing key as well?
+		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 		return 1;
 	}
-	// //ERR_NEEDMOREPARAMS
-	// if (message.getParams().front() == "") {
-	// 	user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
-	// 	return 1;
-	// }
-
 	
 	//if user has already joined max limit of channels: ERR_TOOMANYCHANNELS
 	std::stringstream ss(message.getParams().front());
 	std::string chan;
 	while (std::getline(ss, chan, ',')) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
-		//if yes join
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
 			//if chan full: ERR_CHANNELISFULL
-			//if invite only chan & no invite
-			//if banned from chan: ERR_BANNEDFROMCHAN && return ;
-			//if key needed and key not provided? ERR_NEEDMOREPARAMS or ERR_BADCHANNELKEY ?
 			//if key needed and bad key: ERR_BADCHANNELKEY
+			//if invite only
+				//check channel invitelist for user
+					//if no match tell them off
+					//if yes match erase name from the list
 			toJoin->getMembers()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
+			toJoin->broadcastToChannel(":" + user.getNick() + \
+			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
 			if (toJoin->getTopic() != "")
-				user.send(RPL_TOPIC(server.getName(), user.getNick(), toJoin->getName(), toJoin->getTopic()));
+				user.send(RPL_TOPIC(server.getName(), user.getNick(), \
+				toJoin->getName(), toJoin->getTopic()));
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
-			//send 332 if topic has been set! what is the topic
-
-			//send 353
-			//send 366
 		} else { //CREATING NEW CHANNEL
-			//check if the channel name is valid! If not, send err_nosuchchannel
-			//check that the channel name is unique
+			//check if the channel name is valid! If not, send err_nosuchchannel(???)
+			if (checkChannelName(chan) == 1) {
+				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
+				return 1;
+			}
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + "!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n");
-			//send 332
-			//send 333
-			//send 353
-			//send 366
+			//add chop to user?
+			toJoin->broadcastToChannel(":" + user.getNick() + \
+			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}
 	}
 	return 0;

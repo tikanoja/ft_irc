@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 08:47:01 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:47:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,32 @@
 int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 	Channel* chan = server.getChannels().findChannel(message.getParams().front());
 	if (chan == NULL) {
-		std::cout << "Channel not found! (in chan_cmd_topic())" << std::endl;
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
 		return 1;
 	}
 	if (message.getTrailing() == "") { //no trailing: they want current topic
 		if (chan->getTopic() == "") { //topic has not been set
-			user.send(RPL_NOTOPIC(server.getName(), message.getParams().front()));
+			user.send(RPL_NOTOPIC(server.getName(), \
+			message.getParams().front()));
 			return 0;
 		}
 		user.send(RPL_NOTOPIC(server.getName(), chan->getName())); //sending topic info
-		//send 333 to inform who has set the topic
-		return 1;
+		return 0;
 	} else { //we have trailing: they want to change topic to a new one
 		//check if the new topic complies w protocol
-		//check if they need OP to change topic if not send :punch.wa.us.dal.net 482 tuukka #test :You're not channel operator
-		//check if they are a part of the channel
+		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) { //check if they are a part of the channel
+			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
+			return 1;
+		}
+		
+		//Check operator! If they are not op, check if channel has mode t enabled
+		
 		chan->setTopic(message.getTrailing());
-		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here TOPIC " + chan->getName() + " :" + message.getTrailing() + "\r\n");
-		user.send(RPL_TOPIC(server.getName(), user.getNick(), chan->getName(), chan->getTopic()));
+		chan->broadcastToChannel(":" + user.getNick() + \
+		"!add_user_host_here TOPIC " + chan->getName() + \
+		" :" + message.getTrailing() + "\r\n", NULL);
+		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
+		chan->getName(), chan->getTopic()));
 	}
 	return 0;
 }

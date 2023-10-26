@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 10:32:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:46:42 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,8 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	user.setNick(new_nick);
-	// if (!temp_nick.empty())
-	// 	user.send(RPL_NICK(user.getOldNick(), user.getUserName(), server.getName(), user.getNick()));
-	// // if (!temp_nick.empty())
-	user.send(RPL_NICK(user.getNick(), user.getUserName(), server.getName(), user.getNick()));
-	if (user.getMode() & IRCServer::registered)
-		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+	//if not registered
+	user.setRegistrationFlag(1, user, server);
+		//welcome
 	return 0;
 }
