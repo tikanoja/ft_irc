@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pass.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:05:53 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/27 10:20:33 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:37:54 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/Commands.hpp"
 
 int cmd_pass(IRCServer& server, User& user, Message& message){
-	std::cout << "HHHHHHEEEEERRREEEEEE!!!!!" << std::endl;
-	message.printContent();
 	if (message.getParams()[0].empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
