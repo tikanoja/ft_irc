@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/26 14:48:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:23:51 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void signalHandler(int signum) {
 	}
 }
 
-IRCServer::IRCServer(uint16_t port) : p_port(port){
+IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_password(password){
 	// std::cout << "IRCServer constructor called" << std::endl;
 	p_serverName = "ircserv";
 	p_pfds.reserve(MAXCLIENTS);

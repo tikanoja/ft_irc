@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/26 14:48:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:24:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ class IRCServer {
 		// 		virtual char const * what() const throw();
 		// };
 
-		IRCServer(uint16_t port);
+		IRCServer(uint16_t port, std::string password);
 		~IRCServer(void);
 
 		int								pollingRoutine();

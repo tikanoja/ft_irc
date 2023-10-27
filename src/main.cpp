@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 22:45:35 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/09 15:01:00 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:22:30 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int ac, char** av) {
 	std::string password(av[2]);
 
 	try {
-		IRCServer server(port);
+		IRCServer server(port, password);
 		if (server.pollingRoutine())
 			throw std::runtime_error("Polling failed");
 	} catch (std::exception& e) {
