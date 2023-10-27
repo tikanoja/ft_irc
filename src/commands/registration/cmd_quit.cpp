@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/13 13:20:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:54:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 	delete &user;
 
 	//add confirmation to other users on channel! TODO!!
-	std::cout << "User has quit and vecs handled!" << std::endl;
 	(void)message;
 	return 0;
 }

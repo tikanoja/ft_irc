@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 10:24:03 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:10:02 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "User.hpp"
 # include "Operator.hpp"
 # include "Commands.hpp"
+# include "Utils.hpp"
 
 # define MAXCLIENTS 10
 
@@ -131,6 +132,8 @@ class IRCServer {
 		void							unsetUserMode(User & user, e_uperm mode);
 		std::string						setBatchMode(User & user, std::string const & modes, size_t *index);
 		std::string						unsetBatchMode(User & user, std::string const & modes, size_t *index);
+
+		void 							broadcastToUsers(std::string const & message, User* sender, std::string const & mask);
 };
 
 #endif

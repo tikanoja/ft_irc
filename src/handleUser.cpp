@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 17:10:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:15:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,12 @@ Operator & IRCServer::getOperByNick(std::string nick){
 	// if (i == p_opers.size())
 	// 	throw UserNotFound();
 	return p_opers[i];
+}
+
+void IRCServer::broadcastToUsers(std::string const & message, User* sender, std::string const & mask)
+{
+	for (size_t i = 0; i < p_users.size(); i++) {
+		if (matchWildcard(mask, p_users[i]->getIP()) && sender->getNick() != p_users[i]->getNick())
+			p_users[i]->send(message);
+	}
 }

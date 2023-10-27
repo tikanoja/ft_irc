@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 14:46:42 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:07:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ bool	isNickvalid(std::string & nick){
 		return false;
 	}
 	if (nick.find_first_of(",*?! @.", 0) != std::string::npos){
-		std::cout << "Here2" << std::endl;
 		return false;
 	}
 	return true;

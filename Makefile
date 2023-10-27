@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/26 14:49:48 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/27 12:09:39 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC_FILES = CircularBuffer \
 			executeCommand \
 			Operator \
 			split \
+			wildcard \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
@@ -51,12 +52,10 @@ SRC_FILES = CircularBuffer \
 			chan_cmd_topic \
 			chan_cmd_kick \
 			chan_cmd_invite
-#			cmd_lusers
 #			cmd_notice
+#			cmd_lusers
 #			cmd_who
 #			cmd_whois
-#			cmd_mode
-#			cmd_oper
 #			cmd_squit
 #			chan_list
 #			chan_mode
