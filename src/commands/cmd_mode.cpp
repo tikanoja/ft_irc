@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 09:34:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/28 13:53:39 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,22 @@ static bool hasPermissions(IRCServer& server, User& user, Message& message){
 	return true;
 }
 
-int cmd_mode(IRCServer& server, User& user, Message& message){
+static bool isChannel(std::string str) {
+	if (str[0] == '#' || str[0] == '+' || str[0] == '!' || str[0] == '&')
+		return true;
+	return false;
+}
 
+int cmd_mode(IRCServer& server, User& user, Message& message){
 	
+	message.printContent();
+
+	if (!message.getParams().front().empty() && \
+		isChannel(message.getParams().front())) { //if channel, handle in chan_cmd_mode
+		chan_cmd_mode(server, user, message);
+		return 0;
+	}
+
 	if (!hasPermissions(server, user, message))
 		return 1;
 	std::vector<std::string>const & params = message.getParams();

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/27 12:09:39 by djagusch         ###   ########.fr        #
+#    Updated: 2023/10/28 11:34:11 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ SRC_FILES = CircularBuffer \
 			chan_cmd_part \
 			chan_cmd_topic \
 			chan_cmd_kick \
-			chan_cmd_invite
+			chan_cmd_invite \
+			chan_cmd_mode
 #			cmd_notice
 #			cmd_lusers
 #			cmd_who

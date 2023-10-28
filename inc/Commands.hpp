@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 14:51:34 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:31:44 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message);
 int chan_cmd_topic(IRCServer& server, User& user, Message& message);
 int chan_cmd_kick(IRCServer& server, User& user, Message& message);
 int chan_cmd_invite(IRCServer& server, User& user, Message& message);
+int chan_cmd_mode(IRCServer& server, User& user, Message& message);
 
 
 // Utils

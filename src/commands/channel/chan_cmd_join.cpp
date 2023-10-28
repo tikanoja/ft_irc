@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 12:46:41 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:49:47 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			}
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
+			toJoin->getChops()->push_back(&user); //add channel creator to channel operators (add OG chanop flag ?)
 			//add chop to user?
 			toJoin->broadcastToChannel(":" + user.getNick() + \
 			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
