@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/28 15:39:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:39:01 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ class Channel
 		Uvector*		getMembers();
 		Uvector*		getChops();
 		Uvector*		getInvitelist();
+		bool			getTopicrestricted();
+		bool			getInviteonly();
+		bool			getKeyneeded();
+		bool			getUserlimit();
+		std::string		getKey();
 
 		//setters
 		void			setTopic(std::string newTopic);
@@ -44,6 +49,7 @@ class Channel
 		
 		//utils
 		void			broadcastToChannel(std::string message, User* sender);
+		bool			isChop(User& user);
 
 	private:
 		Channel();

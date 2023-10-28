@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 11:49:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:58:38 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,17 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
 			//if chan full: ERR_CHANNELISFULL
-			//if key needed and bad key: ERR_BADCHANNELKEY
 			//if invite only
 				//check channel invitelist for user
 					//if no match tell them off
 					//if yes match erase name from the list
+			if (toJoin->getKeyneeded() == true) {
+				if (message.getParams().size() < 2 || \
+					message.getParams()[1] != toJoin->getKey()) {
+					user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(), toJoin->getName()));
+					return 1;
+				}
+			}
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + \
 			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);

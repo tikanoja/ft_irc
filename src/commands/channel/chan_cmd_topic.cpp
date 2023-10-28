@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_topic.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 12:47:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:27:40 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		}
 		
 		//Check operator! If they are not op, check if channel has mode t enabled
-		
+		if (chan->getTopicrestricted() == true && chan->isChop(user) == false) {
+			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
+			return 1;
+		}
+
 		chan->setTopic(message.getTrailing());
 		chan->broadcastToChannel(":" + user.getNick() + \
 		"!add_user_host_here TOPIC " + chan->getName() + \

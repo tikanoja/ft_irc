@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/28 16:09:51 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:39:40 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,31 @@ Uvector* Channel::getInvitelist()
 	return &this->p_invitelist;
 }
 
+bool Channel::getTopicrestricted()
+{
+	return this->p_topicrestricted;
+}
+
+bool Channel::getInviteonly()
+{
+	return this->p_inviteonly;
+}
+
+bool Channel::getKeyneeded()
+{
+	return this->p_keyneeded;
+}
+
+bool Channel::getUserlimit()
+{
+	return this->p_userlimit;
+}
+
+std::string Channel::getKey()
+{
+	return this->p_key;
+}
+
 void Channel::broadcastToChannel(std::string message, User* sender)
 {
 	for (size_t i = 0; i < p_members.size(); i++) {
@@ -76,6 +101,14 @@ void Channel::broadcastToChannel(std::string message, User* sender)
 			continue ;
 		p_members[i]->send(message);
 	}
+}
+
+bool Channel::isChop(User& user)
+{
+	if (this->getChops()->findUserByNick(user.getNick()) != NULL)
+		return true;
+	else
+		return false;
 }
 
 void Channel::toggleInviteonly(bool status) {
