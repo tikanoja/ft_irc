@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/28 11:34:11 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/10/29 11:27:06 by tuukka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRC_FILES = CircularBuffer \
 			cmd_user \
 			cmd_oper \
 			cmd_quit \
-			chan_cmd_join \
 			cmd_ping \
 			cmd_pong \
 			cmd_privmsg \
@@ -48,10 +47,11 @@ SRC_FILES = CircularBuffer \
 			cmd_kill \
 			cmd_mode \
 			commandUtils \
+			chan_cmd_invite \
+			chan_cmd_join \
+			chan_cmd_kick \
 			chan_cmd_part \
 			chan_cmd_topic \
-			chan_cmd_kick \
-			chan_cmd_invite \
 			chan_cmd_mode
 #			cmd_notice
 #			cmd_lusers

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 10:23:51 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/29 11:26:26 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void IRCServer::initCommands() {
 		std::make_pair("KILL", cmd_kill),
 		std::make_pair("JOIN", chan_cmd_join),
 		std::make_pair("PART", chan_cmd_part),
-		std::make_pair("TOPIC", chan_cmd_topic)
+		std::make_pair("TOPIC", chan_cmd_topic),
+		std::make_pair("INVITE", chan_cmd_invite),
+		std::make_pair("KICK", chan_cmd_kick)
 	};
 	
 	p_commandMap.insert(cmdPairs, cmdPairs + sizeof(cmdPairs) / sizeof(cmdPairs[0]));

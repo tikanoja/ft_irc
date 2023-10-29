@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_invite.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:21 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 12:47:57 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/29 11:24:01 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int chan_cmd_invite(IRCServer& server, User& user, Message& message){
 	//perform the invite!
 	//check if user is already on the invitelist
 	if (chan->getInvitelist()->findUserByNick(invited->getNick()) != NULL) {
+		std::cout << "Invited user is already on list...!" << std::endl;
 		return 1;
 	}
 	chan->getInvitelist()->push_back(invited); //add user to invitelist

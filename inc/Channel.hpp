@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/28 18:39:01 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/29 10:59:39 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ class Channel
 		//utils
 		void			broadcastToChannel(std::string message, User* sender);
 		bool			isChop(User& user);
+		void			removeFromChops(User& user);
+		void			removeFromInvlist(User& user);
+		void			removeFromMembers(User& user);
 
 	private:
 		Channel();

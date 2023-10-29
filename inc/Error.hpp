@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 18:50:49 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:18:33 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define ERR_KEYSET(servername, channel)(":" + servername + " 467 " + channel + " :Channel key already set" + "\r\n") //467
 # define ERR_CHANNELISFULL(servername, channel)(":" + servername + " 471 " + channel + " :Cannot join channel (+l)" + "\r\n") //471
 # define ERR_UNKNOWNMODE(servername, char, channel)(":" + servername + " 472 " + char + " :is unknown mode char to me for " + channel + "" + "\r\n") //472
-# define ERR_INVITEONLYCHAN(servername, channel)(":" + servername + " 473 " +  channel + " :Cannot join channel (+i)" + "\r\n") //473
+# define ERR_INVITEONLYCHAN(servername, user, channel)(":" + servername + " 473 " + user + " " + channel + " :Cannot join channel (+i)" + "\r\n") //473
 # define ERR_BANNEDFROMCHAN(servername, channel)(":" + servername + " 474 " + channel + " :Cannot join channel (+b)" + "\r\n") //474
 # define ERR_BADCHANNELKEY(servername, user, channel)(":" + servername + " 475 " + user + " " + channel + " :Cannot join channel (+k)" + "\r\n") //475
 # define ERR_BADCHANMASK(servername, channel)(":" + servername + " 476 " +  channel + " :Bad Channel Mask" + "\r\n") //476

@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/28 18:39:40 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:08:54 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,45 @@ bool Channel::isChop(User& user)
 		return true;
 	else
 		return false;
+}
+
+void Channel::removeFromChops(User& user)
+{
+	if (isChop(user) == true) {
+		for (std::vector<User*>::iterator it = this->p_chops.begin(); \
+			it != this->p_chops.end(); it++){
+			if ((*it) == &user) {
+				this->p_chops.erase(it); //remove the user from p_chops
+				break;
+			}
+		}
+	}
+}
+
+void Channel::removeFromInvlist(User& user)
+{
+	if (this->p_invitelist.findUserByNick(user.getNick())) {
+		for (std::vector<User*>::iterator it = this->p_invitelist.begin(); \
+			it != this->p_invitelist.end(); it++){
+			if ((*it) == &user) {
+				this->p_invitelist.erase(it); //remove the user from p_chops
+				break;
+			}
+		}
+	}
+}
+
+void Channel::removeFromMembers(User& user)
+{
+	if (this->p_members.findUserByNick(user.getNick())) {
+		for (std::vector<User*>::iterator it = this->p_members.begin(); \
+			it != this->p_members.end(); it++){
+			if ((*it) == &user) {
+				this->p_members.erase(it); //remove the user from p_chops
+				break;
+			}
+		}
+	}
 }
 
 void Channel::toggleInviteonly(bool status) {

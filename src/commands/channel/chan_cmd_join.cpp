@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 18:58:38 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:20:59 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 					user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(), toJoin->getName()));
 					return 1;
 				}
+			}
+			if (toJoin->getInviteonly() == true) {
+				if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {
+					user.send(ERR_INVITEONLYCHAN(server.getName(), user.getNick(), toJoin->getName()));
+					return 1;
+				}
+				toJoin->removeFromInvlist(user);
 			}
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + \
