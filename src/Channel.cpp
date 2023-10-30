@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/29 11:08:54 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/30 09:43:30 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ std::string Channel::getKey()
 	return this->p_key;
 }
 
+size_t Channel::getMaxusers()
+{
+	return this->p_maxusers;
+}
+
 void Channel::broadcastToChannel(std::string message, User* sender)
 {
 	for (size_t i = 0; i < p_members.size(); i++) {
@@ -176,14 +181,14 @@ void Channel::toggleKeyneeded(bool status, std::string key) {
 }
 
 void Channel::toggleUserlimit(bool status, std::string limitstr) {
-	std::stringstream ss(limitstr);
-    int limit;
-    ss >> limit;
-    if (ss.fail()) {
-        std::cout << "failed to convert user limit to int!" << std::endl;
-    }
-	//if limit is a crazy number (bigger than max connections?) do something
 	if (status == true) {
+		std::stringstream ss(limitstr);
+		size_t limit;
+		ss >> limit;
+		if (ss.fail()) {
+			std::cout << "failed to convert user limit to size_t!" << std::endl;
+		}
+		//if limit is a crazy number (bigger than max connections?) do something
 		this->p_userlimit = true;
 		this->p_maxusers = limit;
 	}

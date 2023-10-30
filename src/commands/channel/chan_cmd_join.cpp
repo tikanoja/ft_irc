@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/29 11:20:59 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/30 09:44:57 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	while (std::getline(ss, chan, ',')) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
-			//if chan full: ERR_CHANNELISFULL
-			//if invite only
-				//check channel invitelist for user
-					//if no match tell them off
-					//if yes match erase name from the list
+			if (toJoin->getUserlimit() == true && \
+				toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
+				user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(), toJoin->getName()));
+				return 1;
+			}
 			if (toJoin->getKeyneeded() == true) {
 				if (message.getParams().size() < 2 || \
 					message.getParams()[1] != toJoin->getKey()) {

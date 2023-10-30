@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/26 14:53:50 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 10:00:40 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	//check user permissions and send 482 & return 1 if necessary!
 	if (message.getParams().size() < 2) { //we need at least a chan & an user!
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
 		return 1;
@@ -58,8 +57,10 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
 			continue ;
 		}
-
-		//CHECK IF WE HAVE OPER ON THE CHANNEL!
+		if (chan->isChop(user) == false) {
+			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
+			continue ;
+		}
 
 		User* toKick = chan->getMembers()->findUserByNick(users[i]);
 		if (toKick == NULL) { //could we find the kickee on the channel ?

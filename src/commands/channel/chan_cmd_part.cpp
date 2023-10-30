@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_part.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 14:50:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 10:15:16 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 				else
 					partFrom->broadcastToChannel("\r\n", NULL);
 				partFrom->getMembers()->erase(it);
+				partFrom->removeFromChops(user);
 				if (partFrom->getMembers()->size() == 0) {
 					std::cout << "Channel is empty, deleting..." << std::endl;
 					server.getChannels().deleteChannel(partFrom);

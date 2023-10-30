@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/29 10:59:39 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/30 09:39:43 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class Channel
 		bool			getKeyneeded();
 		bool			getUserlimit();
 		std::string		getKey();
+		size_t			getMaxusers();
 
 		//setters
 		void			setTopic(std::string newTopic);
@@ -59,7 +60,7 @@ class Channel
 		std::string	p_name;
 		std::string p_topic;
 		std::string p_key;
-		int			p_maxusers;
+		size_t		p_maxusers;
 		Uvector		p_invitelist;
 		Uvector		p_members;
 		Uvector		p_chops;
