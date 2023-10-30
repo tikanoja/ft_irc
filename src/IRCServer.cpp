@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/29 11:26:26 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/30 10:24:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void IRCServer::initCommands() {
 		std::make_pair("PING", cmd_ping),
 		std::make_pair("PONG", cmd_pong),
 		std::make_pair("PRIVMSG", cmd_privmsg),
+		std::make_pair("NOTICE", cmd_notice),
 		std::make_pair("KILL", cmd_kill),
 		std::make_pair("JOIN", chan_cmd_join),
 		std::make_pair("PART", chan_cmd_part),

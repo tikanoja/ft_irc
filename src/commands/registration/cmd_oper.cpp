@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 17:12:30 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:42:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ int cmd_oper(IRCServer& server, User& user, Message& message){
 	// throw IRCServer::UserNotFound();
 	try {
 		server.getOperByNick(params[0]).setUser(&user);
-		std::cout << user.getIP() << std::endl;
-		std::cout << server.getOpers()[0].getIP() << std::endl;
 		user.setMode(IRCServer::Oper);
+		user.send(RPL_YOUREOPER(server.getName(), user.getNick()));
 		return 0;
 	} catch (std::exception & e){
 		user.send(ERR_NOOPERHOST(server.getName()));

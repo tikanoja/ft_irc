@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:24 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/27 15:12:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:48:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void sendToMask(IRCServer& server, User& user, Message& message, std::str
 		return ;
 	std::string msg = ":" + USER_ID(user.getNick(), user.getUserName(), server.getName()) +
 		" NOTICE " + target + " :" + message.getTrailing() + "\r\n";
-	server.broadcastToUsers(msg, &user, target);
+	server.broadcastToUsers(msg, &user, target.substr(1));
 }
 
 static void sendToChannel(IRCServer& server, User& user, Message& message, std::string const & target){
@@ -63,9 +63,9 @@ int cmd_notice(IRCServer& server, User& user, Message& message){
 			&& target.find('.') == std::string::npos)
 			sendToChannel(server, user, message, target);
 		else if ((user.getMode() & (IRCServer::oper | IRCServer::Oper))
-			&& (target[0] == '#' || target[0] == '$'))
+			&& (target[0] == '#' || target[0] == '$')){
 			sendToMask(server, user, message, target);
-		else
+		} else
 			sendToUser(server, user, message, target);
 	}
 	return 0;

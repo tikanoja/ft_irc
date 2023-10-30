@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 15:10:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 12:32:49 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ class IRCServer {
 
 	public:
 		enum e_uperm{
-			away = 0x0001,			// user is flagged as away;
-			wallops = 0x0002,		// user receives wallops;
-			invisible = 0x0004,		// marks a users as invisible;
-			restricted = 0x0008,	// restricted user connection;
-			oper = 0x0010,			// operator flag;
-			Oper = 0x0020,			// local operator flag;
-			server_notice = 0x0040,	// marks a user for receipt of server notices.
-			registered = 0x0080		// user has completed registration
+			away = 0x01,			// user is flagged as away;
+			wallops = 0x02,		// user receives wallops;
+			invisible = 0x04,		// marks a users as invisible;
+			restricted = 0x08,	// restricted user connection;
+			oper = 0x10,			// operator flag;
+			Oper = 0x20,			// local operator flag;
+			server_notice = 0x40,	// marks a user for receipt of server notices.
+			registered = 0x80		// user has completed registration
 		};
 
 		// class UserNotFound : public std::exception{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/29 11:08:54 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:00:25 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,58 +40,71 @@ Channel::~Channel(void)
 
 std::string Channel::getName()
 {
-	return this->p_name;
+	return p_name;
 }
-
 
 std::string Channel::getTopic()
 {
-	return this->p_topic;
+	return p_topic;
+}
+
+Channel::chanModes Channel::getMode()
+{
+	return p_mode;
+}
+
+std::string	Channel::getChanModes(){
+	static const chanModes permissions[] = {invisible, topic_rest, key, limit};
+	static const std::string characters = "itkl";
+	std::string result = "+";
+	chanModes mode = this->getMode();
+
+	for(size_t i = 0; i < characters.size(); i++) {
+		if (mode & permissions[i])
+			result += characters[i];
+	}
+	return result;
+}
+std::string		Channel::getChanStr(){
+	std::string modestr = "";
+	std::stringstream ss;
+	ss << p_maxusers;
+
+	if (this->p_key != "" && (this->getMode() & key))
+		modestr += p_key;
+	if (this->getMode() & limit)
+		modestr += ss.str();
+	return modestr;
 }
 
 void Channel::setTopic(std::string newTopic)
 {
-	this->p_topic = newTopic;
+	p_topic = newTopic;
 }
 
 Uvector* Channel::getMembers()
 {
-	return &this->p_members;
+	return &p_members;
 }
 
 Uvector* Channel::getChops()
 {
-	return &this->p_chops;
+	return &p_chops;
 }
 
 Uvector* Channel::getInvitelist()
 {
-	return &this->p_invitelist;
-}
-
-bool Channel::getTopicrestricted()
-{
-	return this->p_topicrestricted;
-}
-
-bool Channel::getInviteonly()
-{
-	return this->p_inviteonly;
-}
-
-bool Channel::getKeyneeded()
-{
-	return this->p_keyneeded;
+	return &p_invitelist;
 }
 
 bool Channel::getUserlimit()
 {
-	return this->p_userlimit;
+	return p_maxusers;
 }
 
 std::string Channel::getKey()
 {
-	return this->p_key;
+	return p_key;
 }
 
 void Channel::broadcastToChannel(std::string message, User* sender)
@@ -111,115 +124,176 @@ bool Channel::isChop(User& user)
 		return false;
 }
 
+void Channel::setKey(std::string key){
+	p_key = key;
+}
+
 void Channel::removeFromChops(User& user)
 {
-	if (isChop(user) == true) {
-		for (std::vector<User*>::iterator it = this->p_chops.begin(); \
-			it != this->p_chops.end(); it++){
-			if ((*it) == &user) {
-				this->p_chops.erase(it); //remove the user from p_chops
-				break;
-			}
+	for (std::vector<User*>::iterator it = this->p_chops.begin(); \
+		it != this->p_chops.end(); it++){
+		if ((*it) == &user) {
+			this->p_chops.erase(it); //remove the user from p_chops
+			break;
 		}
 	}
 }
 
 void Channel::removeFromInvlist(User& user)
 {
-	if (this->p_invitelist.findUserByNick(user.getNick())) {
-		for (std::vector<User*>::iterator it = this->p_invitelist.begin(); \
-			it != this->p_invitelist.end(); it++){
-			if ((*it) == &user) {
-				this->p_invitelist.erase(it); //remove the user from p_chops
-				break;
-			}
+
+	for (std::vector<User*>::iterator it = this->p_invitelist.begin(); \
+		it != this->p_invitelist.end(); it++){
+		if ((*it) == &user) {
+			this->p_invitelist.erase(it); //remove the user from p_chops
+			break;
 		}
 	}
 }
 
 void Channel::removeFromMembers(User& user)
 {
-	if (this->p_members.findUserByNick(user.getNick())) {
-		for (std::vector<User*>::iterator it = this->p_members.begin(); \
-			it != this->p_members.end(); it++){
-			if ((*it) == &user) {
-				this->p_members.erase(it); //remove the user from p_chops
-				break;
-			}
+	for (std::vector<User*>::iterator it = this->p_members.begin(); \
+		it != this->p_members.end(); it++){
+		if ((*it) == &user) {
+			this->p_members.erase(it); //remove the user from p_chops
+			break;
 		}
 	}
 }
 
-void Channel::toggleInviteonly(bool status) {
-	if (status == true)
-		this->p_inviteonly = true;
-	else
-		this->p_inviteonly = false;
-}
-
-void Channel::toggleTopicrestricted(bool status) {
-	if (status == true)
-		this->p_topicrestricted = true;
-	else
-		this->p_topicrestricted = false;
-}
-
-void Channel::toggleKeyneeded(bool status, std::string key) {
-	if (status == true) {
-		this->p_keyneeded = true;
-		this->p_key = key;
-	}
-	else {
-		this->p_keyneeded = false;
-		this->p_key = "";
-	}
-}
-
-void Channel::toggleUserlimit(bool status, std::string limitstr) {
+void Channel::setUserlimit(std::string limitstr) {
 	std::stringstream ss(limitstr);
-    int limit;
-    ss >> limit;
-    if (ss.fail()) {
-        std::cout << "failed to convert user limit to int!" << std::endl;
-    }
-	//if limit is a crazy number (bigger than max connections?) do something
-	if (status == true) {
-		this->p_userlimit = true;
-		this->p_maxusers = limit;
+	unsigned int limit;
+	ss >> limit;
+	if (ss.fail()) {
+		std::cout << "failed to convert user limit to int!" << std::endl;
 	}
-	else
-		this->p_userlimit = false;
-		//this->p_maxusers = default value ?
+		this->p_maxusers = limit;
 }
 
-void Channel::toggleChoprights(bool status, std::string target, Channel* chan) {
+void Channel::setChop(std::string target, Channel* chan) {
 	User* newChop = chan->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
 		std::cout << "new chop candidate not found on channel" << std::endl;
 		return;
 	}
-	
-	if (status == true) { //adding a new chop
-		if (chan->getChops()->findUserByNick(target) != NULL) {
-			std::cout << "the user is already a chop, no need to add" << std::endl;
-			return ;
-		}
-		chan->getChops()->push_back(newChop);
-		std::cout << "GZ new chop " << newChop->getNick() << std::endl;
+	if (chan->getChops()->findUserByNick(target) != NULL) {
+		std::cout << "the user is already a chop, no need to add" << std::endl;
+		return ;
 	}
-	else { //removing current chop
-		//make it so that the OG chop cannot get rights removed ?
-		if (chan->getChops()->findUserByNick(target) == NULL) {
-			std::cout << "the user is not a chop, no need to remove rights" << std::endl;
-			return ;
+	chan->getChops()->push_back(newChop);
+	std::cout << "GZ new chop " << newChop->getNick() << std::endl;
+}
+
+void Channel::unsetChop(std::string target, Channel* chan) {
+	User* newChop = chan->getMembers()->findUserByNick(target);
+	if (newChop == NULL) {
+		std::cout << "new chop candidate not found on channel" << std::endl;
+		return;
+	} 
+	if (chan->getChops()->findUserByNick(target) == NULL) {
+		std::cout << "the user is not a chop, no need to remove rights" << std::endl;
+		return ;
+	}
+	for (std::vector<User*>::iterator it = chan->getChops()->begin(); \
+		it != chan->getChops()->end(); it++){
+		if ((*it) == newChop) {
+			chan->getChops()->erase(it); //remove the user from p_chops!!!!
+			std::cout << "User " << newChop->getNick() << " just got their chops removed!" << std::endl;
+			break;
 		}
-		for (std::vector<User*>::iterator it = chan->getChops()->begin(); \
-			it != chan->getChops()->end(); it++){
-			if ((*it) == newChop) {
-				chan->getChops()->erase(it); //remove the user from p_chops!!!!
-				std::cout << "User " << newChop->getNick() << " just got their chops removed!" << std::endl;
-				break;
+	}
+}
+
+bool	Channel::setMode(chanModes mode){
+	if (!(p_mode & mode)){
+		p_mode = static_cast<Channel::chanModes>(p_mode | mode);
+		return true;
+	}
+	return false;
+}
+
+bool	Channel::unsetMode(chanModes mode){
+	if ((p_mode & mode)){
+		p_mode = static_cast<Channel::chanModes>(p_mode & ~mode);
+		return true;
+	}
+	return false;
+}
+
+std::string	Channel::setBatchMode(std::string const & modes, size_t *index){
+
+	std::string opsdone = "";
+	static const std::string characters = "itkol";
+
+	if (modes[*index] == '+')
+	{
+		for (; *index < modes.size(); (*index)++ ){
+			switch (modes[*index]){
+				case ('i'):
+					if (this->setMode(invisible))
+						opsdone += characters[0];
+					break;
+				case ('t'):
+					if (this->setMode(topic_rest))
+						opsdone += characters[1];
+					break;
+				case ('k'):
+					if (this->setMode(key))
+						opsdone += characters[2];
+					break;
+				case ('o'):
+					if (this->setMode(ops))
+						opsdone += characters[3];
+				case ('l'):
+					if (this->setMode(limit))
+						opsdone += characters[4];
+					break;
+				case ('-'):
+					return opsdone;
+				default:
+					continue;
 			}
 		}
 	}
+	return opsdone;
+}
+
+std::string		Channel::unsetBatchMode(std::string const & modes, size_t *index){
+
+	std::string opsdone = "";
+	static const std::string characters = "itkol";
+
+	if (modes[*index] == '-')
+	{
+		for ( ; *index < modes.size(); (*index)++ ){
+			switch (modes[*index]){
+				case ('i'):
+					if (this->unsetMode(invisible))
+						opsdone += characters[0];
+					break;
+				case ('t'):
+					if (this->unsetMode(topic_rest))
+						opsdone += characters[1];
+					break;
+				case ('k'):
+					if (this->unsetMode(key))
+						opsdone += characters[2];
+					break;
+				case ('o'):
+					if (this->unsetMode(ops))
+						opsdone += characters[3];
+				case ('l'):
+					if (this->unsetMode(limit))
+						opsdone += characters[4];
+					break;
+				case ('+'):
+					return opsdone;
+				default:
+					continue;
+			}
+		}
+	}
+	return opsdone;
 }
