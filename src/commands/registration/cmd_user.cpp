@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_user.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/26 14:46:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:35:42 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 //USER guest 0 * :Ronnie Reagan
 
 int cmd_user(IRCServer& server, User& user, Message& message){
-
+	if (user.getPassFlag() == false) {
+		user.send(ERR_PASSWDMISMATCH(server.getName()));
+		return 1;
+	}
 	// if (user.getNick().empty()){
 	// 	// user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 	// 	return 1;

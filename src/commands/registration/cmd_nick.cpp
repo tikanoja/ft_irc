@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_nick.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/27 13:07:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:35:21 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ bool	isNickvalid(std::string & nick){
 }
 
 int cmd_nick(IRCServer& server, User& user, Message& message){
-
+	if (user.getPassFlag() == false) {
+		user.send(ERR_PASSWDMISMATCH(server.getName()));
+		return 1;
+	}
 	std::string new_nick = message.getParams()[0];
 	std::cout << "Given NICK " << new_nick << " is empty " << std::boolalpha << new_nick.empty() << std::endl;
 	if (new_nick.empty()){
