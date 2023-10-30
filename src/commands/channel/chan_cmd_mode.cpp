@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_mode.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 13:13:56 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:59:35 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ std::string getChanModeParams(Channel* chan) {
 }
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
-	std::cout << "Handling chan modes..." << std::endl;
-	message.printContent();
-	
-	if (!(user.getMode() & IRCServer::registered)){ //are we registered?
+	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
 		return 1;

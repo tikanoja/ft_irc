@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 09:44:57 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:58:48 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 	REPLIES
 		RPL_TOPIC				//sent upon successful JOIN
 */
+
 int checkChannelName(std::string name) {
 	if (name.length() > 50)
 		return 1;
@@ -46,13 +47,11 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	
-	if (message.getParams().size() < 1) { //maybe when missing key as well?
+	if (message.getParams().size() < 1) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 		return 1;
 	}
-	
-	//if user has already joined max limit of channels: ERR_TOOMANYCHANNELS
+	//check channel max limit?
 	std::stringstream ss(message.getParams().front());
 	std::string chan;
 	while (std::getline(ss, chan, ',')) {
@@ -86,15 +85,13 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
 		} else { //CREATING NEW CHANNEL
-			//check if the channel name is valid! If not, send err_nosuchchannel(???)
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
 				return 1;
 			}
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
-			toJoin->getChops()->push_back(&user); //add channel creator to channel operators (add OG chanop flag ?)
-			//add chop to user?
+			toJoin->getChops()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + \
 			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}

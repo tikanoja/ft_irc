@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_part.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 10:15:16 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:08:51 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
 			continue ;
 		}
-		//check if user is present in the channel
 		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\
 		it != partFrom->getMembers()->end(); it++) {
 			if ((*it)->getNick() == user.getNick()) {
 				partFrom->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName(), NULL);
 				if (message.getTrailing() != "")
-					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n", NULL); //add userhost? add trailing message? check out log from dalnet
+					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n", NULL);
 				else
 					partFrom->broadcastToChannel("\r\n", NULL);
 				partFrom->getMembers()->erase(it);

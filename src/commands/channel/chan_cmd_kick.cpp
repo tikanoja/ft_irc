@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/30 13:47:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:05:38 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	if (message.getParams().size() < 2) { //we need at least a chan & an user!
+	if (message.getParams().size() < 2) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
 		return 1;
 	}
-
+	
 	std::vector<std::string> channels = split(message.getParams().front(), ',');
 	std::vector<std::string> users = split(message.getParams()[1], ',');
 	size_t limit;
@@ -49,11 +49,11 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		limit = users.size();
 	for (size_t i = 0; i < limit; i++) {
 		Channel* chan = server.getChannels().findChannel(channels[i]);
-		if (chan == NULL) { //does the channel they asked for exist ?
+		if (chan == NULL) {
 			user.send(ERR_NOSUCHCHANNEL(server.getName(), channels[i]));
 			continue ;
 		}
-		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) { //are we a part of that channel?
+		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) {
 			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
 			continue ;
 		}
@@ -63,18 +63,20 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		}
 
 		User* toKick = chan->getMembers()->findUserByNick(users[i]);
-		if (toKick == NULL) { //could we find the kickee on the channel ?
-			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
+		if (toKick == NULL) {
+			user.send(ERR_NOSUCHNICK(server.getName(), toKick->getNick(), "nick"));
 			continue ;
 		}
-		chan->broadcastToChannel(":" + user.getNick() + "!add_user_host_here KICK " + chan->getName() + " " + toKick->getNick(), NULL);
+		chan->broadcastToChannel(":" + user.getNick() + \
+		"!add_user_host_here KICK " + chan->getName() + \
+		" " + toKick->getNick(), NULL);
 		if (message.getTrailing() == "")
 			chan->broadcastToChannel("\r\n", NULL);
 		else
 			chan->broadcastToChannel(" " + message.getTrailing() + "\r\n", NULL);
 		for (std::vector<User*>::iterator it = chan->getMembers()->begin();\
 			it != chan->getMembers()->end(); it++) {
-			if ((*it)->getNick() == users[i]) {
+			if ((*it)->getNick() == toKick->getNick()) {
 				chan->getMembers()->erase(it);
 				break ;
 			}
