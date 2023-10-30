@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 09:43:30 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:18:28 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,9 @@ void Channel::toggleUserlimit(bool status, std::string limitstr) {
 		std::stringstream ss(limitstr);
 		size_t limit;
 		ss >> limit;
-		if (ss.fail()) {
+		if (ss.fail() || limit < 1 || limit > 2147483647) {
 			std::cout << "failed to convert user limit to size_t!" << std::endl;
+			return ;
 		}
 		//if limit is a crazy number (bigger than max connections?) do something
 		this->p_userlimit = true;

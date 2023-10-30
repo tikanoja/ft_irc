@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 09:27:20 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:13:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,35 @@ void execChanMode(IRCServer& server, User& user, Channel* chan, \
 	(void)modeparam;
 }
 
+std::string getChanModes(Channel* chan) {
+	std::string modes = "+";
+	if (chan->getTopicrestricted() == true)
+		modes += "t";
+	if (chan->getInviteonly() == true)
+		modes += "i";
+	if (chan->getUserlimit() == true)
+		modes += "l";
+	if (chan->getKeyneeded() == true)
+		modes += "k";
+	return modes;
+}
+
+std::string getChanModeParams(Channel* chan) {
+	std::string modeparams = "";
+	if (chan->getUserlimit() == true || chan->getKeyneeded() == true)
+		modeparams += " ";
+	if (chan->getUserlimit() == true) {
+		std::ostringstream oss;
+		oss << chan->getMaxusers();
+		modeparams += oss.str();
+		if (chan->getKeyneeded() == true)
+			modeparams += " ";
+	}
+	if (chan->getKeyneeded() == true)
+		modeparams += chan->getKey();
+	return modeparams;
+}
+
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	std::cout << "Handling chan modes..." << std::endl;
 	message.printContent();
@@ -89,9 +118,9 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	if (message.getParams().size() == 1) {
-		std::cout << "REQUESTED CHANMOD LIST" << std::endl;
-		//prepare a string of the channel modes
-		//send it back via 324
+		std::string modes = getChanModes(chan);
+		modes += getChanModeParams(chan);
+		user.send(RPL_CHANNELMODEIS(server.getName(), user.getNick(), chan->getName(), modes)); //mode & modeparams?
 		return 0;
 	}
 	if (chan->getChops()->findUserByNick(user.getNick()) == NULL) { //are we channel op?
