@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/30 10:00:40 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:47:34 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 				break ;
 			}
 		}
+		chan->removeFromChops(*toKick);
 	}
-
-	//if the user & channels do not match in size, send appropriate error?
 	return 0;
 }
 
