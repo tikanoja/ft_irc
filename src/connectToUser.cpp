@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/25 12:36:46 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:28:38 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,26 @@ int IRCServer::acceptClient() {
 	return (0);
 }
 
+void static cleanupChannels(IRCServer &server, User* user) {
+	for(std::vector<Channel*>::iterator it = server.getChannels().begin(); it != server.getChannels().end();){
+		if ((*it)->getInvitelist()->findUserByNick(user->getNick())) {//remove from invitelist
+			(*it)->removeFromInvlist(*user);
+			std::cout << "Disconnected user removed from invite list!" << std::endl;
+		}
+		if ((*it)->getMembers()->findUserByNick(user->getNick()) != NULL) { //they are on channel
+			(*it)->removeFromChops(*user); //remove from chops
+			(*it)->removeFromMembers(*user); //remove from members
+		}
+		if ((*it)->getMembers()->size() == 0) { //channel emptied
+			delete (*it);
+			std::vector<Channel*>::iterator itBackup = server.getChannels().erase(it);
+			it = itBackup;
+		}
+		else
+			it++;
+	}
+}
+
 void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	if (numbytes == 0)
 		std::cout << "Connection #" << fd_index << " closed." << std::endl;
@@ -108,6 +128,11 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	}
 	close(p_pfds[fd_index].fd);
 	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);
+	//channel cleanup!!!!!!
+		//check channels
+			//if present, remove from chops, invitelist, p_members
+	cleanupChannels(*this, userToRemove);
+	//correct order for these?
 	if (userToRemove)
 		delete userToRemove;
 	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());
