@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/30 17:05:38 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/31 09:57:32 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			}
 		}
 		chan->removeFromChops(*toKick);
+		if (chan->getMembers()->size() == 0) {
+				std::cout << "Channel is empty, deleting..." << std::endl;
+				server.getChannels().deleteChannel(chan);
+		}
 	}
 	return 0;
 }
