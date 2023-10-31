@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 13:54:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:00:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 */
 
 
-#define ALLCHANMODES "+- itkol"
+#define ALLCHANMODES "+- itkIol"
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	std::cout << "Handling chan modes..." << std::endl;
@@ -84,9 +84,9 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 		while (pos < params[i].size())
 		{
 			if (params[i][pos] == '+')
-				additions += server.setBatchMode(user, params[i], &pos);
+				additions += chan->setBatchMode(params[i], &pos);
 			else if (params[i][pos] == '-')
-				removals += server.unsetBatchMode(user, params[i], &pos);
+				removals += chan->unsetBatchMode(params[i], &pos);
 			else
 				pos++;
 		}

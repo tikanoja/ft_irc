@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_topic.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 18:27:40 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/31 08:39:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		}
 		
 		//Check operator! If they are not op, check if channel has mode t enabled
-		if (chan->getTopicrestricted() == true && chan->isChop(user) == false) {
+		if ((chan->getMode() & Channel::topic_rest) && chan->isChop(user) == false) {
 			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
 			return 1;
 		}

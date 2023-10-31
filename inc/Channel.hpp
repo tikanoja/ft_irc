@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 13:59:43 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:42:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ class Channel
 	public:
 
 		enum chanModes {
-			invisible = 0x01, 		// Set/remove Invite-only channel;
+			invite = 0x01, 		// Set/remove Invite-only channel;
 			topic_rest = 0x02, 		// Set/remove the restrictions of the TOPIC command to chanops
 			key = 0x04, 			// Set/remove the channel key (password)
-			ops = 0x08, 			// Give/take channel operator privilege
-			limit = 0x10 			// Set/remove the user limit to channel
+			secret = 0x08, 			// Set/remove the channel key (password)
+			ops = 0x10, 			// Give/take channel operator privilege
+			limit = 0x20 			// Set/remove the user limit to channel
 		};
 
 		Channel(const std::string name);

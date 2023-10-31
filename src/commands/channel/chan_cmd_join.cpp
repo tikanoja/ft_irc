@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/29 11:20:59 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/31 07:58:46 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				//check channel invitelist for user
 					//if no match tell them off
 					//if yes match erase name from the list
-			if (toJoin->getKeyneeded() == true) {
+			if (toJoin->getMode() & Channel::key) {
 				if (message.getParams().size() < 2 || \
 					message.getParams()[1] != toJoin->getKey()) {
 					user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(), toJoin->getName()));
 					return 1;
 				}
 			}
-			if (toJoin->getInviteonly() == true) {
+			if (toJoin->getMode() & Channel::invite) {
 				if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {
 					user.send(ERR_INVITEONLYCHAN(server.getName(), user.getNick(), toJoin->getName()));
 					return 1;

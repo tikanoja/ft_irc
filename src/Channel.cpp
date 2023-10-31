@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 14:00:25 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:46:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ Channel::chanModes Channel::getMode()
 }
 
 std::string	Channel::getChanModes(){
-	static const chanModes permissions[] = {invisible, topic_rest, key, limit};
+	static const chanModes permissions[] = {invite, topic_rest, key, limit};
 	static const std::string characters = "itkl";
 	std::string result = "+";
 	chanModes mode = this->getMode();
@@ -232,7 +232,7 @@ std::string	Channel::setBatchMode(std::string const & modes, size_t *index){
 		for (; *index < modes.size(); (*index)++ ){
 			switch (modes[*index]){
 				case ('i'):
-					if (this->setMode(invisible))
+					if (this->setMode(invite))
 						opsdone += characters[0];
 					break;
 				case ('t'):
@@ -245,10 +245,10 @@ std::string	Channel::setBatchMode(std::string const & modes, size_t *index){
 					break;
 				case ('o'):
 					if (this->setMode(ops))
-						opsdone += characters[3];
+						opsdone += characters[4];
 				case ('l'):
 					if (this->setMode(limit))
-						opsdone += characters[4];
+						opsdone += characters[5];
 					break;
 				case ('-'):
 					return opsdone;
@@ -270,7 +270,7 @@ std::string		Channel::unsetBatchMode(std::string const & modes, size_t *index){
 		for ( ; *index < modes.size(); (*index)++ ){
 			switch (modes[*index]){
 				case ('i'):
-					if (this->unsetMode(invisible))
+					if (this->unsetMode(invite))
 						opsdone += characters[0];
 					break;
 				case ('t'):
@@ -283,10 +283,10 @@ std::string		Channel::unsetBatchMode(std::string const & modes, size_t *index){
 					break;
 				case ('o'):
 					if (this->unsetMode(ops))
-						opsdone += characters[3];
+						opsdone += characters[4];
 				case ('l'):
 					if (this->unsetMode(limit))
-						opsdone += characters[4];
+						opsdone += characters[5];
 					break;
 				case ('+'):
 					return opsdone;
