@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 12:03:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:37:11 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd)
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 
 	p_mode = 0;
-	nickFlag = false;
-	userFlag = false;
-	passFlag = false;
-	welcomeFlag = false;
+	p_nickFlag = false;
+	p_userFlag = false;
+	p_passFlag = false;
+	p_welcomeFlag = false;
 }
 
 User::User()
@@ -161,18 +161,23 @@ void User::send(std::string str) {
 	this->getSendBuffer().addToBuffer(str.c_str());
 }
 
-void	User::setRegistrationFlag(int i, User& user, IRCServer& server) {
+void	User::setRegistrationFlag(int i, User& user, IRCServer& server)
+{
 	if (i == 1)
-		nickFlag = true;
+		p_nickFlag = true;
 	else if (i == 2)
-		userFlag = true;
+		p_userFlag = true;
 	else if (i == 3)
-		passFlag = true;
+		p_passFlag = true;
 
-	if (welcomeFlag == false && nickFlag == true && userFlag == true && passFlag == true) {
-		welcomeFlag = true;
+	if (p_welcomeFlag == false && p_nickFlag == true && p_userFlag == true && p_passFlag == true) {
+		p_welcomeFlag = true;
 		user.setMode(IRCServer::registered);
 		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
 	}
 }
 
+bool User::getPassFlag()
+{
+	return this->p_passFlag;
+}

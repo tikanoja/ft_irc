@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 08:00:57 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:57:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@
 #define ALLCHANMODES "+- itkIol"
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
-	std::cout << "Handling chan modes..." << std::endl;
-	message.printContent();
-	
-	if (!(user.getMode() & IRCServer::registered)){ //are we registered?
+	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
 		return 1;
@@ -59,7 +56,10 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	if (params.size() == 1) {
 		std::cout << "REQUESTED CHANMOD LIST" << std::endl;
 		user.send(RPL_CHANNELMODEIS(server.getName(), chan->getName(), chan->getChanModes(), chan->getChanStr()));
-		return 0;
+	}
+	if (chan == NULL) { //does the channel exist ?
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
+		return 1;
 	}
 	if (chan == NULL) { //does the channel exist ?
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), params.front()));

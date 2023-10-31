@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 13:35:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:59:12 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@
 # define RPL_WHOISCHANNELS(servername)(":" + servername + " 319 \r\n") //319 ?????
 # define RPL_LIST(servername, channel, n_visible, topic)(":" + servername + " 322 " + channel + " " + n_visible + " :" + topic + "\r\n") //322
 # define RPL_LISTEND(servername)(":" + servername + " 323 :End of LIST\r\n") //323
-# define RPL_CHANNELMODEIS(servername, channel, mode, mode_params)(":" + servername + " 324 " + channel + " " + mode + " " + mode_params + "\r\n") //324
+# define RPL_CHANNELMODEIS(servername, cannel, mode, mode_params)(":" + servername + " 324 " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
 # define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332

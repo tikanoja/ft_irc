@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/26 14:48:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:33:19 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ class User
 		std::string	const &	getUserName(void) const;
 		std::string	const &	getAwayMsg(void) const;
 
-		void	setIP(char const * ip);
-		void	setSocket(int socketfd);
-		bool	setMode(int mode);
-		void	setNick(std::string nickname);
-		void	setOldNick(std::string nickname);
-		bool	unsetMode(int mode);
-		void	setRealName(std::string realname);
-		void	setUserName(std::string username);
-		void	setAwayMsg(std::string const & comment);
-		void 	send(std::string str);
+		void				setIP(char const * ip);
+		void				setSocket(int socketfd);
+		bool				setMode(int mode);
+		void				setNick(std::string nickname);
+		void				setOldNick(std::string nickname);
+		bool				unsetMode(int mode);
+		void				setRealName(std::string realname);
+		void				setUserName(std::string username);
+		void				setAwayMsg(std::string const & comment);
+		void 				send(std::string str);
+		void				setRegistrationFlag(int i, User& user, IRCServer& server);
 
-		void	setRegistrationFlag(int i, User& user, IRCServer& server);
-
+		bool				getPassFlag();
 		CircularBuffer &	getRecvBuffer(void);
 		CircularBuffer &	getSendBuffer(void);
 		void				resetBuffers(void);
@@ -67,10 +67,10 @@ class User
 		CircularBuffer	p_recvBuffer;
 		CircularBuffer	p_sendBuffer;
 
-		bool			nickFlag;
-		bool			userFlag;
-		bool			passFlag;
-		bool			welcomeFlag;
+		bool			p_nickFlag;
+		bool			p_userFlag;
+		bool			p_passFlag;
+		bool			p_welcomeFlag;
 };
 
 std::ostream & operator<<( std::ostream & o, User const & user);

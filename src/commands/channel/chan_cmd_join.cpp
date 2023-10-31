@@ -6,9 +6,10 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 07:58:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:51:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../../inc/Commands.hpp"
 /*
@@ -27,6 +28,7 @@
 	REPLIES
 		RPL_TOPIC				//sent upon successful JOIN
 */
+
 int checkChannelName(std::string name) {
 	if (name.length() > 50)
 		return 1;
@@ -46,23 +48,21 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	
-	if (message.getParams().size() < 1) { //maybe when missing key as well?
+	if (message.getParams().size() < 1) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 		return 1;
 	}
-	
-	//if user has already joined max limit of channels: ERR_TOOMANYCHANNELS
+	//check channel max limit?
 	std::stringstream ss(message.getParams().front());
 	std::string chan;
 	while (std::getline(ss, chan, ',')) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
-			//if chan full: ERR_CHANNELISFULL
-			//if invite only
-				//check channel invitelist for user
-					//if no match tell them off
-					//if yes match erase name from the list
+			if (toJoin->getUserlimit() == true && \
+				toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
+				user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(), toJoin->getName()));
+				return 1;
+			}
 			if (toJoin->getMode() & Channel::key) {
 				if (message.getParams().size() < 2 || \
 					message.getParams()[1] != toJoin->getKey()) {
@@ -86,15 +86,13 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
 		} else { //CREATING NEW CHANNEL
-			//check if the channel name is valid! If not, send err_nosuchchannel(???)
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
 				return 1;
 			}
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
-			toJoin->getChops()->push_back(&user); //add channel creator to channel operators (add OG chanop flag ?)
-			//add chop to user?
+			toJoin->getChops()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + \
 			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/31 08:42:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:51:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ class Channel
 		chanModes		getMode();
 		std::string		getChanModes();
 		std::string		getChanStr();
+		size_t			getMaxusers();
 
 		//setters
 		void			setTopic(std::string newTopic);

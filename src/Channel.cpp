@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/31 08:46:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 08:53:58 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ std::string Channel::getKey()
 	return p_key;
 }
 
+size_t Channel::getMaxusers()
+{
+	return this->p_maxusers;
+}
+
 void Channel::broadcastToChannel(std::string message, User* sender)
 {
 	for (size_t i = 0; i < p_members.size(); i++) {
@@ -169,7 +174,7 @@ void Channel::setUserlimit(std::string limitstr) {
 	if (ss.fail()) {
 		std::cout << "failed to convert user limit to int!" << std::endl;
 	}
-		this->p_maxusers = limit;
+	this->p_maxusers = limit;
 }
 
 void Channel::setChop(std::string target, Channel* chan) {
