@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/31 09:57:32 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:34:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 
 		User* toKick = chan->getMembers()->findUserByNick(users[i]);
 		if (toKick == NULL) {
-			user.send(ERR_NOSUCHNICK(server.getName(), toKick->getNick(), "nick"));
+			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
 			continue ;
 		}
 		chan->broadcastToChannel(":" + user.getNick() + \
