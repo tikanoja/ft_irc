@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_modt.cpp                                       :+:      :+:    :+:   */
+/*   cmd_motd.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:16:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:19:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:24:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int cmd_motd(IRCServer& server, User& user, Message& message){
 	return 0;
 }
 
-int cmd_motd(IRCServer& server, User& user){
+int motd(IRCServer& server, User& user){
 
 	if (user.getMode() & IRCServer::registered)
 	{
