@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/31 09:58:16 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:08:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 				std::cout << "Quitting user removed from chops!" << std::endl;
 			}
 			(*it)->removeFromMembers(user);
+			(*it)->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " QUIT", &user);
+			if (message.getTrailing().empty())
+				(*it)->broadcastToChannel("\r\n", &user);
+			else
+				(*it)->broadcastToChannel(" :" + message.getTrailing() + "\r\n", &user);
 			std::cout << "Quitting user removed from channel members!" << std::endl;
 		}
 		if ((*it)->getMembers()->size() == 0) {
