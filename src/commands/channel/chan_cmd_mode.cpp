@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 09:19:55 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:41:20 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@
 
 #define ALLCHANMODES "+-itkol"
 
-bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
+static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
 	Channel * chan, std::vector<std::string> const & params);
 	
-void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
 	std::string removals, std::vector<size_t> indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){

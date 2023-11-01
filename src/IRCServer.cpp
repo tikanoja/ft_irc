@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 10:24:08 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:45:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ int IRCServer::pollingRoutine() {
 		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 50)) == -1) //!!!!!!!!!!!! TIMEOUT
 			return (-1);
 		for (nfds_t i = 0; i < p_fd_count; i++) {
-			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {
+			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
 				if (i == 0) { //Listener has a client in accept queue
 					if (acceptClient())
 						continue ;
@@ -232,8 +232,6 @@ int IRCServer::pollingRoutine() {
 						continue ;
 				} else if (p_pfds[i].revents & POLLOUT) { //A client has sent us a message, add to buffer!
 					std::cout << "Ready to receive!" << std::endl;
-				} else if (p_pfds[i].revents & POLLHUP) {
-					std::cout << "They hang up!" << std::endl;
 				} else {
 					std::cout << "Polling invalid / error!" << std::endl;
 					std::cout << "p_fd_count: " << p_fd_count << std::endl;
