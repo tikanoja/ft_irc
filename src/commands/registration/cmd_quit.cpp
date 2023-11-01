@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_quit.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/29 11:29:44 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 09:08:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 
 	//search channels
 	for (std::vector<Channel*>::iterator it = server.getChannels().begin(); \
-		it != server.getChannels().end(); it++){ //iterate thru chans
+		it != server.getChannels().end();){ //iterate thru chans
 		if ((*it)->getInvitelist()->findUserByNick(user.getNick())) {//remove from invitelist
 			(*it)->removeFromInvlist(user);
 			std::cout << "Quitting user removed from invite list!" << std::endl;
@@ -29,7 +29,21 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 				std::cout << "Quitting user removed from chops!" << std::endl;
 			}
 			(*it)->removeFromMembers(user);
+			(*it)->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " QUIT", &user);
+			if (message.getTrailing().empty())
+				(*it)->broadcastToChannel("\r\n", &user);
+			else
+				(*it)->broadcastToChannel(" :" + message.getTrailing() + "\r\n", &user);
 			std::cout << "Quitting user removed from channel members!" << std::endl;
+		}
+		if ((*it)->getMembers()->size() == 0) {
+			delete (*it);
+			std::vector<Channel*>::iterator itBackup = server.getChannels().erase(it);
+			it = itBackup;
+			std::cout << "Quit: channel empty, deleted channel!" << std::endl;
+		}
+		else {
+			it++;
 		}
 	}
 

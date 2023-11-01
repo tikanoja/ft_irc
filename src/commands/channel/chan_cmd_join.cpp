@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 08:51:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 10:02:53 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,25 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			if (toJoin->getUserlimit() == true && \
 				toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
 				user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(), toJoin->getName()));
-				return 1;
+				continue ;
 			}
 			if (toJoin->getMode() & Channel::key) {
 				if (message.getParams().size() < 2 || \
 					message.getParams()[1] != toJoin->getKey()) {
 					user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(), toJoin->getName()));
-					return 1;
+					continue ;
 				}
 			}
 			if (toJoin->getMode() & Channel::invite) {
 				if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {
 					user.send(ERR_INVITEONLYCHAN(server.getName(), user.getNick(), toJoin->getName()));
-					return 1;
+					continue ;
 				}
 				toJoin->removeFromInvlist(user);
+			}
+			if (toJoin->getMembers()->findUserByNick(user.getNick()) != NULL) {
+				user.send(ERR_USERONCHANNEL(server.getName(), user.getNick(), toJoin->getName()));
+				continue ;
 			}
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + user.getNick() + \
@@ -88,7 +92,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		} else { //CREATING NEW CHANNEL
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
-				return 1;
+				continue ;
 			}
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
