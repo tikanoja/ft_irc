@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:16:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:46:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:04:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ Uvector::Uvector(Uvector const& src)
 Uvector::~Uvector()
 {}
 
-Uvector& Uvector::operator=(Uvector const & rhs)
-{
+Uvector& Uvector::operator=(Uvector const & rhs){
+	
 	if (this != &rhs)
 		copy(rhs.begin(), rhs.end(), this->begin());
 	return *this;
@@ -40,8 +40,8 @@ std::string Uvector::toIRCLower(std::string const & str) const {
 	return (result);
 }
 
-User*		Uvector::findUserBySocket(int const socket_fd) const
-{
+User*		Uvector::findUserBySocket(int const socket_fd) const{
+
 	for (std::vector<User*>::const_iterator it = this->begin(); it != this->end(); it++){
 		if ((*it)->getSocket() == socket_fd)
 			return (*it);
@@ -49,8 +49,8 @@ User*		Uvector::findUserBySocket(int const socket_fd) const
 	return NULL;
 }
 
-User*		Uvector::findUserByNick(std::string const & nick) const
-{
+User*		Uvector::findUserByNick(std::string const & nick) const{
+	
 	for (std::vector<User*>::const_iterator it = this->begin(); it != this->end(); it++){
 		if (toIRCLower((*it)->getNick()) == toIRCLower(nick))
 			return (*it);

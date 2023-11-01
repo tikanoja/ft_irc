@@ -6,13 +6,14 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:41:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:00:46 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/IRCServer.hpp"
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
+	
 	char buf[MAXDATASIZE];
 	memset(buf, '\0', MAXDATASIZE);
 	ssize_t numbytes;
@@ -28,8 +29,8 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	return (0);
 }
 
-
 int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
+	
 	if (user->getRecvBuffer().findCRLF() == -1) {
 		return (0);
 	}
@@ -42,6 +43,7 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 }
 
 int IRCServer::checkSendBuffer(User* user) {
+	
 	if (user->getSendBuffer().emptyCheck() == 0) {
 		return 0;
 	} 

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:46:58 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:21:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../../inc/Reply.hpp"
 
 User::User(int const socket_fd, char const * ipaddress, std::string host) : p_socket_fd(socket_fd){
-	// std::cout << "User param constructor called" << std::endl;
+
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 	p_host = host;
 
@@ -64,6 +64,7 @@ void	User::setSocket(int socketfd){
 }
 
 void	User::setNick(std::string nickname){
+		p_oldNick = p_nickname;
 		p_nickname = nickname.substr(0, 9);
 }
 
@@ -170,6 +171,7 @@ void	User::setRegistrationFlag(int i, User& user, IRCServer& server)
 		p_welcomeFlag = true;
 		user.setMode(IRCServer::registered);
 		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+		motd(server, user);
 	}
 }
 

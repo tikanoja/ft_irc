@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:23:55 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:03:52 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@
 # define RPL_INFO(servername, string)(":" + servername + " 371 :" + string + "\r\n") //371
 # define RPL_MOTD(servername, text)(":" + servername + " 372 :- " + text + "\r\n") //372
 # define RPL_ENDOFINFO(servername)(":" + servername + " 374 :End of INFO list\r\n") //374
-# define RPL_MOTDSTART(servername)(":" + servername + " 375 :- " + server + " Message of the day - \r\n") //375
+# define RPL_MOTDSTART(servername)(":" + servername + " 375 :- " + servername + " Message of the day - \r\n") //375
 # define RPL_ENDOFMOTD(servername)(":" + servername + " 376 :End of MOTD command\r\n") //376
 # define RPL_YOUREOPER(servername, nick)(":" + servername + " 381 " + nick + " :You are now an IRC operator\r\n") //381
 # define RPL_REHASHING(servername)(":" + servername + " 382 " + config + "file :Rehashing\r\n") //382

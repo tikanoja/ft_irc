@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 10:49:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:20:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int cmd_user(IRCServer& server, User& user, Message& message);
 int cmd_mode(IRCServer& server, User& user, Message& message);
 int cmd_quit(IRCServer& server, User &user, Message &message);
 int cmd_away(IRCServer& server, User &user, Message &message);
-
+int motd(IRCServer& server, User& user);
+int cmd_motd(IRCServer& server, User& user, Message& message);
 
 // Operator functions
 int cmd_kill(IRCServer& server, User &user, Message &message);

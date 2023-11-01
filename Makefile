@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/01 14:45:24 by djagusch         ###   ########.fr        #
+#    Updated: 2023/11/01 16:15:13 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = c++
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
 	-Wconversion -Wshadow -I $I -g -fsanitize=address -static-libsan
 
-SRC_FILES = CircularBuffer \
+SRC_FILES = circularBuffer \
 			User \
 			Uvector \
 			Cvector \
@@ -30,6 +30,7 @@ SRC_FILES = CircularBuffer \
 			IRCServer \
 			handleIO \
 			Channel \
+			ChannelBatchMode \
 			connectToUser \
 			handleUser \
 			executeCommand \
@@ -39,6 +40,7 @@ SRC_FILES = CircularBuffer \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
+			cmd_motd \
 			cmd_oper \
 			cmd_quit \
 			cmd_ping \
@@ -57,7 +59,7 @@ SRC_FILES = CircularBuffer \
 			chan_cmd_mode \
 			Logger
 
-INC_FILES = CircularBuffer \
+INC_FILES = circularBuffer \
 			Logger \
 			User \
 			Uvector \

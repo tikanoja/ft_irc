@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:12:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:08:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,47 @@
 
 enum CheckType { CHECK_NICK, CHECK_IP, CHECK_PW };
 
-static bool checkOpers(std::vector<Operator> const & opers, std::string const & input, CheckType checkType){
-	for (std::vector<Operator>::const_iterator it = opers.begin(); it != opers.end(); ++it){
+static bool checkOpers(std::vector<Operator> const & opers,
+	std::string const & input, CheckType checkType);
+	
+static bool hasOperAccount(IRCServer const & server, User & user,
+	std::vector<std::string> const & params);
+
+
+int cmd_oper(IRCServer& server, User& user, Message& message){
+
+	if (!(user.getMode() & IRCServer::registered)){
+		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
+		return 1;
+	}
+	std::vector<std::string> const & params = message.getParams();
+	if (params.size() < 2 || params[0].empty() || params[1].empty()){
+		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
+		server.log("Refused " + user.getNick() + " from becoming oper");
+		return 1;
+	}
+	if (!hasOperAccount(server, user, params))
+		server.log("Refused " + user.getNick() + " from becoming oper");
+		return 1;
+	try {
+		server.getOperByNick(params[0]).setUser(&user);
+		user.setMode(IRCServer::Oper);
+		user.send(RPL_YOUREOPER(server.getName(), user.getNick()));
+		server.log("Set " + user.getNick() + " to oper");
+		return 0;
+	} catch (std::exception & e){
+		user.send(ERR_NOOPERHOST(server.getName()));
+		server.log("Refused " + user.getNick() + " from becoming oper");
+		return 1;
+	}
+}
+
+static bool checkOpers(std::vector<Operator> const & opers,
+	std::string const & input, CheckType checkType){
+
+	for (std::vector<Operator>::const_iterator it = opers.begin();
+		it != opers.end(); ++it){
+			
 		std::string toCompare;
 		switch (checkType){
 			case CHECK_NICK:
@@ -34,7 +73,9 @@ static bool checkOpers(std::vector<Operator> const & opers, std::string const & 
 	return false;
 }
 
-static bool hasOperAccount(IRCServer const & server, User & user, std::vector<std::string> const & params){
+static bool hasOperAccount(IRCServer const & server, User & user,
+	std::vector<std::string> const & params){
+
 	std::vector<Operator> const & opers = server.getOpers();
 
 	if (!checkOpers(opers, params[0], CHECK_NICK)){
@@ -50,28 +91,4 @@ static bool hasOperAccount(IRCServer const & server, User & user, std::vector<st
 		return false;
 	}
 	return true;
-}
-
-int cmd_oper(IRCServer& server, User& user, Message& message){
-
-	if (!(user.getMode() & IRCServer::registered)){
-		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
-		return 1;
-	}
-	std::vector<std::string> const & params = message.getParams();
-	if (params.size() < 2 || params[0].empty() || params[1].empty()){
-		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
-		return 1;
-	}
-	if (!hasOperAccount(server, user, params))
-		return 1;
-	try {
-		server.getOperByNick(params[0]).setUser(&user);
-		user.setMode(IRCServer::Oper);
-		user.send(RPL_YOUREOPER(server.getName(), user.getNick()));
-		return 0;
-	} catch (std::exception & e){
-		user.send(ERR_NOOPERHOST(server.getName()));
-		return 1;
-	}
 }

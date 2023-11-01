@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/23 18:37:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:31:36 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int cmd_away(IRCServer& server, User &user, Message &message){
 
-
-	std::cout << "In AWAY" << std::endl;
-	
 	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
@@ -30,6 +27,7 @@ int cmd_away(IRCServer& server, User &user, Message &message){
 		user.setMode(IRCServer::away);
 	}
 	user.setAwayMsg(message.getTrailing());
+	server.log(user.getNick() + " was set as away");
 
 	return 0;
 }

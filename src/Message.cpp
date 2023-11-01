@@ -6,11 +6,11 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:42:26 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:04:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/Message.hpp"
+#include "../inc/Message.hpp"
 
 Message::Message()
 {}
@@ -62,16 +62,15 @@ void Message::printContent()
 	std::cout << "Trailing: " << this->p_trailing << "$" << std::endl;
 }
 
-Message::Message(Message const& src)
-{
+Message::Message(Message const& src){
 	*this = src; 
 }
 
 Message::~Message()
 {}
 
-Message& Message::operator=(Message const& rhs)
-{
+Message& Message::operator=(Message const& rhs){
+	
 	if(this != &rhs)
 	{
 		p_command = rhs.p_command;
@@ -83,6 +82,7 @@ Message& Message::operator=(Message const& rhs)
 }
 
 std::string Message::combineParams() {
+	
 	std::string combinedParams;
 	for (size_t i = 0; i < p_params.size(); i++) {
 		combinedParams += p_params[i];
@@ -93,6 +93,7 @@ std::string Message::combineParams() {
 }
 
 const char* Message::toString() {
+	
 	std::string temp = "";
 	if (p_prefix != "") {
 		temp = ":";
@@ -123,25 +124,31 @@ const char* Message::toString() {
 }
 
 std::string const &	Message::getPrefix() const{
+
 	return p_prefix;
 }
 
 std::vector<std::string> const &	Message::getParams() const {
+
 	return p_params;
 }
 
 std::string const &	Message::getTrailing() const {
+
 	return p_trailing;
 }
 
 User const *	Message::getSender() const {
+	
 	return p_sender;
 }
 
 User const *	Message::getRecipient() const {
+
 	return p_recipient;
 }
 
 std::string const &	Message::getCommand() const {
+	
 	return p_command;
 }

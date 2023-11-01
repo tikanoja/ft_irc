@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:13:17 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:52:18 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <arpa/inet.h> //inet
 # include <sys/types.h> //types needed for socket() functions
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
-# include "CircularBuffer.hpp"
+# include "circularBuffer.hpp"
 # include "Uvector.hpp"
 # include "Cvector.hpp"
 # include "Message.hpp"

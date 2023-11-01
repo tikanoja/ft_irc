@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:44:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:51:51 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <string>
 # include <netinet/in.h>
-# include "../inc/CircularBuffer.hpp"
+# include "../inc/circularBuffer.hpp"
 
 class IRCServer;
 

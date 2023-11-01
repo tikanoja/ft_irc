@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:41:32 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:01:04 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 
 bool IRCServer::getUserMode(User & user, e_uperm mode) const{
-		if (!user.getNick().empty())
-			return p_users.findUserByNick(user.getNick())->getMode() & mode;
-		return p_users.findUserBySocket(user.getSocket())->getMode() & mode;
+	
+	if (!user.getNick().empty())
+		return p_users.findUserByNick(user.getNick())->getMode() & mode;
+	return p_users.findUserBySocket(user.getSocket())->getMode() & mode;
 }
 
 void IRCServer::setUserMode(User & user, e_uperm mode){
-		if (user.getNick() == "")
-				p_users.findUserByNick(user.getNick())->setMode(mode);
-			p_users.findUserBySocket(user.getSocket())->setMode(mode);
+
+	if (user.getNick() == "")
+			p_users.findUserByNick(user.getNick())->setMode(mode);
+		p_users.findUserBySocket(user.getSocket())->setMode(mode);
 }
 
 void	IRCServer::unsetUserMode(User & user, e_uperm mode){
-		if (user.getNick() == "")
-				p_users.findUserByNick(user.getNick())->unsetMode(mode);
-			p_users.findUserBySocket(user.getSocket())->unsetMode(mode);
+	
+	if (user.getNick() == "")
+			p_users.findUserByNick(user.getNick())->unsetMode(mode);
+		p_users.findUserBySocket(user.getSocket())->unsetMode(mode);
 }
 
 std::string	IRCServer::getModeStr(User const & user){
+	
 	static const e_uperm permissions[] = {away, wallops, invisible, restricted, oper, Oper, server_notice};
 	static const std::string characters = "awiroOs";
 	std::string result = "+";

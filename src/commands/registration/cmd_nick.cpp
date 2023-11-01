@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:14:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:05:50 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,7 @@
 
 #define NICKAPPENDICES "_123456789"
 
-// std::string changeNick(IRCServer const &server, std::string const & nick){
-
-// 	for (size_t i = 0; i < MAXCLIENTS; i++)
-// 	{
-// 		std::string new_nick = nick.substr(0, UNAMELEN - 1).append(1, NICKAPPENDICES[i]);
-// 		if (!server.getUsers().findUserByNick(new_nick))
-// 			return new_nick;
-// 	}
-// 	return "";
-// }
-
-bool	isNickvalid(std::string& nick){
-
-	if (nick[0] == '$' || nick[0] == ':' || nick[0] == '#' || nick[0] == '+'){
-		return false;
-	}
-	if (nick.find_first_of(",*?! @.", 0) != std::string::npos){
-		return false;
-	}
-	return true;
-}
+static bool isNickvalid(std::string& nick);
 
 int cmd_nick(IRCServer& server, User& user, Message& message){
 	if (user.getPassFlag() == false) {
@@ -56,12 +36,19 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NICKNAMEINUSE(server.getName(), new_nick));
 			return 1;
 	}
-	if (server.isBlocked(new_nick)){
-		user.send(ERR_UNAVAILRESOURCE(server.getName(),
-			new_nick, "nick"));
-		return 1;
-	}
+	server.log("Changed nickname " + user.getNick() + "->" + new_nick);
 	user.setNick(new_nick);
 	user.setRegistrationFlag(1, user, server);
 	return 0;
+}
+
+static bool isNickvalid(std::string& nick){
+
+	if (nick[0] == '$' || nick[0] == ':' || nick[0] == '#' || nick[0] == '+'){
+		return false;
+	}
+	if (nick.find_first_of(",*?! @.", 0) != std::string::npos){
+		return false;
+	}
+	return true;
 }

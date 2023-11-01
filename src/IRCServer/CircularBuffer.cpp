@@ -1,4 +1,4 @@
-#include "../../inc/CircularBuffer.hpp"
+#include "../../inc/circularBuffer.hpp"
 
 CircularBuffer::CircularBuffer() : p_head(0), p_tail(0) {
 	p_buffer = new unsigned char[MAXDATASIZE * 2];
@@ -56,7 +56,7 @@ void CircularBuffer::addToBuffer(const char* buf) {
 
 int CircularBuffer::findCRLF() const {
 	for (int i = p_tail; p_buffer[i] != '\0'; i++) {
-		if (p_buffer[i] == '\r' || p_buffer[i] == '\n')// || (p_buffer[i] == '\r' && p_buffer[i + 1] == '\n'))
+		if (p_buffer[i] == '\r' || p_buffer[i] == '\n')
 			return (i);
 	}
 	return (-1);
@@ -64,7 +64,7 @@ int CircularBuffer::findCRLF() const {
 
 std::string CircularBuffer::extractBuffer() {
 	std::string bufferString;
-	while (p_tail != p_head) { //calculating len of the buffered msg
+	while (p_tail != p_head) {
 		if (p_tail == MAXDATASIZE * 2 - 1)
 			p_tail = 0;
 		bufferString.push_back(static_cast<char>(p_buffer[p_tail]));
@@ -78,8 +78,8 @@ std::string CircularBuffer::extractBuffer() {
 	}
 
 	size_t index = 0;
-    while ((index = bufferString.find("^D", index)) != std::string::npos) // find "^D"
-        bufferString.replace(index, 2, ""); //replace "^D" with ""
+    while ((index = bufferString.find("^D", index)) != std::string::npos)
+        bufferString.replace(index, 2, "");
 
 	return (bufferString);
 }
@@ -91,8 +91,6 @@ void CircularBuffer::clear() {
 }
 
 void CircularBuffer::printbuf() {
-	std::cout << "Tail is at: " << p_tail << ", Head is at: " << p_head << std::endl;
-	std::cout << "In buffer: ";
 	for (int i = p_tail; i != p_head; i++) {
 		if (i == MAXDATASIZE * 2 - 1) {
 			i = 0;

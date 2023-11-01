@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:06 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/01 14:46:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:45:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ std::string Cvector::toIRCLower(std::string const & str) const {
 	return (result);
 }
 
-Channel*		Cvector::findChannel(std::string const & name) const
+Channel* Cvector::findChannel(std::string const & name) const
 {
-	for (std::vector<Channel*>::const_iterator it = this->begin(); it != this->end(); it++){
+	for (std::vector<Channel*>::const_iterator it = this->begin();
+		it != this->end(); it++){
 		if (toIRCLower((*it)->getName()) == toIRCLower(name))
 			return (*it);
 	}
@@ -56,11 +57,11 @@ Channel* Cvector::createChannel(std::string const & name)
 
 void Cvector::deleteChannel(Channel* toDelete)
 {
-	for (std::vector<Channel*>::iterator it = this->begin(); it != this->end(); it++){
+	for (std::vector<Channel*>::iterator it = this->begin();
+		it != this->end(); it++){
 		if ((*it) == toDelete) {
-			delete *it; //delete channel
-			it = this->erase(it); //remove channel from vectorx
-			std::cout << "Channel removed from vector and deleted!" << std::endl;
+			delete *it;
+			it = this->erase(it); 
 			break;
 		}
 	}

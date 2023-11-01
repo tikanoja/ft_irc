@@ -6,16 +6,16 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:14:29 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:41:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:03:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/Logger.hpp"
+#include "../inc/Logger.hpp"
 
-Logger::Logger()
-{}
+Logger::Logger(){}
 
 Logger::Logger(char const * file){
+
 	p_outstream.open(file, std::fstream::out);
 	if (!p_outstream.is_open() || !p_outstream.good()){
 		std::cerr << "Error initialising Logger" << std::endl;
@@ -25,22 +25,21 @@ Logger::Logger(char const * file){
 		p_displayTimestamp();
 }
 
-Logger::Logger(Logger const& src)
-{
+Logger::Logger(Logger const& src){
+
 	*this = src;
 }
 
-Logger::~Logger()
-{}
+Logger::~Logger(){}
 
-Logger& Logger::operator=(Logger const& rhs)
-{
+Logger& Logger::operator=(Logger const& rhs){
 	if(this != &rhs)
 		;
 	return *this;
 }
 
 void Logger::p_displayTimestamp(){
+	
 	std::time_t p_cur_time = std::time(0);
 	std::tm* now = std::localtime(&p_cur_time);
 
@@ -55,6 +54,7 @@ void Logger::p_displayTimestamp(){
 }
 
 void	Logger::log(std::string const str){
+	
 	p_displayTimestamp();
 	p_outstream << str << "\n";
 }

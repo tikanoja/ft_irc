@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:14:08 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:32:00 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.send(ERR_PASSWDMISMATCH(server.getName()));
 		return 1;
 	}
-	// if (user.getNick().empty()){
-	// 	// user.send(ERR_NONICKNAMEGIVEN(server.getName()));
-	// 	return 1;
-	// }
+	if (user.getNick().empty()){
+		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
+		return 1;
+	}
 	if (message.getParams()[2].empty() || message.getTrailing().empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
@@ -40,6 +40,6 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.setMode(IRCServer::invisible);
 
 	user.setRegistrationFlag(2, user, server);
-
+	server.log(user.getNick() + " was registered");
 	return 0;
 }

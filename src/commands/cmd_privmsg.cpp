@@ -3,17 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/29 11:33:08 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 16:00:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Commands.hpp"
 #include "../inc/Utils.hpp"
 
+
+static void sendToUser(IRCServer& server, User& user, Message& message,
+	std::string const & target);
+
+static void sendToMask(IRCServer& server, User& user, Message& message,
+	std::string const & target);
+
+static void sendToChannel(IRCServer& server, User& user, Message& message,
+	std::string const & target);
+
+int cmd_privmsg(IRCServer& server, User& user, Message& message){
+	
+	if (!(user.getMode() & IRCServer::registered)){
+		user.send(ERR_NOTREGISTERED(server.getName(),
+		message.getCommand()));
+		return 1;
+	}
+
+	std::vector<std::string> recipients = split(message.getParams()[0], ',');
+	size_t num_recipients = recipients.size();
+
+	for (size_t i = 0; i < num_recipients; i++){
+		std::string target = recipients[i];
+		if (target == "") {
+			user.send(ERR_NORECIPIENT(server.getName(),
+			message.getCommand()));
+			continue ;
+		}
+		if (message.getTrailing().empty()) {
+			user.send(ERR_NOTEXTTOSEND(server.getName()));
+			continue ;
+		}
+		if ((target[0] == '#' || target[0] == '&' || target[0] == '!' || target[0] == '+') &&
+			target.find('.') == std::string::npos)
+			sendToChannel(server, user, message, target);
+		else if ((user.getMode() & (IRCServer::oper | IRCServer::Oper))
+			&& (target[0] == '#' || target[0] == '$'))
+			sendToMask(server, user, message, target);
+		else
+			sendToUser(server, user, message, target);
+	}
+	return 0;
+}
+
 static void sendToUser(IRCServer& server, User& user, Message& message, std::string const & target){
+	
 	User* recipient = server.getUsers().findUserByNick(target);
 	if (recipient == NULL) {
 		user.send(ERR_NOSUCHNICK(server.getName(),
@@ -57,37 +102,4 @@ static void sendToChannel(IRCServer& server, User& user, Message& message, std::
 	std::string msg = ":" + USER_ID(user.getNick(), user.getUserName(), server.getName()) +
 		" PRIVMSG " + target + " :" + message.getTrailing() + "\r\n";
 	chan->broadcastToChannel(msg, &user);
-}
-
-int cmd_privmsg(IRCServer& server, User& user, Message& message){
-	if (!(user.getMode() & IRCServer::registered)){
-		user.send(ERR_NOTREGISTERED(server.getName(),
-		message.getCommand()));
-		return 1;
-	}
-
-	std::vector<std::string> recipients = split(message.getParams()[0], ',');
-	size_t num_recipients = recipients.size();
-
-	for (size_t i = 0; i < num_recipients; i++){
-		std::string target = recipients[i];
-		if (target == "") {
-			user.send(ERR_NORECIPIENT(server.getName(),
-			message.getCommand()));
-			continue ;
-		}
-		if (message.getTrailing().empty()) {
-			user.send(ERR_NOTEXTTOSEND(server.getName()));
-			continue ;
-		}
-		if ((target[0] == '#' || target[0] == '&' || target[0] == '!' || target[0] == '+') &&
-			target.find('.') == std::string::npos)
-			sendToChannel(server, user, message, target);
-		else if ((user.getMode() & (IRCServer::oper | IRCServer::Oper))
-			&& (target[0] == '#' || target[0] == '$'))
-			sendToMask(server, user, message, target);
-		else
-			sendToUser(server, user, message, target);
-	}
-	return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 13:53:39 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:06:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,8 @@
 
 # define ALL_MODES "+-awiroOs"
 
-static bool hasPermissions(IRCServer& server, User& user, Message& message){
-	
-	if (!(user.getMode() & IRCServer::registered)){
-		user.send(ERR_NOTREGISTERED(server.getName(),
-			message.getCommand()));
-		return false;
-	}
-	if (message.getParams()[0].size() < 1){
-		user.send(ERR_NEEDMOREPARAMS(server.getName(),
-			message.getCommand()));
-		return false;
-	}
-	if (user.getNick() != message.getParams()[0]){
-		user.send(ERR_USERSDONTMATCH(server.getName(), user.getNick()));
-		return false;
-	}
-	return true;
-}
-
-static bool isChannel(std::string str) {
-	if (str[0] == '#' || str[0] == '+' || str[0] == '!' || str[0] == '&')
-		return true;
-	return false;
-}
+static bool hasPermissions(IRCServer& server, User& user, Message& message);
+static bool isChannel(std::string str);
 
 int cmd_mode(IRCServer& server, User& user, Message& message){
 	
@@ -100,5 +78,32 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	reply += !removals.empty() ?  ("-" + removals) : "";
 	user.send(reply + "\r\n");
 
+	server.log("Modes for user " + user.getNick() + " were changed to " + server.getModeStr(user));
+
 	return 0;
+}
+
+static bool hasPermissions(IRCServer& server, User& user, Message& message){
+	
+	if (!(user.getMode() & IRCServer::registered)){
+		user.send(ERR_NOTREGISTERED(server.getName(),
+			message.getCommand()));
+		return false;
+	}
+	if (message.getParams()[0].size() < 1){
+		user.send(ERR_NEEDMOREPARAMS(server.getName(),
+			message.getCommand()));
+		return false;
+	}
+	if (user.getNick() != message.getParams()[0]){
+		user.send(ERR_USERSDONTMATCH(server.getName(), user.getNick()));
+		return false;
+	}
+	return true;
+}
+
+static bool isChannel(std::string str) {
+	if (str[0] == '#' || str[0] == '+' || str[0] == '!' || str[0] == '&')
+		return true;
+	return false;
 }

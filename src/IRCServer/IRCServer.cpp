@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:41:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:15:13 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,33 @@
 #include "../../inc/Commands.hpp"
 #include "../../inc/Utils.hpp"
 
+std::string const & IRCServer::getName() const{
+
+	return p_serverName;
+}
+
+std::string const & IRCServer::getPassword() const{
+
+	return p_password;
+}
+
+Uvector const &	IRCServer::getUsers() const{
+	
+	return p_users;
+}
+
+Cvector & IRCServer::getChannels(){
+
+	return p_channels;
+}
+
+std::vector<Operator> const & IRCServer::getOpers() const{
+
+	return p_opers;
+}
+
 void signalHandler(int signum) {
+	
 	if (signum == SIGINT) {
 		//delete p_users
 			//(and their buffers ?)
@@ -25,7 +51,7 @@ void signalHandler(int signum) {
 }
 
 IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_password(password){
-	// std::cout << "IRCServer constructor called" << std::endl;
+
 	p_serverName = "ircserv";
 	p_pfds.reserve(MAXCLIENTS);
 	p_users.reserve(MAXCLIENTS);
@@ -36,11 +62,14 @@ IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_pass
 }
 
 IRCServer::~IRCServer(void) {
+	
 	p_logger->log("IRCserv shutdown");
+	delete p_logger;
 	return ;
 }
 
 void IRCServer::initServer() {
+	
 	if (getListenerSocket()){
 		p_logger->log("Coudl not create listener socket");
 		throw std::runtime_error("Failed to create listener socket");
@@ -51,12 +80,13 @@ void IRCServer::initServer() {
 }
 
 void IRCServer::initCommands() {
-	
+
 	std::pair<std::string, CommandFunction> cmdPairs[] = {
 		std::make_pair("PASS", cmd_pass),
 		std::make_pair("NICK", cmd_nick),
 		std::make_pair("USER", cmd_user),
 		std::make_pair("MODE", cmd_mode),
+		std::make_pair("motd", cmd_motd),
 		std::make_pair("OPER", cmd_oper),
 		std::make_pair("AWAY", cmd_away),
 		std::make_pair("QUIT", cmd_quit),
@@ -94,33 +124,13 @@ void IRCServer::initOperators(){
 }
 
 void IRCServer::log(std::string string){
+	
 	p_logger->log(string);
 }
 
-std::string const & IRCServer::getName() const{
-	return p_serverName;
-}
-
-std::string const & IRCServer::getPassword() const{
-	return p_password;
-}
-
-Uvector const &	IRCServer::getUsers() const{
-	return p_users;
-}
-
-Cvector & IRCServer::getChannels(){
-	return p_channels;
-}
-
-std::vector<Operator> const & IRCServer::getOpers() const{
-	return p_opers;
-}
-
-//check for POLLNVAL & POLLERR
 int IRCServer::pollingRoutine() {
+	
 	int poll_count;
-	int j = 0;
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
 	signal(SIGINT, signalHandler);
 	while (1) {

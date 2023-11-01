@@ -6,13 +6,14 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 14:41:12 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:00:37 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/IRCServer.hpp"
 
 int IRCServer::getListenerSocket() {
+	
 	struct addrinfo hints, *servinfo, *p;
 	int sockfd, rv;
 	int yes = 1;
@@ -66,6 +67,7 @@ int IRCServer::getListenerSocket() {
 }
 
 void* IRCServer::get_in_addr(struct sockaddr *sa) {
+	
 	if (sa->sa_family == AF_INET) {
 		return &(((struct sockaddr_in*)sa)->sin_addr);
 	}
@@ -73,6 +75,7 @@ void* IRCServer::get_in_addr(struct sockaddr *sa) {
 }
 
 int IRCServer::acceptClient() {
+	
 	char s[INET6_ADDRSTRLEN];
 	struct sockaddr_storage their_addr;
 	socklen_t sin_size;
@@ -98,6 +101,7 @@ int IRCServer::acceptClient() {
 }
 
 void static cleanupChannels(IRCServer &server, User* user) {
+	
 	for(std::vector<Channel*>::iterator it = server.getChannels().begin(); it != server.getChannels().end();){
 		if ((*it)->getInvitelist()->findUserByNick(user->getNick())) {
 			(*it)->removeFromInvlist(*user);
@@ -118,10 +122,15 @@ void static cleanupChannels(IRCServer &server, User* user) {
 }
 
 void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
-	if (numbytes == 0)
-		p_logger->log("Connection #" + char(fd_index + '0') + " closed.");
+	
+	std::stringstream stream;
+	stream << fd_index;
+	
+	if (numbytes == 0){
+		p_logger->log("Connection #" + stream.str() + " closed.");
+	}
 	else {
-		std::cerr << "Recv failed. Numbytes: " << numbytes << std::endl;
+		p_logger->log("Recv failure: Connection #" + stream.str() + " closed.");
 	}
 	close(p_pfds[fd_index].fd);
 	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);
@@ -135,6 +144,7 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 }
 
 void IRCServer::delUser(User& user) {
+	
 	for (size_t i = 0; i < p_users.size(); i++) {
 		if (user.getSocket() == p_users[i]->getSocket()) {
 			p_users.erase(p_users.begin() + static_cast<ssize_t>(i));
@@ -144,6 +154,7 @@ void IRCServer::delUser(User& user) {
 }
 
 void IRCServer::delFd(User& user) {
+
 	for (size_t i = 0; i < p_pfds.size(); i++) {
 		if (user.getSocket() == p_pfds[i].fd) {
 			p_pfds.erase(p_pfds.begin() + static_cast<ssize_t>(i));
