@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 16:37:11 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:04:28 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ std::string	const &	User::getUserName(void) const {
 	return p_username;
 }
 
-CircularBuffer & User::getRecvBuffer(void) {
+DynamicBuffer & User::getRecvBuffer(void) {
 	return p_recvBuffer;
 }
 
-CircularBuffer & User::getSendBuffer(void) {
+DynamicBuffer & User::getSendBuffer(void) {
 	return p_sendBuffer;
 }
 

@@ -6,7 +6,7 @@
 #    By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/29 11:27:06 by tuukka           ###   ########.fr        #
+#    Updated: 2023/11/01 17:04:00 by tuukka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = c++
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
 	-Wconversion -Wshadow -I $I -g -fsanitize=address -static-libsan
 
-SRC_FILES = CircularBuffer \
+SRC_FILES = DynamicBuffer \
 			User \
 			Uvector \
 			Cvector \
@@ -62,7 +62,7 @@ SRC_FILES = CircularBuffer \
 #			chan_mode
 
 
-INC_FILES = CircularBuffer \
+INC_FILES = DynamicBuffer \
 			User \
 			Uvector \
 			Cvector \

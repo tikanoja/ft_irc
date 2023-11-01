@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 15:10:02 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:04:13 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <arpa/inet.h> //inet
 # include <sys/types.h> //types needed for socket() functions
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
-# include "CircularBuffer.hpp"
+# include "DynamicBuffer.hpp"
 # include "Uvector.hpp"
 # include "Cvector.hpp"
 # include "Message.hpp"
@@ -54,7 +54,7 @@
 
 class User;
 class Channel;
-class CircularBuffer;
+class DynamicBuffer;
 class Message;
 
 class IRCServer {

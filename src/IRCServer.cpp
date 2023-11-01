@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/29 11:26:26 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:34:53 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ int IRCServer::checkSendBuffer(User* user) {
 			std::cerr << "Send failed" << std::endl;
 		if (n_sent > 0 && n_sent < toSendLen) {
 			toSend.erase(0, static_cast<size_t>(n_sent));
-			const char* toBuffer = toSend.c_str();
-			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
+			// const char* toBuffer = toSend.c_str();
+			user->getSendBuffer().replaceUnsent(toSend);
 		}
 		delete[] toSendC;
 	}
