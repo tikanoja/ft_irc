@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 10:24:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:49:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message);
 
 // Utils
 void removeCommonCharacters(std::string& str1, std::string& str2);
+std::string getSetValues(std::vector<std::string> const & params,
+	std::vector<size_t> const & indeces);
 
 #endif

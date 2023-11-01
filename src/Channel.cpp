@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/31 08:53:58 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 14:15:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,8 @@
 Channel::Channel(const std::string name) : p_name(name)
 {
 	std::cout << "Channel constructor called" << std::endl;
+	p_mode = static_cast<chanModes>(0);
 	return ;
-}
-
-Channel::Channel(Channel const& src)
-{
-	*this = src;
-}
-
-Channel& Channel::operator=(Channel const& rhs)
-{
-	if(this != &rhs) {
-		p_name = rhs.p_name;
-	}
-	return *this;
 }
 
 Channel::~Channel(void)
@@ -48,7 +36,7 @@ std::string Channel::getTopic()
 	return p_topic;
 }
 
-Channel::chanModes Channel::getMode()
+unsigned int Channel::getMode()
 {
 	return p_mode;
 }
@@ -57,7 +45,7 @@ std::string	Channel::getChanModes(){
 	static const chanModes permissions[] = {invite, topic_rest, key, limit};
 	static const std::string characters = "itkl";
 	std::string result = "+";
-	chanModes mode = this->getMode();
+	unsigned int mode = this->getMode();
 
 	for(size_t i = 0; i < characters.size(); i++) {
 		if (mode & permissions[i])
@@ -167,48 +155,52 @@ void Channel::removeFromMembers(User& user)
 	}
 }
 
-void Channel::setUserlimit(std::string limitstr) {
+bool Channel::setUserlimit(std::string limitstr) {
 	std::stringstream ss(limitstr);
 	unsigned int limit;
 	ss >> limit;
 	if (ss.fail()) {
 		std::cout << "failed to convert user limit to int!" << std::endl;
+		return false;
 	}
 	this->p_maxusers = limit;
+	return true;
 }
 
-void Channel::setChop(std::string target, Channel* chan) {
-	User* newChop = chan->getMembers()->findUserByNick(target);
+bool Channel::setChop(std::string target) {
+	User* newChop = this->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
 		std::cout << "new chop candidate not found on channel" << std::endl;
-		return;
+		return false;
 	}
-	if (chan->getChops()->findUserByNick(target) != NULL) {
+	if (this->getChops()->findUserByNick(target) != NULL) {
 		std::cout << "the user is already a chop, no need to add" << std::endl;
-		return ;
+		return false;
 	}
-	chan->getChops()->push_back(newChop);
+	this->getChops()->push_back(newChop);
 	std::cout << "GZ new chop " << newChop->getNick() << std::endl;
+	return true;
 }
 
-void Channel::unsetChop(std::string target, Channel* chan) {
-	User* newChop = chan->getMembers()->findUserByNick(target);
+bool Channel::unsetChop(std::string target) {
+	User* newChop = this->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
 		std::cout << "new chop candidate not found on channel" << std::endl;
-		return;
+		return false;
 	} 
-	if (chan->getChops()->findUserByNick(target) == NULL) {
+	if (this->getChops()->findUserByNick(target) == NULL) {
 		std::cout << "the user is not a chop, no need to remove rights" << std::endl;
-		return ;
+		return false;
 	}
-	for (std::vector<User*>::iterator it = chan->getChops()->begin(); \
-		it != chan->getChops()->end(); it++){
+	for (std::vector<User*>::iterator it = this->getChops()->begin(); \
+		it != this->getChops()->end(); it++){
 		if ((*it) == newChop) {
-			chan->getChops()->erase(it); //remove the user from p_chops!!!!
+			this->getChops()->erase(it); //remove the user from p_chops!!!!
 			std::cout << "User " << newChop->getNick() << " just got their chops removed!" << std::endl;
 			break;
 		}
 	}
+	return true;
 }
 
 bool	Channel::setMode(chanModes mode){
@@ -227,15 +219,17 @@ bool	Channel::unsetMode(chanModes mode){
 	return false;
 }
 
-std::string	Channel::setBatchMode(std::string const & modes, size_t *index){
+std::string	Channel::setBatchMode(std::vector<std::string> const & modes, size_t & word,
+	size_t & character, std::vector<size_t> & indeces){
 
-	std::string opsdone = "";
-	static const std::string characters = "itkol";
+	std::string					opsdone = "";
+	static const std::string	characters = "itkol";
+	size_t						move_flag = 0;
 
-	if (modes[*index] == '+')
+	if (modes.at(word)[character] == '+')
 	{
-		for (; *index < modes.size(); (*index)++ ){
-			switch (modes[*index]){
+		for (; character < modes.at(word).size(); character++ ){
+			switch (modes.at(word)[character]){
 				case ('i'):
 					if (this->setMode(invite))
 						opsdone += characters[0];
@@ -245,60 +239,87 @@ std::string	Channel::setBatchMode(std::string const & modes, size_t *index){
 						opsdone += characters[1];
 					break;
 				case ('k'):
-					if (this->setMode(key))
-						opsdone += characters[2];
+					if (word + ++move_flag < modes.size()){
+							this->setMode(key);
+							this->setKey(modes.at((word + move_flag)));
+							indeces.push_back(word + move_flag);
+							opsdone += characters[2];
+					}
 					break;
 				case ('o'):
-					if (this->setMode(ops))
-						opsdone += characters[4];
+					if (word + ++move_flag < modes.size()){
+							std::cout << modes.at(word + move_flag) << std::endl;
+						if (this->setChop(modes.at(word + move_flag))){
+							indeces.push_back(word + move_flag);
+							opsdone += characters[3];
+						}
+					}
+					break;
 				case ('l'):
-					if (this->setMode(limit))
-						opsdone += characters[5];
+					if (word + ++move_flag < modes.size()){
+							this->setMode(limit);
+							indeces.push_back(word + move_flag);
+							opsdone += characters[4];
+					}
 					break;
 				case ('-'):
+					opsdone += "-" + unsetBatchMode(modes, word, character, indeces);
 					return opsdone;
 				default:
 					continue;
 			}
 		}
 	}
+	word += move_flag;
 	return opsdone;
 }
 
-std::string		Channel::unsetBatchMode(std::string const & modes, size_t *index){
+std::string	Channel::unsetBatchMode(std::vector<std::string> const & modes, size_t & word,
+	size_t & character, std::vector<size_t> & indeces){
 
-	std::string opsdone = "";
-	static const std::string characters = "itkol";
+	std::string					opsdone = "";
+	static const std::string	characters = "itkol";
+	size_t						move_flag = 1;
 
-	if (modes[*index] == '-')
+	if (modes.at(word)[character] == '-')
 	{
-		for ( ; *index < modes.size(); (*index)++ ){
-			switch (modes[*index]){
+		for (; character < modes.at(word).size(); character++ ){
+			switch (modes.at(word)[character]){
 				case ('i'):
-					if (this->unsetMode(invite))
+					if (this->setMode(invite))
 						opsdone += characters[0];
 					break;
 				case ('t'):
-					if (this->unsetMode(topic_rest))
+					if (this->setMode(topic_rest))
 						opsdone += characters[1];
 					break;
 				case ('k'):
-					if (this->unsetMode(key))
+					if (this->unsetMode(key)){
 						opsdone += characters[2];
+					}
 					break;
 				case ('o'):
-					if (this->unsetMode(ops))
-						opsdone += characters[4];
+					if (word + ++move_flag < modes.size()){
+						std::cout << modes.at(word + move_flag) << std::endl;
+						if (this->unsetChop(modes.at(word + move_flag))){
+							opsdone += characters[3];
+							indeces.push_back(word + move_flag);
+						}
+					}
+					break;
 				case ('l'):
-					if (this->unsetMode(limit))
-						opsdone += characters[5];
+					if (this->unsetMode(limit)){
+							opsdone += characters[4];
+					}
 					break;
 				case ('+'):
+					opsdone += "+" + setBatchMode(modes, word, character, indeces);
 					return opsdone;
 				default:
 					continue;
 			}
 		}
 	}
+	word += move_flag - 1;
 	return opsdone;
 }

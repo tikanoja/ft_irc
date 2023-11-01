@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 08:57:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:19:55 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,62 +43,85 @@
 */
 
 
-#define ALLCHANMODES "+- itkIol"
+#define ALLCHANMODES "+-itkol"
+
+bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
+	Channel * chan, std::vector<std::string> const & params);
+	
+void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
+	std::string removals, std::vector<size_t> indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
+	
+	std::vector<std::string> params = message.getParams();
+	Channel* chan = server.getChannels().findChannel(params.front());
+
+	if (!checkChanmodePerms(server, user, message, chan, params))
+		return 1;
+
+	size_t forbidden;
+	for (size_t i = 1; i < params.size(); i++){
+		if (params[i][0] == '+' || params[i][0] == '-')
+		{
+			forbidden = params[i].find_first_not_of(ALLCHANMODES);
+			if (forbidden != std::string::npos)
+				user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
+		}
+	}
+
+	std::string				additions;
+	std::string				removals;
+	std::vector<size_t>		indeces;
+	
+	setModes(chan, params, additions, removals, indeces);
+
+	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
+	reply += !additions.empty() ? ("+" + additions) : "";
+	reply += !removals.empty() ? ("-" + removals) : "";
+	reply += getSetValues(params, indeces);
+	user.send(reply + "\r\n");
+	if (0 < indeces.size())
+		chan->broadcastToChannel(reply, &user);
+
+	return 0;
+}
+
+static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
+	Channel * chan, std::vector<std::string> const & params){
 	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
-		return 1;
+		return false;
 	}
-	std::vector<std::string> params = message.getParams();
-	Channel* chan = server.getChannels().findChannel(params.front());
 	if (params.size() == 1) {
 		std::cout << "REQUESTED CHANMOD LIST" << std::endl;
-		user.send(RPL_CHANNELMODEIS(server.getName(), chan->getName(), chan->getChanModes(), chan->getChanStr()));
+		user.send(RPL_CHANNELMODEIS(server.getName(), user.getNick(), chan->getName(),\
+			chan->getChanModes(), chan->getChanStr()));
 	}
-	if (chan == NULL) { //does the channel exist ?
+	if (chan == NULL) {
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
-		return 1;
+		return false;
 	}
-	if (chan == NULL) { //does the channel exist ?
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), params.front()));
-		return 1;
-	}
-	if (!chan->isChop(user)) { //are we channel op?
+	if (!chan->isChop(user)) {
 		user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
-		return 1;
+		return false;
 	}
-	size_t forbidden;
-	for (size_t i = 1; i < params.size(); i++){
-		forbidden = params[i].find_first_not_of(ALLCHANMODES);
-		if (forbidden != std::string::npos)
-			user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
-	}
+	return true;
+}
 
-	std::string additions;
-	std::string removals;
-	
-	for (size_t i = 1; i < params.size(); i++){
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
+	std::string removals, std::vector<size_t> indeces){
+		for (size_t i = 1; i < params.size(); i++){
 		size_t pos = 0;
-		while (pos < params[i].size())
+		while (i < params.size() && pos < params[i].size())
 		{
 			if (params[i][pos] == '+')
-				additions += chan->setBatchMode(params[i], &pos);
+				additions += chan->setBatchMode(params, i, pos, indeces);
 			else if (params[i][pos] == '-')
-				removals += chan->unsetBatchMode(params[i], &pos);
+				removals += chan->unsetBatchMode(params, i, pos, indeces);
 			else
 				pos++;
 		}
 	}
-
 	removeCommonCharacters(additions, removals);
-
-	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
-	reply += !additions.empty() ? ("+" + additions) : "";
-	reply += !removals.empty() ?  ("-" + removals) : "";
-	user.send(reply + "\r\n");
-
-	//make reply and send to user
-	return 0;
 }

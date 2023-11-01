@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_part.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 17:08:51 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/10/31 12:21:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTONCHANNEL(server.getName(), partFrom->getName()));
 		user_found = 0;
 	}
-	return 1;
+	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/31 08:51:38 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:28:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,11 @@ class Channel
 			topic_rest = 0x02, 		// Set/remove the restrictions of the TOPIC command to chanops
 			key = 0x04, 			// Set/remove the channel key (password)
 			secret = 0x08, 			// Set/remove the channel key (password)
-			ops = 0x10, 			// Give/take channel operator privilege
 			limit = 0x20 			// Set/remove the user limit to channel
 		};
 
 		Channel(const std::string name);
-		Channel(Channel const& src);
 		~Channel();
-		Channel &		operator=(Channel const& rhs);
 
 		//getters
 		std::string 	getName();
@@ -46,23 +43,25 @@ class Channel
 		Uvector*		getInvitelist();
 		bool			getUserlimit();
 		std::string		getKey();
-		chanModes		getMode();
+		unsigned int	getMode();
 		std::string		getChanModes();
 		std::string		getChanStr();
 		size_t			getMaxusers();
 
 		//setters
 		void			setTopic(std::string newTopic);
-		void 			setUserlimit(std::string limitstr);
 		void			setKey(std::string key);
-		void			setChop(std::string target, Channel* chan);
-		void			unsetChop(std::string target, Channel* chan);
+		bool			setChop(std::string target);
+		bool			unsetChop(std::string target);
+		bool 			setUserlimit(std::string limitstr);
 		bool			setMode(chanModes mode);
 		bool			unsetMode(chanModes mode);
 		
-		std::string		setBatchMode(std::string const & modes, size_t *index);
-		std::string		unsetBatchMode(std::string const & modes, size_t *index);
-		
+		std::string		setBatchMode(std::vector<std::string> const & modes, size_t & word,
+										size_t & character, std::vector<size_t> & indeces);
+		std::string		unsetBatchMode(std::vector<std::string> const & modes, size_t & word,
+										size_t &character, std::vector<size_t> & indeces);
+
 		//utils
 		void			broadcastToChannel(std::string message, User* sender);
 		bool			isChop(User& user);
@@ -79,7 +78,7 @@ class Channel
 		Uvector			p_invitelist;
 		Uvector			p_members;
 		Uvector			p_chops;
-		chanModes		p_mode;
+		unsigned int	p_mode;
 };
 
 #endif
