@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/10/30 10:24:27 by djagusch         ###   ########.fr        #
+#    Updated: 2023/11/01 10:08:41 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,6 @@ SRC_FILES = CircularBuffer \
 #			cmd_whois
 #			cmd_squit
 #			chan_list
-#			chan_mode
-
 
 INC_FILES = CircularBuffer \
 			User \
