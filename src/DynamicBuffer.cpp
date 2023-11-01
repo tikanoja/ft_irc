@@ -6,7 +6,7 @@
 /*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 17:46:34 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 20:29:33 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,48 @@ void DynamicBuffer::printbuf() const {
 	return ;
 }
 
+std::vector<std::string> nlsplit(const std::string& str, char c){
+
+	std::vector<std::string>	tokens;
+	std::istringstream			stream(str);
+	std::string					token;
+
+	while (std::getline(stream, token, c)) {
+		//if we split by c, apppend c to token
+		//else we split by end of the stream, dont append c
+		tokens.push_back(token);
+		if (!stream.eof())
+            tokens.back() += c;
+	}
+	return (tokens);
+}
+
 void DynamicBuffer::addToBuffer(const char* buf) {
 	std::string toAdd = buf;
 	size_t index = 0;
     while ((index = toAdd.find("^D", index)) != std::string::npos) // find "^D"
         toAdd.replace(index, 2, ""); //replace "^D" with ""
 	
-	//!!!!!!
-	//loop to break buf down to std::vector<std::string> based on \n or buf ending
-		//in case we get PRIVMSG hello\r\nPRIVM
-	std::vector<std::string> toAddVec = split(toAdd, '\n');
+	std::vector<std::string> toAddVec = nlsplit(toAdd, '\n');
 	for (size_t j = 0; j < toAddVec.size(); j++) {
 		toAdd = toAddVec[j];
 		bool appended = false;
 		for (size_t i = 0; i < p_buf.size(); ++i) {
-			if (p_buf[i].find("\r") == std::string::npos && p_buf[i].find("\n") == std::string::npos) {
+			if (p_buf[i].find("\n") == std::string::npos) {
+				std::cout << "did not find nl" << std::endl;
 				p_buf[i] += toAdd;
 				appended = true;
 				break;
 			}
 		}
-		if (appended == false)
+		if (appended == false) {
+			std::cout << "fresh push" << std::endl;
 			p_buf.push_back(toAdd);
+		}
 	}
+	std::cout << "Buffer after addtobuf" << std::endl;
+	for (size_t k = 0; k < p_buf.size(); k++)
+		std::cout << p_buf[k] << "$" << std::endl;
 }
 
 std::string DynamicBuffer::extractBuffer() {
