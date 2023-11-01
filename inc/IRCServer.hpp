@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 12:32:49 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:13:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include "Message.hpp"
 # include "User.hpp"
 # include "Operator.hpp"
+# include "Logger.hpp"
 # include "Commands.hpp"
 # include "Utils.hpp"
 
@@ -71,7 +72,8 @@ class IRCServer {
 		std::string					p_creationDate;
 		clock_t						p_runningDateTime;
 		std::string					p_version;
-		std::vector<std::string>	p_blockeUserNames;
+
+		Logger *					p_logger;
 
 		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
 		std::map<std::string, CommandFunction>	p_commandMap;
@@ -88,9 +90,6 @@ class IRCServer {
 		int									receiveMsg(User* user, nfds_t i);
 		int									checkRecvBuffer(User* user, nfds_t i);
 		int									checkSendBuffer(User* user);
-
-		std::vector<std::string> const &	getBlocked() const;
-		void								setBlocked(std::string nick);
 
 	public:
 		enum e_uperm{
@@ -123,9 +122,10 @@ class IRCServer {
 		Operator &						getOperByNick(std::string nick);
 		bool							getUserMode(User & user, e_uperm mode) const;
 
-		bool							isBlocked(std::string nick) const;
 		void							delFd(User& user);
 		void							delUser(User& user);
+
+		void							log(std::string);
 
 		int								executeCommand(User& user, Message& message);
 		void							setUserMode(User & user, e_uperm mode);

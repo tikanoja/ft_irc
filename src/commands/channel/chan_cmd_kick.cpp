@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/31 11:34:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:58:12 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
 			continue ;
 		}
-		chan->broadcastToChannel(":" + user.getNick() + \
-		"!add_user_host_here KICK " + chan->getName() + \
+		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP())\
+			 + " KICK " + chan->getName() + \
 		" " + toKick->getNick(), NULL);
 		if (message.getTrailing() == "")
 			chan->broadcastToChannel("\r\n", NULL);

@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/01 10:08:41 by djagusch         ###   ########.fr        #
+#    Updated: 2023/11/01 14:45:24 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES = CircularBuffer \
 			Cvector \
 			Message \
 			IRCServer \
+			handleIO \
 			Channel \
 			connectToUser \
 			handleUser \
@@ -53,14 +54,11 @@ SRC_FILES = CircularBuffer \
 			chan_cmd_kick \
 			chan_cmd_part \
 			chan_cmd_topic \
-			chan_cmd_mode
-#			cmd_lusers
-#			cmd_who
-#			cmd_whois
-#			cmd_squit
-#			chan_list
+			chan_cmd_mode \
+			Logger
 
 INC_FILES = CircularBuffer \
+			Logger \
 			User \
 			Uvector \
 			Cvector \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_user.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 16:35:42 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 13:14:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.setMode(IRCServer::wallops);
 	if (message.getParams()[2] == "8")
 		user.setMode(IRCServer::invisible);
-	// user.setMode(IRCServer::registered);
-	// user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
 
 	user.setRegistrationFlag(2, user, server);
 

@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_quit.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/01 09:08:36 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:13:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/Commands.hpp"
 
 int cmd_quit(IRCServer& server, User& user, Message& message){
-	//close fd
+	
 	close(user.getSocket());
 
-	//search channels
 	for (std::vector<Channel*>::iterator it = server.getChannels().begin(); \
-		it != server.getChannels().end();){ //iterate thru chans
-		if ((*it)->getInvitelist()->findUserByNick(user.getNick())) {//remove from invitelist
+		it != server.getChannels().end();){ 
+		if ((*it)->getInvitelist()->findUserByNick(user.getNick())) {
 			(*it)->removeFromInvlist(user);
 			std::cout << "Quitting user removed from invite list!" << std::endl;
 		}
-		if ((*it)->getMembers()->findUserByNick(user.getNick())) { //found user on chan
-			if ((*it)->getChops()->findUserByNick(user.getNick())) { //remove from chops
+		if ((*it)->getMembers()->findUserByNick(user.getNick())) { 
+			if ((*it)->getChops()->findUserByNick(user.getNick())) { 
 				(*it)->removeFromChops(user);
 				std::cout << "Quitting user removed from chops!" << std::endl;
 			}
 			(*it)->removeFromMembers(user);
-			(*it)->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " QUIT", &user);
+			(*it)->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
+				+ " QUIT", &user);
 			if (message.getTrailing().empty())
 				(*it)->broadcastToChannel("\r\n", &user);
 			else
@@ -47,16 +47,9 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 		}
 	}
 
-	//del user from p_pfds
 	server.delFd(user);
-	
-	//del user from p_users
 	server.delUser(user);
-
-	//del user
 	delete &user;
-
-	//add confirmation to other users on channel! TODO!!
 	(void)message;
 	return 0;
 }

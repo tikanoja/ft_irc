@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 09:00:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:23:55 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@
 # define RPL_ENDOFBANLIST(servername)(":" + servername + " 368 \r\n") //368
 # define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of WHOWAS\r\n") //369
 # define RPL_INFO(servername, string)(":" + servername + " 371 :" + string + "\r\n") //371
-# define RPL_MOTD(servername)(":" + servername + " 372 :- " + text + "\r\n") //372
+# define RPL_MOTD(servername, text)(":" + servername + " 372 :- " + text + "\r\n") //372
 # define RPL_ENDOFINFO(servername)(":" + servername + " 374 :End of INFO list\r\n") //374
 # define RPL_MOTDSTART(servername)(":" + servername + " 375 :- " + server + " Message of the day - \r\n") //375
 # define RPL_ENDOFMOTD(servername)(":" + servername + " 376 :End of MOTD command\r\n") //376

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 11:42:38 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:12:36 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int cmd_oper(IRCServer& server, User& user, Message& message){
 	}
 	if (!hasOperAccount(server, user, params))
 		return 1;
-	// throw IRCServer::UserNotFound();
 	try {
 		server.getOperByNick(params[0]).setUser(&user);
 		user.setMode(IRCServer::Oper);

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:21 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 09:03:16 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:07:22 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int chan_cmd_invite(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHNICK(server.getName(), message.getParams().front(), "nick"));
 		return 1;
 	}
+	if (invited->getMode() & IRCServer::away) {
+		user.send(RPL_AWAY(server.getName(), invited->getNick(), invited->getAwayMsg()));
+		return 1;
+	}
 	if (chan->getMembers()->findUserByNick(invited->getNick()) != NULL) {
 		user.send(ERR_USERONCHANNEL(server.getName(), invited->getNick(), chan->getName()));
 		return 1;
@@ -67,9 +71,11 @@ int chan_cmd_invite(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	
+	
 	chan->getInvitelist()->push_back(invited);
 	user.send(RPL_INVITING(server.getName(), user.getNick(), invited->getNick(), chan->getName()));
-	invited->send(":" + user.getNick() + "!add_user_host_here " + "INVITE " + invited->getNick() + " :" + chan->getName() + "\r\n");
+	invited->send(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP())+ " INVITE " \
+		+ invited->getNick() + " :" + chan->getName() + "\r\n");
 	return 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 10:02:53 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:28:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				continue ;
 			}
 			toJoin->getMembers()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + \
-			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
+			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
+				+ " JOIN :" + toJoin->getName() + "\r\n", NULL);
 			if (toJoin->getTopic() != "")
 				user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 				toJoin->getName(), toJoin->getTopic()));
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
-		} else { //CREATING NEW CHANNEL
+		} else {
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
 				continue ;
@@ -97,8 +97,8 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
 			toJoin->getChops()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + \
-			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
+			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
+				+ " JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}
 	}
 	return 0;

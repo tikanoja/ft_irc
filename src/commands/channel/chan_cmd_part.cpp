@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 12:21:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:10:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,14 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\
 		it != partFrom->getMembers()->end(); it++) {
 			if ((*it)->getNick() == user.getNick()) {
-				partFrom->broadcastToChannel(":" + user.getNick() + "!add_user_host_here" + " PART " + partFrom->getName(), NULL);
-				if (message.getTrailing() != "")
+				partFrom->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) + " PART " + partFrom->getName(), NULL);
+				if (!message.getTrailing().empty())
 					partFrom->broadcastToChannel(" :" + message.getTrailing() + "\r\n", NULL);
 				else
 					partFrom->broadcastToChannel("\r\n", NULL);
 				partFrom->getMembers()->erase(it);
 				partFrom->removeFromChops(user);
 				if (partFrom->getMembers()->size() == 0) {
-					std::cout << "Channel is empty, deleting..." << std::endl;
 					server.getChannels().deleteChannel(partFrom);
 				}
 				user_found = 1;

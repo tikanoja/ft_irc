@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_nick.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 16:35:21 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 13:14:52 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@
 // 	return "";
 // }
 
-bool	isNickvalid(std::string & nick){
+bool	isNickvalid(std::string& nick){
 
 	if (nick[0] == '$' || nick[0] == ':' || nick[0] == '#' || nick[0] == '+'){
-		std::cout << "Here1" << std::endl;
 		return false;
 	}
 	if (nick.find_first_of(",*?! @.", 0) != std::string::npos){
@@ -43,39 +42,19 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	std::string new_nick = message.getParams()[0];
-	std::cout << "Given NICK " << new_nick << " is empty " << std::boolalpha << new_nick.empty() << std::endl;
 	if (new_nick.empty()){
-		std::cout << "No NICK given" << std::endl;
 		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 		return 1;
 	}
 	if (!isNickvalid(new_nick)){
-		std::cout << "Erroneus NICK" << std::endl;
 		user.send(ERR_ERRONEUSNICKNAME(server.getName(),
 			new_nick));
 		return 1;
 	}
 	User * found_user = server.getUsers().findUserByNick(new_nick);
-	// std::string temp_nick = changeNick(server, new_nick);
 	if (found_user != NULL){
-		// if (user.getMode() & IRCServer::registered){
-			// std::cout << "NICK in use" << std::endl;
-			user.send(ERR_NICKNAMEINUSE(server.getName(), new_nick));
-			// if (temp_nick.empty())
-				return 1;
-			// user.setOldNick(temp_nick.substr(0, UNAMELEN));
-			// new_nick = temp_nick;
-		// } else {
-		// 	// std::cout << "NICK collide" << std::endl;
-		// 	// new_nick = changeNick(server, new_nick);
-		// 	// if (new_nick.empty()){
-		// 		user.send(ERR_NICKCOLLISION(server.getName(),
-		// 			new_nick, found_user->getNick(), found_user->getIP()));
-		// 		close(user.getSocket());
-		// 		return 1;
-		// 	// }
-			// user.send(ERR_NICKNAMEINUSE(server.getName(),new_nick));
-		// }
+		user.send(ERR_NICKNAMEINUSE(server.getName(), new_nick));
+			return 1;
 	}
 	if (server.isBlocked(new_nick)){
 		user.send(ERR_UNAVAILRESOURCE(server.getName(),
@@ -83,8 +62,6 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	user.setNick(new_nick);
-	//if not registered
 	user.setRegistrationFlag(1, user, server);
-		//welcome
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/31 08:57:50 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:10:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
 		return 1;
 	}
-	if (message.getTrailing() == "") {
-		if (chan->getTopic() == "") {
+	if (message.getTrailing().empty()) {
+		if (chan->getTopic().empty()) {
 			user.send(RPL_NOTOPIC(server.getName(), \
 			message.getParams().front()));
 			return 0;
@@ -43,7 +43,6 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			return 1;
 		}
 		
-		//Check operator! If they are not op, check if channel has mode t enabled
 		if ((chan->getMode() & Channel::topic_rest) && chan->isChop(user) == false) {
 			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
 			return 1;
@@ -52,9 +51,9 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			chan->setTopic("");
 		else
 			chan->setTopic(message.getTrailing());
-		chan->broadcastToChannel(":" + user.getNick() + \
-		"!add_user_host_here TOPIC " + chan->getName() + \
-		" :" + chan->getTopic() + "\r\n", NULL);
+		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
+			+ " TOPIC " + chan->getName() + \
+			" :" + chan->getTopic() + "\r\n", NULL);
 		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 		chan->getName(), chan->getTopic()));
 	}

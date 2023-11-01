@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 09:41:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:10:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
 	Channel * chan, std::vector<std::string> const & params);
 	
-static void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
-	std::string removals, std::vector<size_t> indeces);
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
+	std::string& removals, std::vector<size_t> & indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	
@@ -75,6 +75,9 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	
 	setModes(chan, params, additions, removals, indeces);
 
+	std::cout << removals << std::endl;
+	std::cout << additions << std::endl;
+	std::cout << additions << std::endl;
 	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
 	reply += !additions.empty() ? ("+" + additions) : "";
 	reply += !removals.empty() ? ("-" + removals) : "";
@@ -94,9 +97,9 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 		return false;
 	}
 	if (params.size() == 1) {
-		std::cout << "REQUESTED CHANMOD LIST" << std::endl;
 		user.send(RPL_CHANNELMODEIS(server.getName(), user.getNick(), chan->getName(),\
 			chan->getChanModes(), chan->getChanStr()));
+		return false;
 	}
 	if (chan == NULL) {
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
@@ -109,8 +112,9 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 	return true;
 }
 
-static void setModes(Channel * chan, std::vector<std::string> const & params, std::string additions,
-	std::string removals, std::vector<size_t> indeces){
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
+	std::string& removals, std::vector<size_t> & indeces){
+	
 		for (size_t i = 1; i < params.size(); i++){
 		size_t pos = 0;
 		while (i < params.size() && pos < params[i].size())
