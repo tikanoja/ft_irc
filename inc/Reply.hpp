@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 12:47:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:03:52 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@
 # define RPL_WHOISCHANNELS(servername)(":" + servername + " 319 \r\n") //319 ?????
 # define RPL_LIST(servername, channel, n_visible, topic)(":" + servername + " 322 " + channel + " " + n_visible + " :" + topic + "\r\n") //322
 # define RPL_LISTEND(servername)(":" + servername + " 323 :End of LIST\r\n") //323
-# define RPL_CHANNELMODEIS(servername, user, channel, mode)(":" + servername + " 324 " + user + " " + channel + " " + mode + "\r\n") //324
+# define RPL_CHANNELMODEIS(servername, user, channel, mode, mode_params)(":" + servername + " 324 " + user + " " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
 # define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332
@@ -92,11 +92,11 @@
 # define RPL_ENDOFBANLIST(servername)(":" + servername + " 368 \r\n") //368
 # define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of WHOWAS\r\n") //369
 # define RPL_INFO(servername, string)(":" + servername + " 371 :" + string + "\r\n") //371
-# define RPL_MOTD(servername)(":" + servername + " 372 :- " + text + "\r\n") //372
+# define RPL_MOTD(servername, text)(":" + servername + " 372 :- " + text + "\r\n") //372
 # define RPL_ENDOFINFO(servername)(":" + servername + " 374 :End of INFO list\r\n") //374
-# define RPL_MOTDSTART(servername)(":" + servername + " 375 :- " + server + " Message of the day - \r\n") //375
+# define RPL_MOTDSTART(servername)(":" + servername + " 375 :- " + servername + " Message of the day - \r\n") //375
 # define RPL_ENDOFMOTD(servername)(":" + servername + " 376 :End of MOTD command\r\n") //376
-# define RPL_YOUREOPER(servername)(":" + servername + " 381 :You are now an IRC operator\r\n") //381
+# define RPL_YOUREOPER(servername, nick)(":" + servername + " 381 " + nick + " :You are now an IRC operator\r\n") //381
 # define RPL_REHASHING(servername)(":" + servername + " 382 " + config + "file :Rehashing\r\n") //382
 # define RPL_YOURESERVICE(servername, servicename)(":" + servername + " 383 You are service " + servicename + "\r\n") //383
 # define RPL_MYPORTIS(servername)(":" + servername + " 384 \r\n") //384

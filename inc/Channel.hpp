@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/30 09:39:43 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:28:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CHANNEL_HPP
 
 # include <iostream>
+# include <sstream>
+# include <cstdlib>
 # include "Uvector.hpp"
 
 class User;
@@ -21,10 +23,17 @@ class User;
 class Channel
 {
 	public:
+
+		enum chanModes {
+			invite = 0x01, 		// Set/remove Invite-only channel;
+			topic_rest = 0x02, 		// Set/remove the restrictions of the TOPIC command to chanops
+			key = 0x04, 			// Set/remove the channel key (password)
+			secret = 0x08, 			// Set/remove the channel key (password)
+			limit = 0x20 			// Set/remove the user limit to channel
+		};
+
 		Channel(const std::string name);
-		Channel(Channel const& src);
 		~Channel();
-		Channel &		operator=(Channel const& rhs);
 
 		//getters
 		std::string 	getName();
@@ -32,22 +41,27 @@ class Channel
 		Uvector*		getMembers();
 		Uvector*		getChops();
 		Uvector*		getInvitelist();
-		bool			getTopicrestricted();
-		bool			getInviteonly();
-		bool			getKeyneeded();
 		bool			getUserlimit();
 		std::string		getKey();
+		unsigned int	getMode();
+		std::string		getChanModes();
+		std::string		getChanStr();
 		size_t			getMaxusers();
 
 		//setters
 		void			setTopic(std::string newTopic);
+		void			setKey(std::string key);
+		bool			setChop(std::string target);
+		bool			unsetChop(std::string target);
+		bool 			setUserlimit(std::string limitstr);
+		bool			setMode(chanModes mode);
+		bool			unsetMode(chanModes mode);
 		
-		void			toggleInviteonly(bool status);
-		void			toggleTopicrestricted(bool status);
-		void			toggleKeyneeded(bool status, std::string key);
-		void			toggleUserlimit(bool status, std::string limitstr);
-		void			toggleChoprights(bool status, std::string target, Channel* chan);
-		
+		std::string		setBatchMode(std::vector<std::string> const & modes, size_t & word,
+										size_t & character, std::vector<size_t> & indeces);
+		std::string		unsetBatchMode(std::vector<std::string> const & modes, size_t & word,
+										size_t &character, std::vector<size_t> & indeces);
+
 		//utils
 		void			broadcastToChannel(std::string message, User* sender);
 		bool			isChop(User& user);
@@ -57,19 +71,14 @@ class Channel
 
 	private:
 		Channel();
-		std::string	p_name;
-		std::string p_topic;
-		std::string p_key;
-		size_t		p_maxusers;
-		Uvector		p_invitelist;
-		Uvector		p_members;
-		Uvector		p_chops;
-
-		//modes
-		bool		p_inviteonly;
-		bool		p_topicrestricted;
-		bool		p_keyneeded;
-		bool		p_userlimit;
+		std::string		p_name;
+		std::string 	p_topic;
+		std::string 	p_key;
+		unsigned int	p_maxusers;
+		Uvector			p_invitelist;
+		Uvector			p_members;
+		Uvector			p_chops;
+		unsigned int	p_mode;
 };
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 17:04:13 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:15:43 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include "Message.hpp"
 # include "User.hpp"
 # include "Operator.hpp"
+# include "Logger.hpp"
 # include "Commands.hpp"
 # include "Utils.hpp"
 
@@ -71,7 +72,8 @@ class IRCServer {
 		std::string					p_creationDate;
 		clock_t						p_runningDateTime;
 		std::string					p_version;
-		std::vector<std::string>	p_blockeUserNames;
+
+		Logger *					p_logger;
 
 		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
 		std::map<std::string, CommandFunction>	p_commandMap;
@@ -89,19 +91,16 @@ class IRCServer {
 		int									checkRecvBuffer(User* user, nfds_t i);
 		int									checkSendBuffer(User* user);
 
-		std::vector<std::string> const &	getBlocked() const;
-		void								setBlocked(std::string nick);
-
 	public:
 		enum e_uperm{
-			away = 0x0001,			// user is flagged as away;
-			wallops = 0x0002,		// user receives wallops;
-			invisible = 0x0004,		// marks a users as invisible;
-			restricted = 0x0008,	// restricted user connection;
-			oper = 0x0010,			// operator flag;
-			Oper = 0x0020,			// local operator flag;
-			server_notice = 0x0040,	// marks a user for receipt of server notices.
-			registered = 0x0080		// user has completed registration
+			away = 0x01,			// user is flagged as away;
+			wallops = 0x02,		// user receives wallops;
+			invisible = 0x04,		// marks a users as invisible;
+			restricted = 0x08,	// restricted user connection;
+			oper = 0x10,			// operator flag;
+			Oper = 0x20,			// local operator flag;
+			server_notice = 0x40,	// marks a user for receipt of server notices.
+			registered = 0x80		// user has completed registration
 		};
 
 		// class UserNotFound : public std::exception{
@@ -123,9 +122,10 @@ class IRCServer {
 		Operator &						getOperByNick(std::string nick);
 		bool							getUserMode(User & user, e_uperm mode) const;
 
-		bool							isBlocked(std::string nick) const;
 		void							delFd(User& user);
 		void							delUser(User& user);
+
+		void							log(std::string);
 
 		int								executeCommand(User& user, Message& message);
 		void							setUserMode(User & user, e_uperm mode);

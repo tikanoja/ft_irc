@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 17:04:28 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:17:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../inc/User.hpp"
-#include "../inc/IRCServer.hpp"
-#include "../inc/Reply.hpp"
+#include "../../inc/User.hpp"
+#include "../../inc/IRCServer.hpp"
+#include "../../inc/Reply.hpp"
 
-User::User(int const socket_fd, char const * ipaddress) : p_socket_fd(socket_fd){
-	// std::cout << "User param constructor called" << std::endl;
+User::User(int const socket_fd, char const * ipaddress, std::string host) : p_socket_fd(socket_fd){
+
 	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
+	p_host = host;
 
 	p_mode = 0;
 	p_nickFlag = false;
@@ -63,6 +64,7 @@ void	User::setSocket(int socketfd){
 }
 
 void	User::setNick(std::string nickname){
+		p_oldNick = p_nickname;
 		p_nickname = nickname.substr(0, 9);
 }
 
@@ -95,6 +97,10 @@ void User::setUserName(std::string username){
 		p_username = username;
 }
 
+void User::setHostServer(std::string hostname){
+		p_host = hostname;
+}
+
 char const * User::getIP(void) const {
 	return p_ipaddress;
 }
@@ -113,6 +119,10 @@ std::string	const &	User::getOldNick(void) const {
 
 int	User::getMode(void) const {
 	return p_mode;
+}
+
+std::string	const & User::getHostServer(void) const {
+	return p_host;
 }
 
 std::string	const &	User::getRealName(void) const {
@@ -134,19 +144,6 @@ DynamicBuffer & User::getSendBuffer(void) {
 void	User::resetBuffers(void){
 	p_recvBuffer.clear();
 	p_sendBuffer.clear();
-}
-
-
-std::ostream & operator<<( std::ostream & o, User const & user){
-
-	o 	<< "USER CONTNENT\n" 
-		<< "Nick: " << user.getNick() << "\n"
-		<< "User:"<< user.getUserName() << "\n"
-		<< "Real:"<< user.getRealName() << "\n"
-		<< "Mode:"<< user.getMode() << "\n"
-		<< "Socket: "<< user.getSocket() << "\n"
-		<< "IP Address: "<< user.getIP() << std::endl;
-	return o;
 }
 
 void	User::setAwayMsg(std::string const & comment){
@@ -174,6 +171,7 @@ void	User::setRegistrationFlag(int i, User& user, IRCServer& server)
 		p_welcomeFlag = true;
 		user.setMode(IRCServer::registered);
 		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
+		motd(server, user);
 	}
 }
 

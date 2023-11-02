@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_topic.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 17:27:52 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 13:10:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
 		return 1;
 	}
-	if (message.getTrailing() == "") {
-		if (chan->getTopic() == "") {
+	if (message.getTrailing().empty()) {
+		if (chan->getTopic().empty()) {
 			user.send(RPL_NOTOPIC(server.getName(), \
 			message.getParams().front()));
 			return 0;
@@ -42,7 +42,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTONCHANNEL(server.getName(), chan->getName()));
 			return 1;
 		}
-		if (chan->getTopicrestricted() == true && chan->isChop(user) == false) {
+		
+		if ((chan->getMode() & Channel::topic_rest) && chan->isChop(user) == false) {
 			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
 			return 1;
 		}
@@ -50,9 +51,9 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			chan->setTopic("");
 		else
 			chan->setTopic(message.getTrailing());
-		chan->broadcastToChannel(":" + user.getNick() + \
-		"!add_user_host_here TOPIC " + chan->getName() + \
-		" :" + chan->getTopic() + "\r\n", NULL);
+		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
+			+ " TOPIC " + chan->getName() + \
+			" :" + chan->getTopic() + "\r\n", NULL);
 		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 		chan->getName(), chan->getTopic()));
 	}

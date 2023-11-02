@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printOut.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:33:49 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/27 11:42:53 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:02:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 
 void printOut(int i, std::string msg) {
+
 	if (i == 3) {
 		std::cerr << "\033[31m[ERROR]\033[0m" << std::endl;
 		std::cerr << msg << std::endl << std::endl;

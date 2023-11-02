@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 17:04:22 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:16:31 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class User
 {
 	public:
 		User();
-		User(int const socket_fd, char const * ipaddress );
+		User(int const socket_fd, char const * ipaddress, std::string host);
 		User(User const& src);
 		~User();
 
@@ -37,6 +37,7 @@ class User
 		std::string	const &	getRealName(void) const;
 		std::string	const &	getUserName(void) const;
 		std::string	const &	getAwayMsg(void) const;
+		std::string	const & getHostServer(void) const;
 
 		void				setIP(char const * ip);
 		void				setSocket(int socketfd);
@@ -47,6 +48,7 @@ class User
 		void				setRealName(std::string realname);
 		void				setUserName(std::string username);
 		void				setAwayMsg(std::string const & comment);
+		void				setHostServer(std::string hostname);
 		void 				send(std::string str);
 		void				setRegistrationFlag(int i, User& user, IRCServer& server);
 
@@ -61,6 +63,7 @@ class User
 		std::string		p_username;
 		std::string		p_realname;
 		std::string		p_awaymsg;
+		std::string		p_host;
 		int32_t			p_mode;
 		int				p_socket_fd;
 		char			p_ipaddress[INET6_ADDRSTRLEN];
@@ -72,7 +75,5 @@ class User
 		bool			p_passFlag;
 		bool			p_welcomeFlag;
 };
-
-std::ostream & operator<<( std::ostream & o, User const & user);
 
 #endif

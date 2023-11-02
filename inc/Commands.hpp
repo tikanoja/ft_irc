@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/28 11:31:44 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:20:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int cmd_user(IRCServer& server, User& user, Message& message);
 int cmd_mode(IRCServer& server, User& user, Message& message);
 int cmd_quit(IRCServer& server, User &user, Message &message);
 int cmd_away(IRCServer& server, User &user, Message &message);
-
+int motd(IRCServer& server, User& user);
+int cmd_motd(IRCServer& server, User& user, Message& message);
 
 // Operator functions
 int cmd_kill(IRCServer& server, User &user, Message &message);
@@ -47,6 +48,7 @@ int cmd_oper(IRCServer& server, User &user, Message &message);
 
 // int cmd_notice(IRCServer& server, User &user, Message &message);
 
+int cmd_notice(IRCServer& server, User &user, Message &message);
 int cmd_privmsg(IRCServer& server, User &user, Message &message);
 int cmd_ping(IRCServer& server, User &user, Message &message);
 int cmd_pong(IRCServer& server, User &user, Message &message);
@@ -63,5 +65,7 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message);
 
 // Utils
 void removeCommonCharacters(std::string& str1, std::string& str2);
+std::string getSetValues(std::vector<std::string> const & params,
+	std::vector<size_t> const & indeces);
 
 #endif

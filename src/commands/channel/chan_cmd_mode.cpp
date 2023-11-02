@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_mode.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/30 16:59:35 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/01 13:10:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,104 +43,89 @@
 */
 
 
-void execChanMode(IRCServer& server, User& user, Channel* chan, \
-				std::string mode, std::string modeparam) { //this needs to return something in case the command fails
-	bool status;
-	if (mode[0] == '+')
-		status = true;
-	else
-		status = false;
-	switch (mode[1]){
-		case ('i'):
-			chan->toggleInviteonly(status);
-			break;
-		case ('t'):
-			chan->toggleTopicrestricted(status);
-			break;
-		case ('k'):
-			chan->toggleKeyneeded(status, modeparam);
-			break;
-		case ('o'):
-			chan->toggleChoprights(status, modeparam, chan);
-			break;
-		case ('l'):
-			chan->toggleUserlimit(status, modeparam);
-			break;
-		default:
-			return;
-	}
-	(void)server;
-	(void)user;
-	(void)modeparam;
-}
+#define ALLCHANMODES "+-itkol"
 
-std::string getChanModes(Channel* chan) {
-	std::string modes = "+";
-	if (chan->getTopicrestricted() == true)
-		modes += "t";
-	if (chan->getInviteonly() == true)
-		modes += "i";
-	if (chan->getUserlimit() == true)
-		modes += "l";
-	if (chan->getKeyneeded() == true)
-		modes += "k";
-	return modes;
-}
-
-std::string getChanModeParams(Channel* chan) {
-	std::string modeparams = "";
-	if (chan->getUserlimit() == true || chan->getKeyneeded() == true)
-		modeparams += " ";
-	if (chan->getUserlimit() == true) {
-		std::ostringstream oss;
-		oss << chan->getMaxusers();
-		modeparams += oss.str();
-		if (chan->getKeyneeded() == true)
-			modeparams += " ";
-	}
-	if (chan->getKeyneeded() == true)
-		modeparams += chan->getKey();
-	return modeparams;
-}
+static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
+	Channel * chan, std::vector<std::string> const & params);
+	
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
+	std::string& removals, std::vector<size_t> & indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
+	
+	std::vector<std::string> params = message.getParams();
+	Channel* chan = server.getChannels().findChannel(params.front());
+
+	if (!checkChanmodePerms(server, user, message, chan, params))
+		return 1;
+
+	size_t forbidden;
+	for (size_t i = 1; i < params.size(); i++){
+		if (params[i][0] == '+' || params[i][0] == '-')
+		{
+			forbidden = params[i].find_first_not_of(ALLCHANMODES);
+			if (forbidden != std::string::npos)
+				user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
+		}
+	}
+
+	std::string				additions;
+	std::string				removals;
+	std::vector<size_t>		indeces;
+	
+	setModes(chan, params, additions, removals, indeces);
+
+	std::cout << removals << std::endl;
+	std::cout << additions << std::endl;
+	std::cout << additions << std::endl;
+	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
+	reply += !additions.empty() ? ("+" + additions) : "";
+	reply += !removals.empty() ? ("-" + removals) : "";
+	reply += getSetValues(params, indeces);
+	user.send(reply + "\r\n");
+	if (0 < indeces.size())
+		chan->broadcastToChannel(reply, &user);
+
+	return 0;
+}
+
+static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
+	Channel * chan, std::vector<std::string> const & params){
 	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
-		return 1;
+		return false;
 	}
-	Channel* chan = server.getChannels().findChannel(message.getParams().front());
-	if (chan == NULL) { //does the channel exist ?
+	if (params.size() == 1) {
+		user.send(RPL_CHANNELMODEIS(server.getName(), user.getNick(), chan->getName(),\
+			chan->getChanModes(), chan->getChanStr()));
+		return false;
+	}
+	if (chan == NULL) {
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
-		return 1;
+		return false;
 	}
-	if (message.getParams().size() == 1) {
-		std::string modes = getChanModes(chan);
-		modes += getChanModeParams(chan);
-		user.send(RPL_CHANNELMODEIS(server.getName(), user.getNick(), chan->getName(), modes)); //mode & modeparams?
-		return 0;
-	}
-	if (chan->getChops()->findUserByNick(user.getNick()) == NULL) { //are we channel op?
+	if (!chan->isChop(user)) {
 		user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
-		return 1;
+		return false;
 	}
-	std::string mode = message.getParams()[1];
-	std::string modeparam = "";
-	std::string allmodes = "itkol";
-	if (message.getParams().size() > 2)
-		modeparam = message.getParams()[2];
+	return true;
+}
 
-	if (mode.length() != 2 || (mode[0] != '+' && mode[0] != '-')) { //check that we have correct format '+?'
-		user.send(ERR_UNKNOWNMODE(server.getName(), mode, chan->getName()));
-		return 1;
+static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
+	std::string& removals, std::vector<size_t> & indeces){
+	
+		for (size_t i = 1; i < params.size(); i++){
+		size_t pos = 0;
+		while (i < params.size() && pos < params[i].size())
+		{
+			if (params[i][pos] == '+')
+				additions += chan->setBatchMode(params, i, pos, indeces);
+			else if (params[i][pos] == '-')
+				removals += chan->unsetBatchMode(params, i, pos, indeces);
+			else
+				pos++;
+		}
 	}
-	if (allmodes.find(mode[1]) == std::string::npos) { //check that we support the mode
-		user.send(ERR_UNKNOWNMODE(server.getName(), mode[1], chan->getName()));
-		return 1;
-	}
-
-	execChanMode(server, user, chan, mode, modeparam);
-
-	//make reply and send to user
-	return 0;
+	removeCommonCharacters(additions, removals);
 }

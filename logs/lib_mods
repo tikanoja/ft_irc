@@ -1,0 +1,521 @@
+<< CAP LS 302
+<< JOIN :
+>> :tungsten.libera.chat NOTICE * :*** Checking Ident
+>> :tungsten.libera.chat NOTICE * :*** Looking up your hostname...
+>> :tungsten.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :tungsten.libera.chat NOTICE * :*** No Ident response
+>> :tungsten.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :tungsten.libera.chat 451 * :You have not registered
+>> :tungsten.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK djagusch
+<< USER djagusch djagusch irc.libera.chat :Dorian Jagusch
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 001 djagusch :Welcome to the Libera.Chat Internet Relay Chat Network djagusch
+<< MODE djagusch +i
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 002 djagusch :Your host is tungsten.libera.chat[130.239.18.120/6697], running version solanum-1.0-dev
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 003 djagusch :This server was created Wed Aug 2 2023 at 00:42:26 UTC
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 004 djagusch tungsten.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 005 djagusch ACCOUNTEXTBAN=a FNC MONITOR=100 KNOCK WHOX CALLERID=g ETRACE SAFELIST ELIST=CMNTU CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 005 djagusch CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 005 djagusch DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 251 djagusch :There are 68 users and 33378 invisible on 28 servers
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 252 djagusch 39 :IRC Operators online
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 253 djagusch 94 :unknown connection(s)
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 254 djagusch 22716 :channels formed
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 255 djagusch :I have 1982 clients and 1 servers
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 265 djagusch 1982 2450 :Current local users 1982, max 2450
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 266 djagusch 33446 40164 :Current global users 33446, max 40164
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 250 djagusch :Highest connection count: 2451 (2450 clients) (193134 connections received)
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 375 djagusch :- tungsten.libera.chat Message of the Day - 
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Welcome to Libera Chat, the IRC network for
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- free & open-source software and peer directed projects.
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :-  
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Use of Libera Chat is governed by our network policies.
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :-  
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- To reduce network abuses we perform open proxy checks
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- on hosts at connection time.
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :-  
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Please visit us in #libera for questions and support.
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :-  
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Website and documentation:  https://libera.chat
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Webchat:                    https://web.libera.chat
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Network policies:           https://libera.chat/policies
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 372 djagusch :- Email:                      support@libera.chat
+>> @time=2023-10-30T10:09:31.900Z :tungsten.libera.chat 376 djagusch :End of /MOTD command.
+>> @time=2023-10-30T10:09:31.900Z :djagusch MODE djagusch :+Ziw
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:09:37.899Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< JOIN #test123456
+>> @time=2023-10-30T10:10:18.672Z :djagusch!~djagusch@194.136.126.52 JOIN #test123456 * :Dorian Jagusch
+>> @time=2023-10-30T10:10:18.672Z :tungsten.libera.chat MODE #test123456 +Cnst
+>> @time=2023-10-30T10:10:18.672Z :tungsten.libera.chat 353 djagusch @ #test123456 :@djagusch
+>> @time=2023-10-30T10:10:18.672Z :tungsten.libera.chat 366 djagusch #test123456 :End of /NAMES list.
+<< MODE #test123456
+>> @time=2023-10-30T10:10:21.193Z :tungsten.libera.chat 324 djagusch #test123456 +Cnst
+--> chanquery mode
+>> @time=2023-10-30T10:10:21.194Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+--> event 329
+<< WHO #test123456 %tcuhnfdar,743
+>> @time=2023-10-30T10:10:23.703Z :tungsten.libera.chat 354 djagusch 743 #test123456 ~djagusch 194.136.126.52 djagusch H@ 0 0 :Dorian Jagusch
+--> silent event whox
+>> @time=2023-10-30T10:10:23.703Z :tungsten.libera.chat 315 djagusch #test123456 :End of /WHO list.
+--> chanquery who end
+<< MODE #test123456 b
+>> @time=2023-10-30T10:10:26.228Z :tungsten.libera.chat 368 djagusch #test123456 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #test123456 +r
+>> @time=2023-10-30T10:10:27.792Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +r 
+<< MODE #test123456 +riI
+>> @time=2023-10-30T10:10:31.970Z :tungsten.libera.chat 347 djagusch #test123456 :End of Channel Invite List
+>> @time=2023-10-30T10:10:31.970Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +i 
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:10:37.781Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 -ri+k
+>> @time=2023-10-30T10:10:43.862Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -ri 
+<< MODE #test123456 +k
+<< MODE #test123456 +k hello
+>> @time=2023-10-30T10:10:54.328Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +k hello
+<< MODE #test123456 -k hello
+>> @time=2023-10-30T10:11:00.056Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -k *
+<< MODE #test123456 +rikl hello 40
+>> @time=2023-10-30T10:11:14.944Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +rikl hello 40
+<< MODE #test123456 -l
+>> @time=2023-10-30T10:11:23.055Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -l 
+<< MODE #test123456 -rikl hello
+>> @time=2023-10-30T10:11:32.689Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -rik *
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:11:38.997Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 -riklbye 30
+>> @time=2023-10-30T10:11:41.497Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456 -riklferg bye
+>> @time=2023-10-30T10:11:52.610Z :tungsten.libera.chat 349 djagusch #test123456 :End of Channel Exception List
+<< MODE #test123456 -riklfrg bye
+<< MODE #test123456 -rikl20 bye
+>> @time=2023-10-30T10:12:01.792Z :tungsten.libera.chat 472 djagusch 2 :is an unknown mode char to me
+<< MODE #test123456 +rkl 30 bye
+>> @time=2023-10-30T10:12:15.167Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +rk 30
+<< MODE #test123456 +rkl hello 30
+>> @time=2023-10-30T10:12:27.895Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +kl hello 30
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:12:39.204Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:13:40.332Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456
+>> @time=2023-10-30T10:14:07.324Z :tungsten.libera.chat 324 djagusch #test123456 +Cnrstlk 30 hello
+>> @time=2023-10-30T10:14:07.324Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456
+>> @time=2023-10-30T10:14:21.138Z :tungsten.libera.chat 324 djagusch #test123456 +Cnrstlk 30 hello
+>> @time=2023-10-30T10:14:21.138Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:14:41.519Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:15:42.689Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:16:43.812Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 +rkgkl hello 30
+>> @time=2023-10-30T10:17:01.122Z :tungsten.libera.chat 461 djagusch MODE :Not enough parameters
+<< MODE #test123456 +rk
+<< MODE #test123456 +rdfggfhjk
+>> @time=2023-10-30T10:17:07.127Z :tungsten.libera.chat 472 djagusch d :is an unknown mode char to me
+<< MODE #test123456 +g
+>> @time=2023-10-30T10:17:21.651Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +g 
+<< MODE #test123456 -h
+>> @time=2023-10-30T10:17:26.716Z :tungsten.libera.chat 472 djagusch h :is an unknown mode char to me
+<< MODE pohjhgddffg
+>> @time=2023-10-30T10:17:30.872Z :tungsten.libera.chat 403 djagusch pohjhgddffg :No such channel
+<< MODE #test123456 +h
+>> @time=2023-10-30T10:17:36.968Z :tungsten.libera.chat 472 djagusch h :is an unknown mode char to me
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:17:45.013Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 +z
+>> @time=2023-10-30T10:17:56.397Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +z 
+<< MODE ]z
+>> @time=2023-10-30T10:17:59.708Z :tungsten.libera.chat 403 djagusch ]z :No such channel
+<< MODE \\][z
+>> @time=2023-10-30T10:18:03.171Z :tungsten.libera.chat 403 djagusch \\][z :No such channel
+<< MODE ?*
+>> @time=2023-10-30T10:18:10.690Z :tungsten.libera.chat 403 djagusch ?* :No such channel
+<< MODE #test123456 +)
+>> @time=2023-10-30T10:18:13.981Z :tungsten.libera.chat 472 djagusch ) :is an unknown mode char to me
+<< PRIVMSG #test123456 :lls
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:18:45.228Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 +test
+>> @time=2023-10-30T10:18:50.984Z :tungsten.libera.chat 349 djagusch #test123456 :End of Channel Exception List
+<< MODE #test123456 +t
+<< MODE #test123456 +yaaas
+>> @time=2023-10-30T10:19:02.219Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456 +i
+>> @time=2023-10-30T10:19:05.951Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +i 
+<< MODE #test123456 -i
+>> @time=2023-10-30T10:19:08.905Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -i 
+<< MODE #test123456 +i
+>> @time=2023-10-30T10:19:11.006Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +i 
+<< MODE #test123456 +i
+<< MODE #test123456 -i
+>> @time=2023-10-30T10:19:16.640Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -i 
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:19:46.433Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 -yaaas
+>> @time=2023-10-30T10:20:23.940Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456 +syaaa
+>> @time=2023-10-30T10:20:36.801Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456 -syaaa
+>> @time=2023-10-30T10:20:42.376Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:20:47.618Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 +syaka hello
+>> @time=2023-10-30T10:20:59.275Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456
+>> @time=2023-10-30T10:21:23.063Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 30 hello
+>> @time=2023-10-30T10:21:23.063Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456 +syaka bye
+>> @time=2023-10-30T10:21:41.312Z :tungsten.libera.chat 472 djagusch y :is an unknown mode char to me
+<< MODE #test123456
+>> @time=2023-10-30T10:21:43.333Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 30 hello
+>> @time=2023-10-30T10:21:43.334Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:21:48.811Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 +k bye
+>> @time=2023-10-30T10:21:51.274Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +k bye
+<< MODE #test123456
+>> @time=2023-10-30T10:21:52.776Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 30 bye
+>> @time=2023-10-30T10:21:52.776Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456 +kl hello 15
+>> @time=2023-10-30T10:22:04.505Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +kl hello 15
+<< MODE #test123456
+>> @time=2023-10-30T10:22:06.460Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 15 hello
+>> @time=2023-10-30T10:22:06.460Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456 +lk25 15 hello
+>> @time=2023-10-30T10:22:20.918Z :tungsten.libera.chat 472 djagusch 2 :is an unknown mode char to me
+<< MODE #test123456
+>> @time=2023-10-30T10:22:23.547Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 15 hello
+>> @time=2023-10-30T10:22:23.547Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456 +lk25 45 hello
+>> @time=2023-10-30T10:22:30.426Z :tungsten.libera.chat 472 djagusch 2 :is an unknown mode char to me
+<< MODE #test123456
+>> @time=2023-10-30T10:22:32.044Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 15 hello
+>> @time=2023-10-30T10:22:32.044Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< MODE #test123456 +lk 45 hello
+>> @time=2023-10-30T10:22:35.300Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +lk 45 hello
+<< MODE #test123456
+>> @time=2023-10-30T10:22:38.184Z :tungsten.libera.chat 324 djagusch #test123456 +Cgnrstzlk 45 hello
+>> @time=2023-10-30T10:22:38.184Z :tungsten.libera.chat 329 djagusch #test123456 1698660618
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:22:49.023Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< MODE #test123456 -r
+>> @time=2023-10-30T10:23:49.588Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 -r 
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:23:52.226Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+>> @time=2023-10-30T10:23:52.841Z :djagusch_!~djagusch@194.136.126.52 JOIN #test123456 * :Dorian Jagusch
+<< MODE #test123456 +l 1
+>> @time=2023-10-30T10:24:09.650Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +l 1
+>> @time=2023-10-30T10:24:13.266Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :fejhbjern
+>> @time=2023-10-30T10:24:14.117Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :kjvbenr
+>> @time=2023-10-30T10:24:15.106Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :efkjvjb
+>> @time=2023-10-30T10:24:15.695Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :ekvjkjbn
+>> @time=2023-10-30T10:24:16.401Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :efkjvjn
+>> @time=2023-10-30T10:24:18.746Z :djagusch_!~djagusch@194.136.126.52 PRIVMSG #test123456 :eefvjjbn
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:24:53.408Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+>> @time=2023-10-30T10:24:56.431Z :djagusch_!~djagusch@194.136.126.52 PART #test123456
+<< MODE #test123456 +l 10
+>> @time=2023-10-30T10:25:14.130Z :djagusch!~djagusch@194.136.126.52 MODE #test123456 +l 10
+>> @time=2023-10-30T10:25:16.340Z :djagusch_!~djagusch@194.136.126.52 JOIN #test123456 * :Dorian Jagusch
+>> @time=2023-10-30T10:25:35.143Z :djagusch2!~djagusch@194.136.126.52 JOIN #test123456 * :Dorian Jagusch
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:25:54.589Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< TOPIC #test123456 :hellooooooo
+>> @time=2023-10-30T10:26:05.085Z :djagusch!~djagusch@194.136.126.52 TOPIC #test123456 :hellooooooo
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:26:55.776Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:27:56.900Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:28:57.031Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:29:58.114Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:30:59.212Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:32:00.303Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:33:01.404Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:34:02.545Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:35:03.659Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:36:04.794Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:37:05.991Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:38:06.180Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:39:07.329Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:40:08.481Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:41:09.654Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:42:10.741Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:43:11.874Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:44:12.051Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:45:13.191Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:46:14.343Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:47:15.465Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:48:16.613Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:49:17.745Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:50:18.891Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:51:19.067Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:52:20.236Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:53:21.464Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:54:22.704Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:55:23.891Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:56:24.177Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:57:25.361Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:58:26.529Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T10:59:27.663Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:00:28.825Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:01:29.951Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:02:30.074Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:03:31.228Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:04:32.375Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:05:33.500Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:06:34.632Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:07:35.768Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:08:36.938Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:09:37.048Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:10:38.145Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:11:39.292Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:12:40.486Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:13:41.688Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:14:42.836Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:15:43.987Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:16:44.136Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:17:45.277Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:18:46.438Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:19:47.628Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:20:48.799Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:21:49.973Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:22:50.102Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:23:51.274Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:24:52.440Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:25:53.567Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:26:54.673Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:27:55.794Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:28:56.943Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:29:57.091Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:30:58.208Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:31:59.320Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:33:00.451Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:34:01.584Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:35:02.738Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:36:03.848Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:37:04.989Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:38:05.114Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:39:06.296Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:40:07.444Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:41:08.623Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:42:09.781Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:43:10.952Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:44:11.105Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:45:12.274Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:46:13.444Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:47:14.625Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:48:15.810Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:49:16.965Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:50:17.165Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:51:18.335Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:52:19.500Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:53:20.675Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:54:21.856Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:55:22.021Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:56:23.206Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:57:24.349Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< PING tungsten.libera.chat
+>> @time=2023-10-30T11:58:25.524Z :tungsten.libera.chat PONG tungsten.libera.chat :tungsten.libera.chat
+--> lag pong
+<< QUIT :leaving

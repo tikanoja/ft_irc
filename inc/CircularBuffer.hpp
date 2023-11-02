@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 09:32:47 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/05 10:22:01 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:05:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <exception>
 
 # ifndef MAXDATASIZE
-	# define MAXDATASIZE 512
+	# define MAXDATASIZE 2048
 # endif
 
 class CircularBuffer {

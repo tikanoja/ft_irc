@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 09:18:25 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:07:27 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../../inc/Commands.hpp"
 /*
@@ -28,19 +29,8 @@
 		RPL_TOPIC				//sent upon successful JOIN
 */
 
-int checkChannelName(std::string name) {
-	if (name.length() > 50)
-		return 1;
-	if (name.empty() || (name[0] != '#' && name[0] != '&' && name[0] != '!' \
-		&& name[0] != '+'))
-		return 1;
-	size_t limit = name.length();
-	for (size_t i = 0; i < limit; i++) {
-		if (name[i] == 7 || name[i] == ',' || std::isspace(name[i]))
-			return 1;
-	}	
-	return 0;
-}
+static int checkChannelName(std::string name);
+static bool checkPermissions(IRCServer& server, User& user, Message& message, Channel * toJoin);
 
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	if (!(user.getMode() & IRCServer::registered)) {
@@ -56,39 +46,20 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	std::string chan;
 	while (std::getline(ss, chan, ',')) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
+		
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
-			if (toJoin->getUserlimit() == true && \
-				toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
-				user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(), toJoin->getName()));
-				continue ;
-			}
-			if (toJoin->getKeyneeded() == true) {
-				if (message.getParams().size() < 2 || \
-					message.getParams()[1] != toJoin->getKey()) {
-					user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(), toJoin->getName()));
-					continue ;
-				}
-			}
-			if (toJoin->getInviteonly() == true) {
-				if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {
-					user.send(ERR_INVITEONLYCHAN(server.getName(), user.getNick(), toJoin->getName()));
-					continue ;
-				}
-				toJoin->removeFromInvlist(user);
-			}
-			if (toJoin->getMembers()->findUserByNick(user.getNick()) != NULL) {
-				user.send(ERR_USERONCHANNEL(server.getName(), user.getNick(), toJoin->getName()));
-				continue ;
-			}
+			if (!checkPermissions(server, user, message, toJoin))
+				return 1;
+				
 			toJoin->getMembers()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + \
-			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
+			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
+				user.getIP()) + " JOIN :" + toJoin->getName() + "\r\n", NULL);
 			if (toJoin->getTopic() != "")
 				user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 				toJoin->getName(), toJoin->getTopic()));
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
-		} else { //CREATING NEW CHANNEL
+		} else {
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
 				continue ;
@@ -96,9 +67,55 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
 			toJoin->getChops()->push_back(&user);
-			toJoin->broadcastToChannel(":" + user.getNick() + \
-			"!add_user_host_here " + "JOIN :" + toJoin->getName() + "\r\n", NULL);
+			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
+				user.getIP()) + " JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}
 	}
 	return 0;
+}
+
+static int checkChannelName(std::string name) {
+	if (name.length() > 50)
+		return 1;
+	if (name.empty() || (name[0] != '#' && name[0] != '&' && name[0] != '!' \
+		&& name[0] != '+'))
+		return 1;
+	size_t limit = name.length();
+	for (size_t i = 0; i < limit; i++) {
+		if (name[i] == 7 || name[i] == ',' || std::isspace(name[i]))
+			return 1;
+	}	
+	return 0;
+}
+
+
+static bool checkPermissions(IRCServer& server, User& user, Message& message, Channel * toJoin){
+		if (toJoin->getUserlimit() == true && \
+		toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
+		user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(),\
+			toJoin->getName()));
+		return false;
+	}
+	if (toJoin->getMode() & Channel::key) {
+		if (message.getParams().size() < 2 || \
+			message.getParams()[1] != toJoin->getKey()) {
+			user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(),\
+				toJoin->getName()));
+			return false;
+		}
+	}
+	if (toJoin->getMode() & Channel::invite) {
+		if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {
+			user.send(ERR_INVITEONLYCHAN(server.getName(), user.getNick(),\
+				toJoin->getName()));
+			return false;
+		}
+		toJoin->removeFromInvlist(user);
+	}
+	if (toJoin->getMembers()->findUserByNick(user.getNick()) != NULL) {
+		user.send(ERR_USERONCHANNEL(server.getName(), user.getNick(),\
+			toJoin->getName()));
+		return false;
+	}
+	return true;
 }

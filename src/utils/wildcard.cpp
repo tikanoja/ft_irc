@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:17:44 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/27 15:23:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:02:35 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <string>
 
 bool isValidWildchard(const std::string& pattern){
+	
 	if ((pattern.find_last_of('.') < pattern.find_last_of('*') 
 			&& pattern.find_last_of('*') != std::string::npos)
 		|| (pattern.find_last_of('.') < pattern.find_last_of('?')
@@ -23,6 +24,7 @@ bool isValidWildchard(const std::string& pattern){
 }
 
 bool matchWildcard(const std::string& pattern, const std::string& str) {
+
 	size_t i = 0;
 	size_t j = 0;
 

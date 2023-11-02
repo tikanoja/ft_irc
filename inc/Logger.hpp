@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 10:57:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/04 19:22:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:45:02 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Logger
 	public:
 		Logger(char const * file);
 		~Logger();
-		void		log(char const * str);
+		void		log(std::string const str);
 
 	private:
 		Logger();

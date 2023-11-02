@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 22:45:35 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/27 10:22:30 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:03:16 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCServer.hpp"
 
 int main(int ac, char** av) {
+	
 	if (ac != 3) {
 		std::cerr << "usage: " << av[0] << " <port> <password>" << std::endl;
 		return (1);

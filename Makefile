@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/01 17:04:00 by tuukka           ###   ########.fr        #
+#    Updated: 2023/11/02 07:14:58 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRC_FILES = DynamicBuffer \
 			Cvector \
 			Message \
 			IRCServer \
+			handleIO \
 			Channel \
+			ChannelBatchMode \
 			connectToUser \
 			handleUser \
 			executeCommand \
@@ -38,31 +40,27 @@ SRC_FILES = DynamicBuffer \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \
+			cmd_motd \
 			cmd_oper \
 			cmd_quit \
 			cmd_ping \
 			cmd_pong \
-			cmd_privmsg \
 			cmd_away \
 			cmd_kill \
 			cmd_mode \
 			commandUtils \
+			cmd_privmsg \
+			cmd_notice \
 			chan_cmd_invite \
 			chan_cmd_join \
 			chan_cmd_kick \
 			chan_cmd_part \
 			chan_cmd_topic \
-			chan_cmd_mode
-#			cmd_notice
-#			cmd_lusers
-#			cmd_who
-#			cmd_whois
-#			cmd_squit
-#			chan_list
-#			chan_mode
-
+			chan_cmd_mode \
+			Logger
 
 INC_FILES = DynamicBuffer \
+			Logger \
 			User \
 			Uvector \
 			Cvector \
