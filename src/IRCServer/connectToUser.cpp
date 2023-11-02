@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:23:30 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:57:07 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,26 @@ int IRCServer::acceptClient() {
 	socklen_t sin_size;
 	int new_fd;
 
-	sin_size = sizeof(their_addr);
-	new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
-	fcntl(new_fd, F_SETFL, O_NONBLOCK);
-	if (new_fd == -1) {
-		p_logger->log("Unable to accept connection from " + static_cast<std::string>(s), __FILE__, __LINE__);
-		return (-1);
-	} else {
-		struct pollfd pfd;
-		pfd.fd = new_fd;
-		pfd.events = POLLIN;
-		p_pfds.push_back(pfd);
-		p_fd_count++;
-		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
+	if (p_pfds.size() < MAXCLIENTS + 1){
+		sin_size = sizeof(their_addr);
+		new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
+		fcntl(new_fd, F_SETFL, O_NONBLOCK);
+		if (new_fd == -1) {
+			p_logger->log("Unable to accept connection from " + static_cast<std::string>(s), __FILE__, __LINE__);
+			return (-1);
+		} else {
+			struct pollfd pfd;
+			pfd.fd = new_fd;
+			pfd.events = POLLIN;
+			p_pfds.push_back(pfd);
+			p_fd_count++;
+			inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 
-		p_users.push_back(new User(new_fd, s, this->getName()));
-		p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
-	}
+			p_users.push_back(new User(new_fd, s, this->getName()));
+			p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
+		}
+	} else
+		p_logger->log("Rejected client because of too many connections", __FILE__, __LINE__);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 15:03:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:06:50 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@
 # define RPL_NOUSERS(servername)(":" + servername + " 395 :Nobody logged in\r\n") //395
 
 # define RPL_NICK(ouser, uuser, host, user)(":" + ouser + "!" + uuser + "@" + host + " NICK " +  user + "\r\n")
+# define RPL_CAP(servername, type, text)(":" + servername + " CAP * " + type + " :" + text + "\r\n")
 
 #endif

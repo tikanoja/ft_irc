@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:05:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:18:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ std::string	Channel::setBatchMode(std::vector<std::string> const & modes, size_t
 					break;
 				case ('o'):
 					if (word + ++move_flag < modes.size()){
-							std::cout << modes.at(word + move_flag) << std::endl;
 						if (this->setChop(modes.at(word + move_flag))){
 							indeces.push_back(word + move_flag);
 							opsdone += characters[3];
@@ -93,7 +92,6 @@ std::string	Channel::unsetBatchMode(std::vector<std::string> const & modes, size
 					break;
 				case ('o'):
 					if (word + ++move_flag < modes.size()){
-						std::cout << modes.at(word + move_flag) << std::endl;
 						if (this->unsetChop(modes.at(word + move_flag))){
 							opsdone += characters[3];
 							indeces.push_back(word + move_flag);

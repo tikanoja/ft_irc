@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 09:29:03 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:25:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@
 # define ERR_NOOPERHOST(servername)(":" + servername + " 491 :No O-lines for your host" + "\r\n") //491
 # define ERR_UMODEUNKNOWNFLAG(servername)(":" + servername + " 501 :Unknown MODE flag" + "\r\n") //501
 # define ERR_USERSDONTMATCH(servername, user)(":" + servername + " 502 " + user + " :Cannot change mode for other users" + "\r\n") //502
+# define ERR_INVALIDCAPCMD(servername, nick, type)(":" + servername + " 410 " + (nick == "" ? nick : "*") + " " + type + " :Invalid CAP command" + "\r\n")
 
 #endif

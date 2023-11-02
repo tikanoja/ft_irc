@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 10:07:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:10:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # include "Commands.hpp"
 # include "Utils.hpp"
 
-# define MAXCLIENTS 10
+# define MAXCLIENTS 64
 
 # ifndef MAXDATASIZE
 #  define MAXDATASIZE 2048
@@ -66,6 +66,7 @@ class IRCServer {
 		std::vector<Operator>		p_opers;
 		Cvector						p_channels;
 		nfds_t 						p_fd_count;
+		std::string					p_caps;
 
 		std::vector<struct pollfd>	p_pfds;
 		std::string					p_serverName;
@@ -76,7 +77,9 @@ class IRCServer {
 		Logger *					p_logger;
 
 		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
-		std::map<std::string, CommandFunction>	p_commandMap;
+		typedef std::map<std::string, CommandFunction> commandMap;
+		
+		commandMap	p_commandMap;
 
 		void								initServer();
 		void 								initCommands();
@@ -93,20 +96,16 @@ class IRCServer {
 
 	public:
 		enum e_uperm{
-			away = 0x01,			// user is flagged as away;
-			wallops = 0x02,		// user receives wallops;
-			invisible = 0x04,		// marks a users as invisible;
-			restricted = 0x08,	// restricted user connection;
-			oper = 0x10,			// operator flag;
-			Oper = 0x20,			// local operator flag;
-			server_notice = 0x40,	// marks a user for receipt of server notices.
-			registered = 0x80		// user has completed registration
+			away = 0x001,				// user is flagged as away;
+			wallops = 0x002,				// user receives wallops;
+			invisible = 0x004,			// marks a users as invisible;
+			restricted = 0x008,			// restricted user connection;
+			oper = 0x010,				// operator flag;
+			Oper = 0x020,				// local operator flag;
+			server_notice = 0x040,		// marks a user for receipt of server notices.
+			registered = 0x080,			// user has completed registration
+			cap_negotiation = 0x100		// capability negotiation ongoing?
 		};
-
-		// class UserNotFound : public std::exception{
-		// 	public:
-		// 		virtual char const * what() const throw();
-		// };
 
 		IRCServer(uint16_t port, std::string password);
 		~IRCServer(void);
@@ -115,6 +114,7 @@ class IRCServer {
 		
 		std::string	const & 			getName() const;
 		std::string	const &				getPassword() const;
+		std::string const & 			getCaps() const;
 		Uvector		const &				getUsers() const;
 		Cvector			  &				getChannels();
 		std::string						getModeStr(User const &user);

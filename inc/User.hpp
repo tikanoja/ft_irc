@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 08:52:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:18:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ class User
 		void				setRegistrationFlag(int i, User& user, IRCServer& server);
 
 		bool				getPassFlag();
-		DynamicBuffer &	getRecvBuffer(void);
-		DynamicBuffer &	getSendBuffer(void);
+		DynamicBuffer &		getRecvBuffer(void);
+		DynamicBuffer &		getSendBuffer(void);
 		void				resetBuffers(void);
 
 	private:

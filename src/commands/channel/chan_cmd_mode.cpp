@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:10:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:16:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	reply += getSetValues(params, indeces);
 	user.send(reply + "\r\n");
 	if (0 < indeces.size())
-		chan->broadcastToChannel(reply, &user);
+		chan->broadcastToChannel(reply + "\r\n", &user);
 
 	return 0;
 }

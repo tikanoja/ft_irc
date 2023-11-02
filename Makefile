@@ -6,7 +6,7 @@
 #    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/02 08:53:19 by djagusch         ###   ########.fr        #
+#    Updated: 2023/11/02 15:08:50 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC_FILES = DynamicBuffer \
 			Operator \
 			split \
 			wildcard \
+			cmd_cap \
 			cmd_pass \
 			cmd_nick \
 			cmd_user \

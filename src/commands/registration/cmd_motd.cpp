@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:16:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:39:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:09:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int cmd_motd(IRCServer& server, User& user, Message& message){
 	std::ifstream	stream;
 	std::string		line;
 
-	stream.open("config/motd.config", std::ifstream::in | std::ifstream::app);
+	stream.open("config/motd.config", std::ifstream::in);
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
 	
@@ -47,7 +47,7 @@ int motd(IRCServer& server, User& user){
 	std::ifstream	stream;
 	std::string		line;
 
-	stream.open("config/motd.config", std::ifstream::in | std::ifstream::app);
+	stream.open("config/motd.config", std::ifstream::in);
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
 	

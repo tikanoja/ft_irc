@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 09:17:48 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:08:45 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ std::string const & IRCServer::getName() const{
 std::string const & IRCServer::getPassword() const{
 
 	return p_password;
+}
+
+std::string const & IRCServer::getCaps() const{
+
+	return p_caps;
 }
 
 Uvector const &	IRCServer::getUsers() const{
@@ -82,6 +87,7 @@ void IRCServer::initServer() {
 void IRCServer::initCommands() {
 
 	std::pair<std::string, CommandFunction> cmdPairs[] = {
+		std::make_pair("CAP", cmd_cap),
 		std::make_pair("PASS", cmd_pass),
 		std::make_pair("NICK", cmd_nick),
 		std::make_pair("USER", cmd_user),
@@ -101,8 +107,9 @@ void IRCServer::initCommands() {
 		std::make_pair("INVITE", chan_cmd_invite),
 		std::make_pair("KICK", chan_cmd_kick)
 	};
-	
 	p_commandMap.insert(cmdPairs, cmdPairs + sizeof(cmdPairs) / sizeof(cmdPairs[0]));
+	// for (commandMap::iterator it = p_commandMap.begin(); it != p_commandMap.end(); it++)
+	// 	p_caps += (*it).first + (it != p_commandMap.end() ? " " : "");
 }
 
 void IRCServer::initOperators(){
