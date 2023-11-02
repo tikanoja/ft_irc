@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:03:46 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:05:18 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:10:37 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ std::string Operator::convertToIPv6(std::string const& configAddress){
 	else
 	{
 		in6_addr ipv6MappedAddress;
-		memset(&ipv6MappedAddress, 0, sizeof(ipv6MappedAddress));
+		std::memset(&ipv6MappedAddress, 0, sizeof(ipv6MappedAddress));
 		ipv6MappedAddress.s6_addr[10] = 0xff;
 		ipv6MappedAddress.s6_addr[11] = 0xff;
 		memcpy(&ipv6MappedAddress.s6_addr[12], &ipv4Address.s_addr, 4);

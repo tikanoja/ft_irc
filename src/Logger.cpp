@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:14:29 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 08:49:09 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:20:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ Logger::Logger(Logger const& src){
 	*this = src;
 }
 
-Logger::~Logger(){}
+Logger::~Logger(){
+	p_outstream << "_________________________________________________" << std::endl;
+	p_outstream.close();
+}
 
 Logger& Logger::operator=(Logger const& rhs){
 	if(this != &rhs)
@@ -57,5 +60,5 @@ void Logger::p_displayTimestamp(){
 void	Logger::log(std::string const str, std::string file, int line){
 	
 	p_displayTimestamp();
-	p_outstream << str << "\t" << file << line << "\n";
+	p_outstream << str << "\t" << file << " " << line << "\n";
 }

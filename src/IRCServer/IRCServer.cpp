@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 08:50:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:17:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void IRCServer::initCommands() {
 		std::make_pair("NICK", cmd_nick),
 		std::make_pair("USER", cmd_user),
 		std::make_pair("MODE", cmd_mode),
-		std::make_pair("motd", cmd_motd),
+		std::make_pair("MOTD", cmd_motd),
 		std::make_pair("OPER", cmd_oper),
 		std::make_pair("AWAY", cmd_away),
 		std::make_pair("QUIT", cmd_quit),
@@ -143,11 +143,9 @@ int IRCServer::pollingRoutine() {
 						p_logger->log("Failed to accept new client", __FILE__, __LINE__);
 						continue ;
 					}
-					p_logger->log("New client accepted", __FILE__, __LINE__);
-				} else if (p_pfds[i].revents & POLLIN) { //A client has sent us a message, add to buffer!
+				} else if (p_pfds[i].revents & POLLIN) {
  					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
 						continue ;
-					p_logger->log("Received message", __FILE__, __LINE__);
 				} else {
 					dropConnection(-1, i);
 					p_logger->log("Connection dropped", __FILE__, __LINE__);

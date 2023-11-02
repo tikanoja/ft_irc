@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:10:47 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:26:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			message.getParams().front()));
 			return 0;
 		}
-		user.send(RPL_TOPIC(server.getName(), user.getNick(), chan->getName(), chan->getTopic()));
+		user.send(RPL_TOPIC(server.getName(), user.getNick(), chan->getName(),
+			chan->getTopic()));
 		return 0;
 	} else {
 		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) {
@@ -51,8 +52,8 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			chan->setTopic("");
 		else
 			chan->setTopic(message.getTrailing());
-		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
-			+ " TOPIC " + chan->getName() + \
+		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),
+		 user.getIP()) + " TOPIC " + chan->getName() + \
 			" :" + chan->getTopic() + "\r\n", NULL);
 		user.send(RPL_TOPIC(server.getName(), user.getNick(), \
 		chan->getName(), chan->getTopic()));
