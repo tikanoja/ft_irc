@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:00:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:23:30 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int IRCServer::getListenerSocket() {
 	const char* server_port = str.c_str();
 
 	//init & configure socket
-	memset(&hints, 0, sizeof(hints)); //can we use memset ???
+	std::memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC; //set to IPv agnostic
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
@@ -85,6 +85,7 @@ int IRCServer::acceptClient() {
 	new_fd = accept(p_pfds[0].fd, (struct sockaddr *)&their_addr, &sin_size);
 	fcntl(new_fd, F_SETFL, O_NONBLOCK);
 	if (new_fd == -1) {
+		p_logger->log("Unable to accept connection from " + static_cast<std::string>(s), __FILE__, __LINE__);
 		return (-1);
 	} else {
 		struct pollfd pfd;
@@ -95,7 +96,7 @@ int IRCServer::acceptClient() {
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
 
 		p_users.push_back(new User(new_fd, s, this->getName()));
-		p_logger->log("New client accepted from " + static_cast<std::string>(s));
+		p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
 	}
 	return (0);
 }
@@ -105,7 +106,7 @@ void static cleanupChannels(IRCServer &server, User* user) {
 	for(std::vector<Channel*>::iterator it = server.getChannels().begin(); it != server.getChannels().end();){
 		if ((*it)->getInvitelist()->findUserByNick(user->getNick())) {
 			(*it)->removeFromInvlist(*user);
-			server.log("Removed " + user->getNick() + "from invite list to " + (*it)->getName());
+			server.log("Removed " + user->getNick() + "from invite list to " + (*it)->getName(), __FILE__, __LINE__);
 		}
 		if ((*it)->getMembers()->findUserByNick(user->getNick()) != NULL) { 
 			(*it)->removeFromChops(*user); 
@@ -127,10 +128,10 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index) {
 	stream << fd_index;
 	
 	if (numbytes == 0){
-		p_logger->log("Connection #" + stream.str() + " closed.");
+		p_logger->log("Connection #" + stream.str() + " closed.", __FILE__, __LINE__);
 	}
 	else {
-		p_logger->log("Recv failure: Connection #" + stream.str() + " closed.");
+		p_logger->log("Recv failure: Connection #" + stream.str() + " closed.", __FILE__, __LINE__);
 	}
 	close(p_pfds[fd_index].fd);
 	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);

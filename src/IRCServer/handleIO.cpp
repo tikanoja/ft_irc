@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:00:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:10:37 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	
 	char buf[MAXDATASIZE];
-	memset(buf, '\0', MAXDATASIZE);
+	std::memset(buf, '\0', MAXDATASIZE);
 	ssize_t numbytes;
 	numbytes = recv(p_pfds[i].fd, buf, MAXDATASIZE - 1, 0);
 	if (numbytes <= 0) {
@@ -35,7 +35,7 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();
-	p_logger->log("received message from " + user->getNick());
+	p_logger->log("Received message from " + user->getNick(), __FILE__, __LINE__);
 	Message m(msg);
 	executeCommand(*user, m);
 	(void)i;
@@ -51,16 +51,15 @@ int IRCServer::checkSendBuffer(User* user) {
 		std::string toSend = user->getSendBuffer().extractBuffer();
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
 		char* toSendC = new char[toSendLen];
-		memset(toSendC, '\0', static_cast<size_t>(toSendLen));
+		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen));
 		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
 			toSendC[i] = toSend[i];
 		ssize_t n_sent = 0;
 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
-			p_logger->log("Failed to send to " + user->getNick());
+			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);
 		if (n_sent > 0 && n_sent < toSendLen) {
 			toSend.erase(0, static_cast<size_t>(n_sent));
-			const char* toBuffer = toSend.c_str();
-			user->getSendBuffer().addToBuffer(toBuffer, toSendLen - n_sent);
+			user->getSendBuffer().replaceUnsent(toSend);
 		}
 		delete[] toSendC;
 	}

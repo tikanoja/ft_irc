@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/01 15:32:34 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 			it++;
 		}
 	}
-	server.log("Removed " + user.getNick());
+	server.log("Removed " + user.getNick(), __FILE__, __LINE__);
 	server.delFd(user);
 	server.delUser(user);
 	delete &user;

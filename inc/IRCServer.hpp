@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 07:15:43 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:42:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define MAXCLIENTS 10
 
 # ifndef MAXDATASIZE
-#  define MAXDATASIZE 512
+#  define MAXDATASIZE 2048
 # endif
 
 # ifndef UNAMELEN
@@ -125,7 +125,7 @@ class IRCServer {
 		void							delFd(User& user);
 		void							delUser(User& user);
 
-		void							log(std::string);
+		void							log(std::string, std::string file, int line);
 
 		int								executeCommand(User& user, Message& message);
 		void							setUserMode(User & user, e_uperm mode);

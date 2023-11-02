@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:08:33 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ int cmd_oper(IRCServer& server, User& user, Message& message){
 	std::vector<std::string> const & params = message.getParams();
 	if (params.size() < 2 || params[0].empty() || params[1].empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
-		server.log("Refused " + user.getNick() + " from becoming oper");
+		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
 	}
 	if (!hasOperAccount(server, user, params))
-		server.log("Refused " + user.getNick() + " from becoming oper");
+		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
 	try {
 		server.getOperByNick(params[0]).setUser(&user);
 		user.setMode(IRCServer::Oper);
 		user.send(RPL_YOUREOPER(server.getName(), user.getNick()));
-		server.log("Set " + user.getNick() + " to oper");
+		server.log("Set " + user.getNick() + " to oper", __FILE__, __LINE__);
 		return 0;
 	} catch (std::exception & e){
 		user.send(ERR_NOOPERHOST(server.getName()));
-		server.log("Refused " + user.getNick() + " from becoming oper");
+		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:16:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:24:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:39:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int cmd_motd(IRCServer& server, User& user, Message& message){
 
-	if (user.getMode() & IRCServer::registered)
+	if (!(user.getMode() & IRCServer::registered))
 	{
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
@@ -23,7 +23,7 @@ int cmd_motd(IRCServer& server, User& user, Message& message){
 	std::ifstream	stream;
 	std::string		line;
 
-	stream.open("config/motd.config", std::ifstream::in);
+	stream.open("config/motd.config", std::ifstream::in | std::ifstream::app);
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
 	
@@ -32,12 +32,13 @@ int cmd_motd(IRCServer& server, User& user, Message& message){
 	}
 	
 	user.send(RPL_ENDOFMOTD(server.getName()));
+	stream.close();
 	return 0;
 }
 
 int motd(IRCServer& server, User& user){
 
-	if (user.getMode() & IRCServer::registered)
+	if (!(user.getMode() & IRCServer::registered))
 	{
 		user.send(ERR_NOTREGISTERED(server.getName(), "MOTD"));
 		return 1;
@@ -46,7 +47,7 @@ int motd(IRCServer& server, User& user){
 	std::ifstream	stream;
 	std::string		line;
 
-	stream.open("config/motd.config", std::ifstream::in);
+	stream.open("config/motd.config", std::ifstream::in | std::ifstream::app);
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
 	
@@ -55,5 +56,6 @@ int motd(IRCServer& server, User& user){
 	}
 	
 	user.send(RPL_ENDOFMOTD(server.getName()));
+	stream.close();
 	return 0;
 }

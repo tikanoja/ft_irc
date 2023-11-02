@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 16:15:13 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:17:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_pass
 	p_users.reserve(MAXCLIENTS);
 	initServer();
 	p_logger = new Logger("./config/log");
-	p_logger->log("IRCserv started");
+	p_logger->log("IRCserv started", __FILE__, __LINE__);
 	return ;
 }
 
 IRCServer::~IRCServer(void) {
 	
-	p_logger->log("IRCserv shutdown");
+	p_logger->log("IRCserv shutdown", __FILE__, __LINE__);
 	delete p_logger;
 	return ;
 }
@@ -71,7 +71,7 @@ IRCServer::~IRCServer(void) {
 void IRCServer::initServer() {
 	
 	if (getListenerSocket()){
-		p_logger->log("Coudl not create listener socket");
+		p_logger->log("Coudl not create listener socket", __FILE__, __LINE__);
 		throw std::runtime_error("Failed to create listener socket");
 	}
 	initCommands();
@@ -86,7 +86,7 @@ void IRCServer::initCommands() {
 		std::make_pair("NICK", cmd_nick),
 		std::make_pair("USER", cmd_user),
 		std::make_pair("MODE", cmd_mode),
-		std::make_pair("motd", cmd_motd),
+		std::make_pair("MOTD", cmd_motd),
 		std::make_pair("OPER", cmd_oper),
 		std::make_pair("AWAY", cmd_away),
 		std::make_pair("QUIT", cmd_quit),
@@ -123,9 +123,9 @@ void IRCServer::initOperators(){
 	}
 }
 
-void IRCServer::log(std::string string){
+void IRCServer::log(std::string string, std::string file, int line){
 	
-	p_logger->log(string);
+	p_logger->log(string, file, line);
 }
 
 int IRCServer::pollingRoutine() {
@@ -140,17 +140,15 @@ int IRCServer::pollingRoutine() {
 			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
 				if (i == 0) {
 					if (acceptClient()){
-						p_logger->log("Failed to accept new client");
+						p_logger->log("Failed to accept new client", __FILE__, __LINE__);
 						continue ;
 					}
-					p_logger->log("New client accepted");
-				} else if (p_pfds[i].revents & POLLIN) { //A client has sent us a message, add to buffer!
+				} else if (p_pfds[i].revents & POLLIN) {
  					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
 						continue ;
-					p_logger->log("Received message");
 				} else {
 					dropConnection(-1, i);
-					p_logger->log("Connection dropped");
+					p_logger->log("Connection dropped", __FILE__, __LINE__);
 					continue;
 				}
 			}

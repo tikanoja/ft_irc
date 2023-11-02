@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 15:32:00 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:10:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 //USER guest 0 * :Ronnie Reagan
 
 int cmd_user(IRCServer& server, User& user, Message& message){
-	if (user.getPassFlag() == false) {
+	if (user.getPassFlag() == false){// || user.getNick().empty() ) { !!!!! this helped
 		user.send(ERR_PASSWDMISMATCH(server.getName()));
 		return 1;
 	}
-	if (user.getNick().empty()){
-		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
-		return 1;
-	}
+	// if (user.getNick().empty()){
+	// 	user.send(ERR_NONICKNAMEGIVEN(server.getName()));
+	// 	return 1;
+	// }
 	if (message.getParams()[2].empty() || message.getTrailing().empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
 		return 1;
 	}
-	if (server.getUserMode(user, IRCServer::registered)){
+	if ((user.getMode() & IRCServer::registered)){
 		user.send(ERR_ALREADYREGISTRED(server.getName()));
 		return 1;
 	}
@@ -40,6 +40,6 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.setMode(IRCServer::invisible);
 
 	user.setRegistrationFlag(2, user, server);
-	server.log(user.getNick() + " was registered");
+	server.log(user.getNick() + " was registered", __FILE__, __LINE__);
 	return 0;
 }

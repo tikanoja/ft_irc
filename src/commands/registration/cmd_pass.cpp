@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:05:53 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 15:22:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int cmd_pass(IRCServer& server, User& user, Message& message){
 	if (message.getParams()[0].empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
-		server.log("Refused login from " + IP);
+		server.log("Refused login from " + IP, __FILE__, __LINE__);
 		return 1;
 	}
 	if (server.getPassword() != message.getParams()[0]){
 		user.send(ERR_PASSWDMISMATCH(server.getName()));
-		server.log("Refused login from " + IP);
+		server.log("Refused login from " + IP, __FILE__, __LINE__);
 		return 1;
 	}
 	if (!user.getIP()){
 		user.send(ERR_ALREADYREGISTRED(server.getName()));
-		server.log("Refused login from " + IP);
+		server.log("Refused login from " + IP, __FILE__, __LINE__);
 		return 1;
 	}
 
