@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_topic.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:26:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:36:06 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 	Channel* chan = server.getChannels().findChannel(message.getParams().front());
 	if (chan == NULL) {
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), message.getParams().front()));
 		return 1;
 	}
 	if (message.getTrailing().empty()) {

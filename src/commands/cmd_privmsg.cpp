@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:00:05 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:36:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int cmd_privmsg(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOTEXTTOSEND(server.getName()));
 			continue ;
 		}
-		if ((target[0] == '#' || target[0] == '&' || target[0] == '!' || target[0] == '+') &&
+		if ((target[0] == '#' || target[0] == '&') &&
 			target.find('.') == std::string::npos)
 			sendToChannel(server, user, message, target);
 		else if ((user.getMode() & (IRCServer::oper | IRCServer::Oper))
@@ -92,7 +92,7 @@ static void sendToChannel(IRCServer& server, User& user, Message& message, std::
 
 	Channel* chan = server.getChannels().findChannel(target);
 	if (chan == NULL) {
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), target));
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), target));
 		return ;
 	}
 	if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) {

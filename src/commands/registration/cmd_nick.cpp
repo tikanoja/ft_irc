@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_nick.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 11:03:20 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:09:14 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,23 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	std::string new_nick = message.getParams().front();
-	std::cout << "NICK EMPTY? " << std::boolalpha << new_nick.empty() << std::endl;
 	if (new_nick.empty()){
-		std::cout << "We're here, we're queer, get used to it" << std::endl;
 		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 		return 1;
 	}
-	std::cout << "NICK VALID? " << std::boolalpha << isNickvalid(new_nick) << std::endl;
 	if (!isNickvalid(new_nick)){
 		user.send(ERR_ERRONEUSNICKNAME(server.getName(),
 			new_nick));
 		return 1;
 	}
 	User * found_user = server.getUsers().findUserByNick(new_nick);
-	if (found_user == NULL)
-		std::cout << "not in use!" << std::endl;
 	if (found_user != NULL){
 		user.send(ERR_NICKNAMEINUSE(server.getName(), new_nick));
 		return 1;
 	}
-	std::cout << "NICK CHANGE TO " << new_nick << std::endl;
 	server.log("Changed nickname " + user.getNick() + "->" + new_nick, __FILE__, __LINE__);
 	user.setNick(new_nick);
 	user.setRegistrationFlag(1, user, server);
-	std::cout << "NICK WAS CHANGED TO " << user.getNick() << std::endl;
 	return 0;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executeCommand.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:52:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 11:12:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:47:38 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int IRCServer::executeCommand(User& user, Message& message) {
 		CommandFunction func = it->second;
 		return func(*this, user, message);
 	} else {
-		std::cout << "Command not found...!" << std::endl; //remove
-		message.printContent();
 		user.send(ERR_UNKNOWNCOMMAND(getName(), message.getCommand()));
 		return 1;
 	}

@@ -6,9 +6,10 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 14:57:07 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:11:30 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/IRCServer.hpp"
 
@@ -91,7 +92,7 @@ int IRCServer::acceptClient() {
 		} else {
 			struct pollfd pfd;
 			pfd.fd = new_fd;
-			pfd.events = POLLIN;
+			pfd.events = POLLIN | POLLOUT;
 			p_pfds.push_back(pfd);
 			p_fd_count++;
 			inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
@@ -99,8 +100,7 @@ int IRCServer::acceptClient() {
 			p_users.push_back(new User(new_fd, s, this->getName()));
 			p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
 		}
-	} else
-		p_logger->log("Rejected client because of too many connections", __FILE__, __LINE__);
+	}
 	return (0);
 }
 
@@ -112,6 +112,8 @@ void static cleanupChannels(IRCServer &server, User* user) {
 			server.log("Removed " + user->getNick() + "from invite list to " + (*it)->getName(), __FILE__, __LINE__);
 		}
 		if ((*it)->getMembers()->findUserByNick(user->getNick()) != NULL) { 
+			(*it)->broadcastToChannel(":" + USER_ID(user->getNick(), user->getUserName(), user->getIP()) \
+				+ " QUIT\r\n", user);
 			(*it)->removeFromChops(*user); 
 			(*it)->removeFromMembers(*user); 
 		}

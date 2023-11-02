@@ -6,9 +6,10 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 15:06:50 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:10:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef REPLY_HPP
 # define REPLY_HPP
@@ -17,7 +18,7 @@
 
 //void	sendRPL(int const user_fd, std::string user_buffer);
 
-# define USER_ID(nickname, username, host) (":" + nickname + "!" + username + "@" + host)
+# define USER_ID(nickname, username, host) (nickname + "!" + username + "@" + host)
 
 /*Registration*/
 

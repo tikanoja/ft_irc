@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_notice.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:24 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:06:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:07:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int cmd_notice(IRCServer& server, User& user, Message& message){
 		if (message.getTrailing().empty()) {
 			continue ;
 		}
-		if ((target[0] == '#' || target[0] == '&' || target[0] == '!' || target[0] == '+')
+		if ((target[0] == '#' || target[0] == '&')
 			&& target.find('.') == std::string::npos)
 			sendToChannel(server, user, message, target);
 		else if ((user.getMode() & (IRCServer::oper | IRCServer::Oper))

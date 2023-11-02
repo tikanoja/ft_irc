@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 15:16:14 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:10:38 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 		return false;
 	}
 	if (chan == NULL) {
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), message.getParams().front()));
 		return false;
 	}
 	if (!chan->isChop(user)) {
