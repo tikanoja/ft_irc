@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 13:02:23 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:48:25 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ std::vector<std::string> nlsplit(const std::string& str, char c){
 	std::string					token;
 
 	while (std::getline(stream, token, c)) {
-		//if we split by c, apppend c to token
-		//else we split by end of the stream, dont append c
 		tokens.push_back(token);
 		if (!stream.eof())
             tokens.back() += c;
@@ -69,8 +67,8 @@ std::vector<std::string> nlsplit(const std::string& str, char c){
 void DynamicBuffer::addToBuffer(const char* buf) {
 	std::string toAdd = buf;
 	size_t index = 0;
-    while ((index = toAdd.find("^D", index)) != std::string::npos) // find "^D"
-        toAdd.replace(index, 2, ""); //replace "^D" with ""
+    while ((index = toAdd.find("^D", index)) != std::string::npos)
+        toAdd.replace(index, 2, "");
 
 	std::vector<std::string> toAddVec = nlsplit(toAdd, '\n');
 	for (size_t j = 0; j < toAddVec.size(); j++) {

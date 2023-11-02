@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 09:17:48 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:03:58 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void signalHandler(int signum) {
 IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_password(password){
 
 	p_serverName = "ircserv";
-	p_pfds.reserve(MAXCLIENTS);
-	p_users.reserve(MAXCLIENTS);
+	p_pfds.reserve(MAXCLIENTS + 1);
+	p_users.reserve(MAXCLIENTS + 1);
 	initServer();
 	p_logger = new Logger("./config/log");
 	p_logger->log("IRCserv started", __FILE__, __LINE__);
@@ -134,27 +134,29 @@ int IRCServer::pollingRoutine() {
 	p_fd_count = static_cast<nfds_t>(p_pfds.size());
 	signal(SIGINT, signalHandler);
 	while (1) {
-		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 50)) == -1)
+		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 300)) == -1)
 			return (-1);
 		for (nfds_t i = 0; i < p_fd_count; i++) {
 			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
 				if (i == 0) {
 					if (acceptClient()){
 						p_logger->log("Failed to accept new client", __FILE__, __LINE__);
-						continue ;
+						// continue ;
 					}
 				} else if (p_pfds[i].revents & POLLIN) {
- 					if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
-						continue ;
-				} else {
+					receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i);
+ 					// if (receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i))
+					// 	continue ;
+				} else if (p_pfds[i].revents & POLLOUT) {
+					// std::cout << "POLLOUT TRIGGER!!!" << std::endl;
+					checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
+					checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
+				}
+				else {
 					dropConnection(-1, i);
 					p_logger->log("Connection dropped", __FILE__, __LINE__);
-					continue;
+					// continue;
 				}
-			}
-			if (i != 0) {
-				checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
-				checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
 			}
 		}
 	}

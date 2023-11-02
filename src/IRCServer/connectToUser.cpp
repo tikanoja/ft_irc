@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 15:43:46 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:57:45 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int IRCServer::acceptClient() {
 	} else {
 		struct pollfd pfd;
 		pfd.fd = new_fd;
-		pfd.events = POLLIN;
+		pfd.events = POLLIN | POLLOUT;
 		p_pfds.push_back(pfd);
 		p_fd_count++;
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
