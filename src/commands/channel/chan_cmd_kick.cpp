@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/01 15:45:03 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		}
 		chan->removeFromChops(*toKick);
 		if (chan->getMembers()->size() == 0) {
-				server.log("Deleted " + chan->getName());
+				server.log("Deleted " + chan->getName(), __FILE__, __LINE__);
 				server.getChannels().deleteChannel(chan);
 		}
 	}

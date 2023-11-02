@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:14:29 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:03:11 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:49:09 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ void Logger::p_displayTimestamp(){
 				<<  std::setw(2) << now->tm_min
 				<<  std::setw(2) << now->tm_sec
 				<< "] " << std::flush;
+
 }
 
-void	Logger::log(std::string const str){
+void	Logger::log(std::string const str, std::string file, int line){
 	
 	p_displayTimestamp();
-	p_outstream << str << "\n";
+	p_outstream << str << "\t" << file << line << "\n";
 }

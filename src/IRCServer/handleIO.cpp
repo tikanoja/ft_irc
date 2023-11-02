@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:00:46 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 		return (0);
 	}
 	std::string msg = user->getRecvBuffer().extractBuffer();
-	p_logger->log("received message from " + user->getNick());
+	p_logger->log("received message from " + user->getNick(), __FILE__, __LINE__);
 	Message m(msg);
 	executeCommand(*user, m);
 	(void)i;
@@ -56,7 +56,7 @@ int IRCServer::checkSendBuffer(User* user) {
 			toSendC[i] = toSend[i];
 		ssize_t n_sent = 0;
 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
-			p_logger->log("Failed to send to " + user->getNick());
+			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);
 		if (n_sent > 0 && n_sent < toSendLen) {
 			toSend.erase(0, static_cast<size_t>(n_sent));
 			const char* toBuffer = toSend.c_str();

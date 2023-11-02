@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:06:43 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:06:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int cmd_mode(IRCServer& server, User& user, Message& message){
 	reply += !removals.empty() ?  ("-" + removals) : "";
 	user.send(reply + "\r\n");
 
-	server.log("Modes for user " + user.getNick() + " were changed to " + server.getModeStr(user));
+	server.log("Modes for user " + user.getNick() + " were changed to " + server.getModeStr(user), __FILE__, __LINE__);
 
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 15:31:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:51:01 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int cmd_away(IRCServer& server, User &user, Message &message){
 		user.setMode(IRCServer::away);
 	}
 	user.setAwayMsg(message.getTrailing());
-	server.log(user.getNick() + " was set as away");
+	server.log(user.getNick() + " was set as away", __FILE__, __LINE__);
 
 	return 0;
 }

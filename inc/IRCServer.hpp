@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:52:18 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:49:32 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ class IRCServer {
 		void							delFd(User& user);
 		void							delUser(User& user);
 
-		void							log(std::string);
+		void							log(std::string, std::string file, int line);
 
 		int								executeCommand(User& user, Message& message);
 		void							setUserMode(User & user, e_uperm mode);
