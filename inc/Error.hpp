@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Error.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 09:29:03 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:34:47 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define ERR_NOSUCHNICK(servername, nickname, type)(":" + servername + " 401 " + nickname + " :No such " + type + "\r\n") //401
 # define ERR_NOSUCHSERVER(servername)(":" + servername + " 402 " + servername + " :No such server" + "\r\n") //402
-# define ERR_NOSUCHCHANNEL(servername, channelname)(":" + servername + " 403 " + channelname + " :No such channel" + "\r\n") //403
+# define ERR_NOSUCHCHANNEL(servername, user, channelname)(":" + servername + " 403 " + user + " " + channelname + " :No such channel" + "\r\n") //403
 # define ERR_CANNOTSENDTOCHAN(servername, channelname)(":" + servername + " 404 " + channelname + " :Cannot send to channel" + "\r\n") //404
 # define ERR_TOOMANYCHANNELS(servername, channelname)(":" + servername + " 405 " + channelname + " :You have joined too many channels" + "\r\n") //405
 # define ERR_WASNOSUCHNICK(servername, nickname)(":" + servername + " 406 " + nickname + " :There was no such nickname" + "\r\n") //406

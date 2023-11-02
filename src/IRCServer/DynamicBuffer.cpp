@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 07:06:01 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:02:23 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void DynamicBuffer::addToBuffer(const char* buf) {
 	size_t index = 0;
     while ((index = toAdd.find("^D", index)) != std::string::npos) // find "^D"
         toAdd.replace(index, 2, ""); //replace "^D" with ""
-	
+
 	std::vector<std::string> toAddVec = nlsplit(toAdd, '\n');
 	for (size_t j = 0; j < toAddVec.size(); j++) {
 		toAdd = toAddVec[j];

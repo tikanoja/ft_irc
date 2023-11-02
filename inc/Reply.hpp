@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 15:03:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:04:56 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 //void	sendRPL(int const user_fd, std::string user_buffer);
 
-# define USER_ID(nickname, username, host) (":" + nickname + "!" + username + "@" + host)
+# define USER_ID(nickname, username, host) (nickname + "!" + username + "@" + host)
 
 /*Registration*/
 

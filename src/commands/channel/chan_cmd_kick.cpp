@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:35:21 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 	for (size_t i = 0; i < limit; i++) {
 		Channel* chan = server.getChannels().findChannel(channels[i]);
 		if (chan == NULL) {
-			user.send(ERR_NOSUCHCHANNEL(server.getName(), channels[i]));
+			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), channels[i]));
 			continue ;
 		}
 		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) {

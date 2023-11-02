@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:10:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:59:19 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		dropConnection(numbytes, i);
 		return (-1);
 	}
-	if (numbytes == 1) {
-		return (0);
-	}
+	if (buf[0] == '\n')
+		return 0;
 	user->getRecvBuffer().addToBuffer(buf);
 	return (0);
 }

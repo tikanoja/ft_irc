@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_part.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:25:58 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:57:50 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 	while (std::getline(ss, chan, ',')) {
 		Channel* partFrom = server.getChannels().findChannel(chan);
 		if (partFrom == NULL) {
-			user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
+			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), chan));
 			continue ;
 		}
 		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\

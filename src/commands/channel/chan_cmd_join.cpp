@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:07:27 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:32:39 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		
 		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
 			if (!checkPermissions(server, user, message, toJoin))
-				return 1;
+				continue ;
 				
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
@@ -61,7 +61,8 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
 		} else {
 			if (checkChannelName(chan) == 1) {
-				user.send(ERR_NOSUCHCHANNEL(server.getName(), chan));
+				std::cout << "here!" << std::endl;
+				user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), chan));
 				continue ;
 			}
 			toJoin = server.getChannels().createChannel(chan);
@@ -77,8 +78,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 static int checkChannelName(std::string name) {
 	if (name.length() > 50)
 		return 1;
-	if (name.empty() || (name[0] != '#' && name[0] != '&' && name[0] != '!' \
-		&& name[0] != '+'))
+	if (name.empty() || (name[0] != '#' && name[0] != '&'))
 		return 1;
 	size_t limit = name.length();
 	for (size_t i = 0; i < limit; i++) {

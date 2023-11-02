@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_mode.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 13:10:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:35:35 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 		return false;
 	}
 	if (chan == NULL) {
-		user.send(ERR_NOSUCHCHANNEL(server.getName(), message.getParams().front()));
+		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), message.getParams().front()));
 		return false;
 	}
 	if (!chan->isChop(user)) {
