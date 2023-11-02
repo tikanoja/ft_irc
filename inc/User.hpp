@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:51:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:52:51 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <string>
 # include <netinet/in.h>
-# include "../inc/circularBuffer.hpp"
+# include "../inc/DynamicBuffer.hpp"
 
 class IRCServer;
 
@@ -53,8 +53,8 @@ class User
 		void				setRegistrationFlag(int i, User& user, IRCServer& server);
 
 		bool				getPassFlag();
-		CircularBuffer &	getRecvBuffer(void);
-		CircularBuffer &	getSendBuffer(void);
+		DynamicBuffer &	getRecvBuffer(void);
+		DynamicBuffer &	getSendBuffer(void);
 		void				resetBuffers(void);
 
 	private:
@@ -67,8 +67,8 @@ class User
 		int32_t			p_mode;
 		int				p_socket_fd;
 		char			p_ipaddress[INET6_ADDRSTRLEN];
-		CircularBuffer	p_recvBuffer;
-		CircularBuffer	p_sendBuffer;
+		DynamicBuffer	p_recvBuffer;
+		DynamicBuffer	p_sendBuffer;
 
 		bool			p_nickFlag;
 		bool			p_userFlag;

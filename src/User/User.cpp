@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 16:21:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:53:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,11 @@ std::string	const &	User::getUserName(void) const {
 	return p_username;
 }
 
-CircularBuffer & User::getRecvBuffer(void) {
+DynamicBuffer & User::getRecvBuffer(void) {
 	return p_recvBuffer;
 }
 
-CircularBuffer & User::getSendBuffer(void) {
+DynamicBuffer & User::getSendBuffer(void) {
 	return p_sendBuffer;
 }
 
