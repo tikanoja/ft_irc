@@ -1,0 +1,93 @@
+<< CAP LS 302
+<< JOIN :
+>> NOTICE AUTH :*** Looking up your hostname
+>> NOTICE AUTH :*** Checking Ident
+>> NOTICE AUTH :*** Couldn't look up your hostname
+>> :Burstfire.UK.EU.GameSurge.net 451 *  :Register first.
+<< NICK tuukka
+<< USER ttikanoj ttikanoj irc.gamesurge.net :TT
+>> PING :915768211
+<< PONG :915768211
+>> NOTICE AUTH :*** No ident response
+>> :Burstfire.UK.EU.GameSurge.net 001 tuukka :Welcome to the GameSurge IRC Network via burstfire.net, tuukka
+<< MODE tuukka +i
+>> :Burstfire.UK.EU.GameSurge.net 002 tuukka :Your host is Burstfire.UK.EU.GameSurge.net, running version u2.10.12.18(gs2)
+>> :Burstfire.UK.EU.GameSurge.net 003 tuukka :This server was created Fri Nov 10 2017 at 08:27:35 GMT
+>> :Burstfire.UK.EU.GameSurge.net 004 tuukka Burstfire.UK.EU.GameSurge.net u2.10.12.18(gs2) diOoswkgxnI biklmnopstvrDdRcCz bklov
+>> :Burstfire.UK.EU.GameSurge.net 005 tuukka WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=25 MODES=6 MAXCHANNELS=75 MAXBANS=100 NICKLEN=30 :are supported by this server
+>> :Burstfire.UK.EU.GameSurge.net 005 tuukka MAXNICKLEN=30 TOPICLEN=300 AWAYLEN=200 KICKLEN=300 CHANNELLEN=200 MAXCHANNELLEN=200 CHANTYPES=#& PREFIX=(ov)@+ STATUSMSG=@+ CHANMODES=b,k,l,imnpstrDdRcC CASEMAPPING=rfc1459 NETWORK=GameSurge :are supported by this server
+>> :Burstfire.UK.EU.GameSurge.net 251 tuukka :There are 11 users and 1696 invisible on 13 servers
+>> :Burstfire.UK.EU.GameSurge.net 252 tuukka 25 :operator(s) online
+>> :Burstfire.UK.EU.GameSurge.net 253 tuukka 1 :unknown connection(s)
+>> :Burstfire.UK.EU.GameSurge.net 254 tuukka 1445 :channels formed
+>> :Burstfire.UK.EU.GameSurge.net 255 tuukka :I have 1 clients and 1 servers
+>> :Burstfire.UK.EU.GameSurge.net NOTICE tuukka :Highest connection count: 2 (1 clients)
+>> :Burstfire.UK.EU.GameSurge.net 422 tuukka :MOTD File is missing
+>> :Burstfire.UK.EU.GameSurge.net NOTICE tuukka :on 1 ca 1(10) ft 10(10) tr
+>> :tuukka!~ttikanoj@194.136.126.52 MODE tuukka :+iw
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :------------- MESSAGE(S) OF THE DAY --------------
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from ThiefMaster, posted 01:47 PM, 04/09/2015:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :We've just started cloaking the IPs of all users on connect. This should improve your privacy and also lower the risk of being targeted by packet kiddies.
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 08:59 PM, 05/11/2013:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :You can now follow GameSurge on Twitter bit.ly/1607zvW and Facebook on.fb.me/10Aq5Dx Please "like" and "follow" us to be kept up-to-date on network news, events, and other items!
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from feigling, posted 08:24 PM, 07/17/2008:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :GameSurge provides a new service called SpamServ which moderates your channel. If you are interested in learning more about it read http://www.gamesurge.net/cms/SpamServ
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 12:27 PM, 01/20/2007:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :Please be familiar with the GameSurge Acceptable Use Policy. All users on the network are required to abide by it. http://www.gamesurge.net/aup/
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :---------- END OF MESSAGE(S) OF THE DAY ----------
+>> :Burstfire.UK.EU.GameSurge.net 396 tuukka ~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 :is now your hidden host
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE tuukka :+x
+>> :CTCP!CTCP@Services.GameSurge.net PRIVMSG tuukka :VERSION
+<< NOTICE CTCP :VERSION irssi v1.4.4 - running on Darwin x86_64
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< JOIN #testchan42
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 JOIN #testchan42
+>> :Burstfire.UK.EU.GameSurge.net 353 tuukka = #testchan42 :@tuukka
+>> :Burstfire.UK.EU.GameSurge.net 366 tuukka #testchan42 :End of /NAMES list.
+<< MODE #testchan42
+>> :Burstfire.UK.EU.GameSurge.net 324 tuukka #testchan42 + 
+--> chanquery mode
+>> :Burstfire.UK.EU.GameSurge.net 329 tuukka #testchan42 1698822057
+--> event 329
+<< WHO #testchan42 %tcuhnfdar,743
+>> :Burstfire.UK.EU.GameSurge.net 354 tuukka 743 #testchan42 ~ttikanoj 91f6a89b.2ed902d5.8f785159.IP4 tuukka H@x 0 0 :TT
+--> silent event whox
+>> :Burstfire.UK.EU.GameSurge.net 315 tuukka #testchan42 :End of /WHO list.
+--> chanquery who end
+<< MODE #testchan42 b
+>> :Burstfire.UK.EU.GameSurge.net 368 tuukka #testchan42 :End of Channel Ban List
+--> chanquery ban end
+>> :tuukka_!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 JOIN #testchan42
+<< WHO tuukka_ %tna,745
+>> :Burstfire.UK.EU.GameSurge.net 354 tuukka 745 tuukka_ 0
+--> silent event whox useraccount
+>> :Burstfire.UK.EU.GameSurge.net 315 tuukka tuukka_ :End of /WHO list.
+--> event empty
+>> :tuukka_!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 QUIT :Quit: leaving
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< QUIT :leaving

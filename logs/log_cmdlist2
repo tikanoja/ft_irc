@@ -1,0 +1,164 @@
+<< CAP LS 302
+<< JOIN :
+>> NOTICE AUTH :*** Looking up your hostname
+>> NOTICE AUTH :*** Checking Ident
+>> :Stockholm.SE.EU.GameSurge.net 451 *  :Register first.
+<< NICK tuukka
+<< USER ttikanoj ttikanoj irc.gamesurge.net :TT
+>> PING :1401764855
+<< PONG :1401764855
+>> NOTICE AUTH :*** Couldn't look up your hostname
+>> NOTICE AUTH :*** No ident response
+>> :Stockholm.SE.EU.GameSurge.net 001 tuukka :Welcome to the GameSurge IRC Network via SUNET, tuukka
+<< MODE tuukka +i
+>> :Stockholm.SE.EU.GameSurge.net 002 tuukka :Your host is Stockholm.SE.EU.GameSurge.net, running version u2.10.12.18(gs2)
+>> :Stockholm.SE.EU.GameSurge.net 003 tuukka :This server was created Fri Nov 10 2017 at 10:10:43 CET
+>> :Stockholm.SE.EU.GameSurge.net 004 tuukka Stockholm.SE.EU.GameSurge.net u2.10.12.18(gs2) diOoswkgxnI biklmnopstvrDdRcCz bklov
+>> :Stockholm.SE.EU.GameSurge.net 005 tuukka WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=25 MODES=6 MAXCHANNELS=75 MAXBANS=100 NICKLEN=30 :are supported by this server
+>> :Stockholm.SE.EU.GameSurge.net 005 tuukka MAXNICKLEN=30 TOPICLEN=300 AWAYLEN=200 KICKLEN=300 CHANNELLEN=200 MAXCHANNELLEN=200 CHANTYPES=#& PREFIX=(ov)@+ STATUSMSG=@+ CHANMODES=b,k,l,imnpstrDdRcC CASEMAPPING=rfc1459 NETWORK=GameSurge :are supported by this server
+>> :Stockholm.SE.EU.GameSurge.net 251 tuukka :There are 10 users and 1862 invisible on 14 servers
+>> :Stockholm.SE.EU.GameSurge.net 252 tuukka 25 :operator(s) online
+>> :Stockholm.SE.EU.GameSurge.net 254 tuukka 1513 :channels formed
+>> :Stockholm.SE.EU.GameSurge.net 255 tuukka :I have 1 clients and 1 servers
+>> :Stockholm.SE.EU.GameSurge.net NOTICE tuukka :Highest connection count: 2 (1 clients)
+>> :Stockholm.SE.EU.GameSurge.net 422 tuukka :MOTD File is missing
+>> :Stockholm.SE.EU.GameSurge.net NOTICE tuukka :on 1 ca 1(10) ft 10(10)
+>> :tuukka!~ttikanoj@194.136.126.52 MODE tuukka :+iw
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :------------- MESSAGE(S) OF THE DAY --------------
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from ThiefMaster, posted 01:47 PM, 04/09/2015:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :We've just started cloaking the IPs of all users on connect. This should improve your privacy and also lower the risk of being targeted by packet kiddies.
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 08:59 PM, 05/11/2013:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :You can now follow GameSurge on Twitter bit.ly/1607zvW and Facebook on.fb.me/10Aq5Dx Please "like" and "follow" us to be kept up-to-date on network news, events, and other items!
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from feigling, posted 08:24 PM, 07/17/2008:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :GameSurge provides a new service called SpamServ which moderates your channel. If you are interested in learning more about it read http://www.gamesurge.net/cms/SpamServ
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 12:27 PM, 01/20/2007:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :Please be familiar with the GameSurge Acceptable Use Policy. All users on the network are required to abide by it. http://www.gamesurge.net/aup/
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :---------- END OF MESSAGE(S) OF THE DAY ----------
+>> :Stockholm.SE.EU.GameSurge.net 396 tuukka ~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 :is now your hidden host
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE tuukka :+x
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< JOIN #testchan42
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 JOIN #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 353 tuukka = #testchan42 :@tuukka
+>> :Stockholm.SE.EU.GameSurge.net 366 tuukka #testchan42 :End of /NAMES list.
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 + 
+--> chanquery mode
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+--> event 329
+<< WHO #testchan42 %tcuhnfdar,743
+>> :Stockholm.SE.EU.GameSurge.net 354 tuukka 743 #testchan42 ~ttikanoj 91f6a89b.2ed902d5.8f785159.IP4 tuukka H@x 0 0 :TT
+--> silent event whox
+>> :Stockholm.SE.EU.GameSurge.net 315 tuukka #testchan42 :End of /WHO list.
+--> chanquery who end
+<< MODE #testchan42 b
+>> :Stockholm.SE.EU.GameSurge.net 368 tuukka #testchan42 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #testchan42 +t
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 +t
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 +t 
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< MODE #testchan42 -t
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 -t
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 + 
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+<< MODE #testchan42 +i
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 +i
+<< MODE #testchan42 +t
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 +t
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 +ti 
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+<< MODE #testchan42 +k pw
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 +k pw
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 +tik pw
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< MODE #testchan42 +l 10
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE #testchan42 +l 10
+<< MODE #testchan42
+>> :Stockholm.SE.EU.GameSurge.net 324 tuukka #testchan42 +tilk 10 pw
+>> :Stockholm.SE.EU.GameSurge.net 329 tuukka #testchan42 1698660934
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< PING Stockholm.SE.EU.GameSurge.net
+>> :Stockholm.SE.EU.GameSurge.net PONG Stockholm.SE.EU.GameSurge.net :Stockholm.SE.EU.GameSurge.net
+--> lag pong
+<< QUIT :leaving

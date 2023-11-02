@@ -1,0 +1,76 @@
+<< CAP LS 302
+<< JOIN :
+>> NOTICE AUTH :*** Looking up your hostname
+>> NOTICE AUTH :*** Checking Ident
+>> :LAN-Team.DE.EU.GameSurge.net 451 *  :Register first.
+<< NICK tuukka
+<< USER ttikanoj ttikanoj irc.gamesurge.net :TT
+>> :LAN-Team.DE.EU.GameSurge.net 433 * tuukka :Nickname is already in use.
+<< NICK tuukka_
+>> NOTICE AUTH :*** Couldn't look up your hostname
+>> PING :1135029671
+<< PONG :1135029671
+>> NOTICE AUTH :*** No ident response
+>> :LAN-Team.DE.EU.GameSurge.net 001 tuukka_ :Welcome to the GameSurge IRC Network, tuukka_
+<< MODE tuukka_ +i
+<< WHOIS tuukka
+>> :LAN-Team.DE.EU.GameSurge.net 002 tuukka_ :Your host is LAN-Team.DE.EU.GameSurge.net, running version u2.10.12.18(gs2)
+>> :LAN-Team.DE.EU.GameSurge.net 003 tuukka_ :This server was created Tue Oct 17 2023 at 07:25:21 PM UTC
+>> :LAN-Team.DE.EU.GameSurge.net 004 tuukka_ LAN-Team.DE.EU.GameSurge.net u2.10.12.18(gs2) diOoswkgxnI biklmnopstvrDdRcCz bklov
+>> :LAN-Team.DE.EU.GameSurge.net 005 tuukka_ WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=25 MODES=6 MAXCHANNELS=75 MAXBANS=100 NICKLEN=30 :are supported by this server
+>> :LAN-Team.DE.EU.GameSurge.net 005 tuukka_ MAXNICKLEN=30 TOPICLEN=300 AWAYLEN=200 KICKLEN=300 CHANNELLEN=200 MAXCHANNELLEN=200 CHANTYPES=#& PREFIX=(ov)@+ STATUSMSG=@+ CHANMODES=b,k,l,imnpstrDdRcC CASEMAPPING=rfc1459 NETWORK=GameSurge :are supported by this server
+>> :LAN-Team.DE.EU.GameSurge.net 251 tuukka_ :There are 12 users and 1700 invisible on 13 servers
+>> :LAN-Team.DE.EU.GameSurge.net 252 tuukka_ 25 :operator(s) online
+>> :LAN-Team.DE.EU.GameSurge.net 253 tuukka_ 2 :unknown connection(s)
+>> :LAN-Team.DE.EU.GameSurge.net 254 tuukka_ 1447 :channels formed
+>> :LAN-Team.DE.EU.GameSurge.net 255 tuukka_ :I have 1 clients and 1 servers
+>> :LAN-Team.DE.EU.GameSurge.net NOTICE tuukka_ :Highest connection count: 2 (1 clients)
+>> :LAN-Team.DE.EU.GameSurge.net 422 tuukka_ :MOTD File is missing
+>> :LAN-Team.DE.EU.GameSurge.net NOTICE tuukka_ :on 2 ca 2(10) ft 10(10)
+>> :tuukka_!~ttikanoj@194.136.126.52 MODE tuukka_ :+iw
+>> :LAN-Team.DE.EU.GameSurge.net 311 tuukka_ tuukka ~ttikanoj 91f6a89b.2ed902d5.8f785159.IP4 * :TT
+--> nickfind event whois
+>> :LAN-Team.DE.EU.GameSurge.net 312 tuukka_ tuukka *.GameSurge.net :The GameSurge IRC Network
+--> event empty
+>> :LAN-Team.DE.EU.GameSurge.net 318 tuukka_ tuukka :End of /WHOIS list.
+--> event empty
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :------------- MESSAGE(S) OF THE DAY --------------
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :[users] Notice from ThiefMaster, posted 01:47 PM, 04/09/2015:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :We've just started cloaking the IPs of all users on connect. This should improve your privacy and also lower the risk of being targeted by packet kiddies.
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :[users] Notice from GameSurge, posted 08:59 PM, 05/11/2013:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :You can now follow GameSurge on Twitter bit.ly/1607zvW and Facebook on.fb.me/10Aq5Dx Please "like" and "follow" us to be kept up-to-date on network news, events, and other items!
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :[users] Notice from feigling, posted 08:24 PM, 07/17/2008:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :GameSurge provides a new service called SpamServ which moderates your channel. If you are interested in learning more about it read http://www.gamesurge.net/cms/SpamServ
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :[users] Notice from GameSurge, posted 12:27 PM, 01/20/2007:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :Please be familiar with the GameSurge Acceptable Use Policy. All users on the network are required to abide by it. http://www.gamesurge.net/aup/
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka_ :---------- END OF MESSAGE(S) OF THE DAY ----------
+>> :LAN-Team.DE.EU.GameSurge.net 396 tuukka_ ~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 :is now your hidden host
+>> :tuukka_!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE tuukka_ :+x
+>> :CTCP!CTCP@Services.GameSurge.net PRIVMSG tuukka_ :VERSION
+<< NOTICE CTCP :VERSION irssi v1.4.4 - running on Darwin x86_64
+<< PING LAN-Team.DE.EU.GameSurge.net
+>> :LAN-Team.DE.EU.GameSurge.net PONG LAN-Team.DE.EU.GameSurge.net :LAN-Team.DE.EU.GameSurge.net
+--> lag pong
+<< JOIN #testchan42
+>> :tuukka_!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 JOIN #testchan42
+>> :LAN-Team.DE.EU.GameSurge.net 353 tuukka_ = #testchan42 :tuukka_ @tuukka
+>> :LAN-Team.DE.EU.GameSurge.net 366 tuukka_ #testchan42 :End of /NAMES list.
+<< MODE #testchan42
+>> :LAN-Team.DE.EU.GameSurge.net 324 tuukka_ #testchan42 + 
+--> chanquery mode
+>> :LAN-Team.DE.EU.GameSurge.net 329 tuukka_ #testchan42 1698822057
+--> event 329
+<< WHO #testchan42 %tcuhnfdar,743
+>> :LAN-Team.DE.EU.GameSurge.net 354 tuukka_ 743 #testchan42 ~ttikanoj 91f6a89b.2ed902d5.8f785159.IP4 tuukka_ Hx 0 0 :TT
+--> silent event whox
+>> :LAN-Team.DE.EU.GameSurge.net 354 tuukka_ 743 #testchan42 ~ttikanoj 91f6a89b.2ed902d5.8f785159.IP4 tuukka H@x 3 0 :TT
+--> silent event whox
+>> :LAN-Team.DE.EU.GameSurge.net 315 tuukka_ #testchan42 :End of /WHO list.
+--> chanquery who end
+<< MODE #testchan42 b
+>> :LAN-Team.DE.EU.GameSurge.net 368 tuukka_ #testchan42 :End of Channel Ban List
+--> chanquery ban end
+<< PING LAN-Team.DE.EU.GameSurge.net
+>> :LAN-Team.DE.EU.GameSurge.net PONG LAN-Team.DE.EU.GameSurge.net :LAN-Team.DE.EU.GameSurge.net
+--> lag pong
+<< QUIT :leaving

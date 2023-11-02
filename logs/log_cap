@@ -1,0 +1,259 @@
+<< CAP LS 302
+<< JOIN :
+>> NOTICE AUTH :*** Looking up your hostname
+>> NOTICE AUTH :*** Checking Ident
+>> :Burstfire.UK.EU.GameSurge.net 451 *  :Register first.
+<< NICK tuukka
+<< USER ttikanoj ttikanoj irc.gamesurge.net :TT
+>> PING :3312728783
+<< PONG :3312728783
+>> NOTICE AUTH :*** Couldn't look up your hostname
+>> NOTICE AUTH :*** No ident response
+>> :Burstfire.UK.EU.GameSurge.net 001 tuukka :Welcome to the GameSurge IRC Network via burstfire.net, tuukka
+<< MODE tuukka +i
+>> :Burstfire.UK.EU.GameSurge.net 002 tuukka :Your host is Burstfire.UK.EU.GameSurge.net, running version u2.10.12.18(gs2)
+>> :Burstfire.UK.EU.GameSurge.net 003 tuukka :This server was created Fri Nov 10 2017 at 08:27:35 GMT
+>> :Burstfire.UK.EU.GameSurge.net 004 tuukka Burstfire.UK.EU.GameSurge.net u2.10.12.18(gs2) diOoswkgxnI biklmnopstvrDdRcCz bklov
+>> :Burstfire.UK.EU.GameSurge.net 005 tuukka WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=25 MODES=6 MAXCHANNELS=75 MAXBANS=100 NICKLEN=30 :are supported by this server
+>> :Burstfire.UK.EU.GameSurge.net 005 tuukka MAXNICKLEN=30 TOPICLEN=300 AWAYLEN=200 KICKLEN=300 CHANNELLEN=200 MAXCHANNELLEN=200 CHANTYPES=#& PREFIX=(ov)@+ STATUSMSG=@+ CHANMODES=b,k,l,imnpstrDdRcC CASEMAPPING=rfc1459 NETWORK=GameSurge :are supported by this server
+>> :Burstfire.UK.EU.GameSurge.net 251 tuukka :There are 12 users and 1685 invisible on 13 servers
+>> :Burstfire.UK.EU.GameSurge.net 252 tuukka 25 :operator(s) online
+>> :Burstfire.UK.EU.GameSurge.net 253 tuukka 2 :unknown connection(s)
+>> :Burstfire.UK.EU.GameSurge.net 254 tuukka 1470 :channels formed
+>> :Burstfire.UK.EU.GameSurge.net 255 tuukka :I have 1 clients and 1 servers
+>> :Burstfire.UK.EU.GameSurge.net NOTICE tuukka :Highest connection count: 2 (1 clients)
+>> :Burstfire.UK.EU.GameSurge.net 422 tuukka :MOTD File is missing
+>> :Burstfire.UK.EU.GameSurge.net NOTICE tuukka :on 1 ca 1(10) ft 10(10)
+>> :tuukka!~ttikanoj@194.136.126.52 MODE tuukka :+iw
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :------------- MESSAGE(S) OF THE DAY --------------
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from ThiefMaster, posted 01:47 PM, 04/09/2015:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :We've just started cloaking the IPs of all users on connect. This should improve your privacy and also lower the risk of being targeted by packet kiddies.
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 08:59 PM, 05/11/2013:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :You can now follow GameSurge on Twitter bit.ly/1607zvW and Facebook on.fb.me/10Aq5Dx Please "like" and "follow" us to be kept up-to-date on network news, events, and other items!
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from feigling, posted 08:24 PM, 07/17/2008:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :GameSurge provides a new service called SpamServ which moderates your channel. If you are interested in learning more about it read http://www.gamesurge.net/cms/SpamServ
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :[users] Notice from GameSurge, posted 12:27 PM, 01/20/2007:
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :Please be familiar with the GameSurge Acceptable Use Policy. All users on the network are required to abide by it. http://www.gamesurge.net/aup/
+>> :Global!Global@Services.GameSurge.net NOTICE tuukka :---------- END OF MESSAGE(S) OF THE DAY ----------
+>> :Burstfire.UK.EU.GameSurge.net 396 tuukka ~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 :is now your hidden host
+>> :tuukka!~ttikanoj@91f6a89b.2ed902d5.8f785159.IP4 MODE tuukka :+x
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< PING Burstfire.UK.EU.GameSurge.net
+>> :Burstfire.UK.EU.GameSurge.net PONG Burstfire.UK.EU.GameSurge.net :Burstfire.UK.EU.GameSurge.net
+--> lag pong
+<< QUIT :leaving
+<< CAP LS 302
+<< JOIN :
+>> :molybdenum.libera.chat NOTICE * :*** Checking Ident
+>> :molybdenum.libera.chat NOTICE * :*** Looking up your hostname...
+>> :molybdenum.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :molybdenum.libera.chat NOTICE * :*** No Ident response
+>> :molybdenum.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :molybdenum.libera.chat 451 * :You have not registered
+>> :molybdenum.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK tuukka
+<< USER ttikanoj ttikanoj irc.libera.chat :TT
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 001 tuukka :Welcome to the Libera.Chat Internet Relay Chat Network tuukka
+<< MODE tuukka +i
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 002 tuukka :Your host is molybdenum.libera.chat[51.161.82.214/6697], running version solanum-1.0-dev
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 003 tuukka :This server was created Mon Sep 4 2023 at 00:58:21 UTC
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 004 tuukka molybdenum.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 005 tuukka ACCOUNTEXTBAN=a WHOX KNOCK MONITOR=100 ETRACE FNC SAFELIST ELIST=CMNTU CALLERID=g CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 005 tuukka CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 005 tuukka DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 251 tuukka :There are 68 users and 31783 invisible on 28 servers
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 252 tuukka 39 :IRC Operators online
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 253 tuukka 104 :unknown connection(s)
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 254 tuukka 22463 :channels formed
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 255 tuukka :I have 1879 clients and 1 servers
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 265 tuukka 1879 2076 :Current local users 1879, max 2076
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 266 tuukka 31851 34132 :Current global users 31851, max 34132
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 250 tuukka :Highest connection count: 2077 (2076 clients) (100508 connections received)
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 375 tuukka :- molybdenum.libera.chat Message of the Day - 
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- -[ Molybdenum ]-[ Atomic number: 42 ]-[ Chemical symbol: Mo ]-
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Molybdenum has been known throughout history, though its
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- properties meant that it was confused with lead ores. It was
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- first identified as a distinct element in 1778, meaning our
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- modern understanding of its existence reaches about as far
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- back as American independence.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Molybdenum has a very high melting point, 2623°C, the fifth-
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- highest temperature of any element.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- While pure molybdenum is only about as strong as tooth enamel,
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- it forms strong alloys that are resistant to corrosion and
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- stable under varying temperatures. As a result, these alloys
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- are used for metal armour plates, high-performance aircraft
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- parts, and pumps for molten metal flows.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- In its elemental form, it can be used as a fertiliser, and the
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- isotope molybdenum-99 is used as a source of technetium-99m,
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- an important medical radioisotope used for 3D bone scans and
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- the investigation of blood flow when diagnosing heart disease.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Welcome to Libera Chat, the IRC network for
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- free & open-source software and peer directed projects.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Use of Libera Chat is governed by our network policies.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- To reduce network abuses we perform open proxy checks
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- on hosts at connection time.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Please visit us in #libera for questions and support.
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :-  
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Website and documentation:  https://libera.chat
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Webchat:                    https://web.libera.chat
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Network policies:           https://libera.chat/policies
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 372 tuukka :- Email:                      support@libera.chat
+>> @time=2023-11-01T06:29:58.529Z :molybdenum.libera.chat 376 tuukka :End of /MOTD command.
+>> @time=2023-11-01T06:29:58.529Z :tuukka MODE tuukka :+Ziw
+<< PING molybdenum.libera.chat
+>> @time=2023-11-01T06:30:04.293Z :molybdenum.libera.chat PONG molybdenum.libera.chat :molybdenum.libera.chat
+--> lag pong
+<< QUIT :leaving
+<< CAP LS 302
+<< JOIN :
+>> NOTICE AUTH :*** Processing connection to irc.servercentral.net
+>> NOTICE AUTH :*** Looking up your hostname...
+>> NOTICE AUTH :*** Checking Ident
+>> NOTICE AUTH :*** Couldn't look up your hostname
+>> NOTICE AUTH :*** No Ident response
+>> :irc.servercentral.net CAP * LS :multi-prefix
+<< CAP REQ :multi-prefix
+>> :irc.servercentral.net 451 * :You have not registered
+>> :irc.servercentral.net CAP * ACK :multi-prefix 
+<< CAP END
+<< NICK tuukka
+<< USER ttikanoj ttikanoj ssl.efnet.org :TT
+>> :irc.servercentral.net 001 tuukka :Welcome to the EFnet Internet Relay Chat Network tuukka
+<< MODE tuukka +i
+>> :irc.servercentral.net 002 tuukka :Your host is irc.servercentral.net[66.225.225.225/9999], running version ircd-ratbox-3.0.10
+>> :irc.servercentral.net 003 tuukka :This server was created Sun May 24 2020 at 18:38:15 UTC
+>> :irc.servercentral.net 004 tuukka irc.servercentral.net ircd-ratbox-3.0.10 oiwszcrkfydnxbauglZCD biklmnopstveIrS bkloveI
+>> :irc.servercentral.net 005 tuukka CHANTYPES=&# EXCEPTS INVEX CHANMODES=eIb,k,l,imnpstS CHANLIMIT=&#:75 PREFIX=(ov)@+ MAXLIST=beI:100 MODES=4 NETWORK=EFnet KNOCK STATUSMSG=@+ CALLERID=g :are supported by this server
+>> :irc.servercentral.net 005 tuukka SAFELIST ELIST=U CASEMAPPING=rfc1459 CHARSET=ascii NICKLEN=9 CHANNELLEN=50 TOPICLEN=160 ETRACE CPRIVMSG CNOTICE DEAF=D MONITOR=60 :are supported by this server
+>> :irc.servercentral.net 005 tuukka FNC ACCEPT=20 MAP TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: :are supported by this server
+>> :irc.servercentral.net 251 tuukka :There are 3997 users and 6208 invisible on 18 servers
+>> :irc.servercentral.net 252 tuukka 89 :IRC Operators online
+>> :irc.servercentral.net 253 tuukka 3 :unknown connection(s)
+>> :irc.servercentral.net 254 tuukka 6363 :channels formed
+>> :irc.servercentral.net 255 tuukka :I have 1117 clients and 2 servers
+>> :irc.servercentral.net 265 tuukka 1117 1960 :Current local users 1117, max 1960
+>> :irc.servercentral.net 266 tuukka 10205 10888 :Current global users 10205, max 10888
+>> :irc.servercentral.net 250 tuukka :Highest connection count: 1962 (1960 clients) (45560 connections received)
+>> :irc.servercentral.net 375 tuukka :- irc.servercentral.net Message of the Day - 
+>> :irc.servercentral.net 372 tuukka :- -                                                _            _ 
+>> :irc.servercentral.net 372 tuukka :- -             ___ ___ _ ___ _____ _ _ __ ___ _ _| |_ _ _ __ _| |
+>> :irc.servercentral.net 372 tuukka :- -            (_-</ -_) '_\ V / -_) '_/ _/ -_) ' \  _| '_/ _` | |
+>> :irc.servercentral.net 372 tuukka :- -            /__/\___|_|  \_/\___|_| \__\___|_||_\__|_| \__,_|_|
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -          o Listening on ports: 6660 - 6669, 7000, 8080, 31337 o
+>> :irc.servercentral.net 372 tuukka :- -                 o Listening on SSL ports: 6697, 9999 o
+>> :irc.servercentral.net 372 tuukka :- -               o Visit us @ http://www.servercentral.com o
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -  -------- Server Rules ----------------------------------------------
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -        o No Flooding                         o No DoS bots
+>> :irc.servercentral.net 372 tuukka :- -        o No Clones                           o No Spamming
+>> :irc.servercentral.net 372 tuukka :- -        o No Takeovers                        o No Whiners 
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -  -------- Server Staff ----------------------------------------------
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -     o doug, netmunky, zi, orange1, max, scrim, remorse, fddi
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -  -------- Server Channel --------------------------------------------
+>> :irc.servercentral.net 372 tuukka :- -
+>> :irc.servercentral.net 372 tuukka :- -     o Visit our server's efnet channel:  #servercentral
+>> :irc.servercentral.net 372 tuukka :- -
+>> :irc.servercentral.net 372 tuukka :- -  -------- Disclaimer ------------------------------------------------
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -     This server, its staff and the people hosting it are *NOT* 
+>> :irc.servercentral.net 372 tuukka :- -     responsible for the content that passes through this server. 
+>> :irc.servercentral.net 372 tuukka :- -     Use of this server is a *privilege* which may be removed at 
+>> :irc.servercentral.net 372 tuukka :- -     any time and for any reason by the friendly server operators.
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 372 tuukka :- -  -------- End of MOTD -----------------------------------------------
+>> :irc.servercentral.net 372 tuukka :- -  
+>> :irc.servercentral.net 376 tuukka :End of /MOTD command.
+>> :DM!irc@services.servercentral.net PRIVMSG tuukka :VERSION
+>> :tuukka MODE tuukka :+i
+<< NOTICE DM :VERSION irssi v1.4.4 - running on Darwin x86_64
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< PING irc.servercentral.net
+>> :irc.servercentral.net PONG irc.servercentral.net :irc.servercentral.net
+--> lag pong
+<< QUIT :leaving
