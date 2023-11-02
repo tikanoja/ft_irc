@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:35:31 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 16:57:45 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:03:35 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <iostream>
 # include <string>
 # include <cstdlib>
+# include <vector>
 
 # ifndef MAXDATASIZE
 	# define MAXDATASIZE 512

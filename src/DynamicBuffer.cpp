@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 20:29:33 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:06:01 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,15 @@ void DynamicBuffer::addToBuffer(const char* buf) {
 				break;
 			}
 		}
-		if (appended == false) {
-			std::cout << "fresh push" << std::endl;
+		if (appended == false)
 			p_buf.push_back(toAdd);
-		}
 	}
-	std::cout << "Buffer after addtobuf" << std::endl;
-	for (size_t k = 0; k < p_buf.size(); k++)
-		std::cout << p_buf[k] << "$" << std::endl;
 }
 
 std::string DynamicBuffer::extractBuffer() {
 	std::string bufferString;
 	bufferString = p_buf.front();
 	p_buf.erase(p_buf.begin());
-	//get rid of the first entry in p_buf, making the second entry there be the first one
-	//p_buf is a std::vector<std::string>
 	return (bufferString);
 }
 

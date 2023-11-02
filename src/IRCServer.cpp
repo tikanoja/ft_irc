@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 18:49:47 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/02 07:10:05 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 		std::cout << "Recieved empty message. (Just a newline from nc?)" << std::endl;
 		return (0);
 	}
-	std::cout << "Raw recv on server: " << buf << std::endl;
 	user->getRecvBuffer().addToBuffer(buf);
 	return (0);
 }
@@ -202,10 +201,9 @@ int IRCServer::checkSendBuffer(User* user) {
 		ssize_t n_sent = 0;
 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
 			std::cerr << "Send failed" << std::endl;
-		std::cout << "sent bytes: " << n_sent << std::endl;
  		if (n_sent > 0 && n_sent < toSendLen) {
+			std::cout << "Failed to send entire message, pushing unsent back to front" << std::endl;
 			toSend.erase(0, static_cast<size_t>(n_sent));
-			// const char* toBuffer = toSend.c_str();
 			user->getSendBuffer().replaceUnsent(toSend);
 		}
 		delete[] toSendC;
