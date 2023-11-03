@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/03 11:31:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:07:49 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 	
 	std::vector<std::string> channels = split(message.getParams().front(), ',');
 	std::vector<std::string> users = split(message.getParams().at(1), ',');
-	size_t limit;
-	if (channels.size() < users.size())
-		limit = channels.size();
-	else
-		limit = users.size();
+	size_t limit = users.size();
+	Channel* chan = NULL;
 	for (size_t i = 0; i < limit; i++) {
-		Channel* chan = server.getChannels().findChannel(channels[i]);
+		if (i == 0 || channels.size() > 1)
+			chan = server.getChannels().findChannel(channels[i]);
 		if (chan == NULL) {
 			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(),
 				channels[i]));
@@ -70,7 +68,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		}
 		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),
 			user.getIP()) + " KICK " + chan->getName() + " " +
-			toKick->getNick(), NULL);
+			toKick->getNick() + " :" + user.getNick(), NULL);
 		if (message.getTrailing() == "")
 			chan->broadcastToChannel("\r\n", NULL);
 		else
