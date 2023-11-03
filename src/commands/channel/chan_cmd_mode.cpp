@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 08:07:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:02:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 		{
 			forbidden = params[i].find_first_not_of(ALLCHANMODES);
 			if (forbidden != std::string::npos)
-				user.send(ERR_UMODEUNKNOWNFLAG(server.getName()));
+				user.send(ERR_UNKNOWNMODE(server.getName(), user.getNick(), params[i][forbidden],
+					chan->getName()));
 		}
 	}
 
