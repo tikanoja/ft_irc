@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 06:37:04 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:59:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 	server.log("Changed nickname " + user.getNick() + "->" + new_nick, __FILE__, __LINE__);
 	user.setNick(new_nick);
 	user.setRegistrationFlag(1, server);
+	user.send(RPL_NICK(user.getOldNick(), user.getUserName(), server.getName(),
+		user.getNick()));
 	return 0;
 }
 
