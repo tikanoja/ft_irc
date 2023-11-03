@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:21 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 09:17:42 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:40:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static bool checkPermission(IRCServer & server, User & user, Message const & mes
 		return false;
 	}
 	*invited = server.getUsers().findUserByNick(message.getParams().front());
-	if (invited == NULL) {
+	if ((*invited) == NULL) {
 		user.send(ERR_NOSUCHNICK(server.getName(), message.getParams().front(), "nick"));
 		return false;
 	}

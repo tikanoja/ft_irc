@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 16:48:25 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:37:13 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void DynamicBuffer::addToBuffer(const char* buf) {
 		bool appended = false;
 		for (size_t i = 0; i < p_buf.size(); ++i) {
 			if (p_buf[i].find("\n") == std::string::npos) {
-				std::cout << "did not find nl" << std::endl;
 				p_buf[i] += toAdd;
 				appended = true;
 				break;
