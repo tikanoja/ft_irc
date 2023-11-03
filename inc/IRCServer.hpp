@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 06:43:53 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:27:23 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@
 # include "Commands.hpp"
 # include "Utils.hpp"
 
-# define MAXCLIENTS 64
+# define MAXCLIENTS 32
 
 # ifndef MAXDATASIZE
-#  define MAXDATASIZE 2048
+#  define MAXDATASIZE 512
 # endif
 
 # ifndef UNAMELEN

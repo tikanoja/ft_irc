@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:35:31 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 10:07:35 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:21:02 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <vector>
 
 # ifndef MAXDATASIZE
-	# define MAXDATASIZE 2048
+	# define MAXDATASIZE 512
 # endif
 
 class DynamicBuffer {
