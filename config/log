@@ -1,24 +1,15 @@
-Loging start: [20231103_104520] [20231103_104520] IRCserv started	src/IRCServer/IRCServer.cpp 72
-[20231103_104523] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
-[20231103_104523] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104523] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104523] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104523] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104523] Changed nickname ->dorian	src/commands/registration/cmd_nick.cpp 39
-[20231103_104523] Received message from dorian	src/IRCServer/handleIO.cpp 37
-[20231103_104523] dorian was registered	src/commands/registration/cmd_user.cpp 43
-[20231103_104526] Received message from dorian	src/IRCServer/handleIO.cpp 37
-[20231103_104526] Modes for user dorian were changed to +i	src/commands/cmd_mode.cpp 79
-[20231103_104526] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
-[20231103_104531] Received message from dorian	src/IRCServer/handleIO.cpp 37
-[20231103_104531] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104538] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231103_104538] Changed nickname ->djagusch	src/commands/registration/cmd_nick.cpp 39
-[20231103_104550] Received message from djagusch	src/IRCServer/handleIO.cpp 37
-[20231103_104550] djagusch was registered	src/commands/registration/cmd_user.cpp 43
-[20231103_104608] Received message from djagusch	src/IRCServer/handleIO.cpp 37
-[20231103_104608] Set djagusch to oper	src/commands/registration/cmd_oper.cpp 44
-[20231103_104632] Received message from dorian	src/IRCServer/handleIO.cpp 37
-[20231103_104637] Received message from djagusch	src/IRCServer/handleIO.cpp 37
-[20231103_104637] Recv failure: Connection #1 closed.	src/IRCServer/connectToUser.cpp 159
-[20231103_104637] 
+Loging start: [20231103_115058] [20231103_115058] IRCserv started	src/IRCServer/IRCServer.cpp 72
+[20231103_115110] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231103_115110] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231103_115110] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231103_115110] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231103_115110] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231103_115110] Changed nickname ->dorian	src/commands/registration/cmd_nick.cpp 39
+[20231103_115110] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231103_115110] dorian was registered	src/commands/registration/cmd_user.cpp 43
+[20231103_115113] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231103_115113] Modes for user dorian were changed to +i	src/commands/cmd_mode.cpp 79
+[20231103_115115] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231103_115115] Changed nickname dorian->hello	src/commands/registration/cmd_nick.cpp 39
+[20231103_115121] Received message from hello	src/IRCServer/handleIO.cpp 37
+[20231103_115123] 

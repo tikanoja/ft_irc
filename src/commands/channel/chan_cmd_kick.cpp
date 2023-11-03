@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_kick.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/02 13:35:21 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:31:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 	}
 	
 	std::vector<std::string> channels = split(message.getParams().front(), ',');
-	std::vector<std::string> users = split(message.getParams()[1], ',');
+	std::vector<std::string> users = split(message.getParams().at(1), ',');
 	size_t limit;
 	if (channels.size() < users.size())
 		limit = channels.size();
@@ -50,7 +50,8 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 	for (size_t i = 0; i < limit; i++) {
 		Channel* chan = server.getChannels().findChannel(channels[i]);
 		if (chan == NULL) {
-			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), channels[i]));
+			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(),
+				channels[i]));
 			continue ;
 		}
 		if (chan->getMembers()->findUserByNick(user.getNick()) == NULL) {
@@ -67,13 +68,13 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOSUCHNICK(server.getName(), users[i], "nick"));
 			continue ;
 		}
-		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP())\
-			 + " KICK " + chan->getName() + \
-		" " + toKick->getNick(), NULL);
+		chan->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),
+			user.getIP()) + " KICK " + chan->getName() + " " +
+			toKick->getNick(), NULL);
 		if (message.getTrailing() == "")
 			chan->broadcastToChannel("\r\n", NULL);
 		else
-			chan->broadcastToChannel(" " + message.getTrailing() + "\r\n", NULL);
+			chan->broadcastToChannel(" " + (message.getTrailing().empty()? message.getTrailing() : "") + "\r\n", NULL);
 		for (std::vector<User*>::iterator it = chan->getMembers()->begin();\
 			it != chan->getMembers()->end(); it++) {
 			if ((*it)->getNick() == toKick->getNick()) {
