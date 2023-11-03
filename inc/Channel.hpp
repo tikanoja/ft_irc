@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/10/31 11:28:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:25:32 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include <sstream>
 # include <cstdlib>
+# include <Error.hpp>
 # include "Uvector.hpp"
 
 class User;
@@ -29,37 +30,37 @@ class Channel
 			topic_rest = 0x02, 		// Set/remove the restrictions of the TOPIC command to chanops
 			key = 0x04, 			// Set/remove the channel key (password)
 			secret = 0x08, 			// Set/remove the channel key (password)
-			limit = 0x20 			// Set/remove the user limit to channel
+			limit = 0x10 			// Set/remove the user limit to channel
 		};
 
 		Channel(const std::string name);
 		~Channel();
 
 		//getters
-		std::string 	getName();
-		std::string 	getTopic();
-		Uvector*		getMembers();
-		Uvector*		getChops();
-		Uvector*		getInvitelist();
-		bool			getUserlimit();
-		std::string		getKey();
-		unsigned int	getMode();
-		std::string		getChanModes();
-		std::string		getChanStr();
-		size_t			getMaxusers();
+		std::string const & 	getName()const;
+		std::string const & 	getTopic()const;
+		Uvector*				getChops();
+		Uvector*				getMembers();
+		Uvector*				getInvitelist();
+		bool					getUserlimit()const;
+		std::string const &	 	getKey() const;
+		unsigned int			getMode() const;
+		std::string				getChanModes()const;
+		std::string				getChanStr()const;
+		size_t					getMaxusers() const;
 
 		//setters
 		void			setTopic(std::string newTopic);
 		void			setKey(std::string key);
-		bool			setChop(std::string target);
-		bool			unsetChop(std::string target);
+		int				setChop(std::string target);
+		int				unsetChop(std::string target);
 		bool 			setUserlimit(std::string limitstr);
 		bool			setMode(chanModes mode);
 		bool			unsetMode(chanModes mode);
 		
-		std::string		setBatchMode(std::vector<std::string> const & modes, size_t & word,
+		std::string		setBatchMode(User & user, std::vector<std::string> const & modes, size_t & word,
 										size_t & character, std::vector<size_t> & indeces);
-		std::string		unsetBatchMode(std::vector<std::string> const & modes, size_t & word,
+		std::string		unsetBatchMode(User & user, std::vector<std::string> const & modes, size_t & word,
 										size_t &character, std::vector<size_t> & indeces);
 
 		//utils
@@ -75,6 +76,7 @@ class Channel
 		std::string 	p_topic;
 		std::string 	p_key;
 		unsigned int	p_maxusers;
+		unsigned int	p_curusers;
 		Uvector			p_invitelist;
 		Uvector			p_members;
 		Uvector			p_chops;

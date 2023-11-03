@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 15:32:39 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:17:48 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 		return 1;
 	}
-	//check channel max limit?
+	
 	std::stringstream ss(message.getParams().front());
 	std::string chan;
 	while (std::getline(ss, chan, ',')) {
@@ -61,7 +61,6 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
 		} else {
 			if (checkChannelName(chan) == 1) {
-				std::cout << "here!" << std::endl;
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), chan));
 				continue ;
 			}
@@ -90,12 +89,7 @@ static int checkChannelName(std::string name) {
 
 
 static bool checkPermissions(IRCServer& server, User& user, Message& message, Channel * toJoin){
-		if (toJoin->getUserlimit() == true && \
-		toJoin->getMembers()->size() >= toJoin->getMaxusers()) {
-		user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(),\
-			toJoin->getName()));
-		return false;
-	}
+
 	if (toJoin->getMode() & Channel::key) {
 		if (message.getParams().size() < 2 || \
 			message.getParams()[1] != toJoin->getKey()) {
@@ -103,6 +97,12 @@ static bool checkPermissions(IRCServer& server, User& user, Message& message, Ch
 				toJoin->getName()));
 			return false;
 		}
+	}
+	if (toJoin->getMode() & Channel::limit && \
+		toJoin->getMembers()->size() == toJoin->getMaxusers()) {
+		user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(),\
+			toJoin->getName()));
+	return false;
 	}
 	if (toJoin->getMode() & Channel::invite) {
 		if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {

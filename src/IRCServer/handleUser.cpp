@@ -6,12 +6,11 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:35:41 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:01:04 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 05:51:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/IRCServer.hpp"
-
 
 bool IRCServer::getUserMode(User & user, e_uperm mode) const{
 	

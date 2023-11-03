@@ -6,13 +6,13 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 15:18:14 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:33:24 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Channel.hpp"
 
-std::string	Channel::setBatchMode(std::vector<std::string> const & modes, size_t & word,
+std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & modes, size_t & word,
 	size_t & character, std::vector<size_t> & indeces){
 
 	std::string					opsdone = "";
@@ -41,21 +41,27 @@ std::string	Channel::setBatchMode(std::vector<std::string> const & modes, size_t
 					break;
 				case ('o'):
 					if (word + ++move_flag < modes.size()){
-						if (this->setChop(modes.at(word + move_flag))){
+						int	ret;
+						if ((ret = this->setChop(modes.at(word + move_flag))) != 1){
 							indeces.push_back(word + move_flag);
 							opsdone += characters[3];
+						} else {
+							std::string servername = "PawsitiveIRC";
+							user.send(ERR_USERNOTINCHANNEL(servername,
+								user.getNick(), this->getName()));
 						}
 					}
 					break;
 				case ('l'):
 					if (word + ++move_flag < modes.size()){
 							this->setMode(limit);
+							this->setUserlimit(modes.at(word + move_flag));
 							indeces.push_back(word + move_flag);
 							opsdone += characters[4];
 					}
 					break;
 				case ('-'):
-					opsdone += "-" + unsetBatchMode(modes, word, character, indeces);
+					opsdone += "-" + unsetBatchMode(user, modes, word, character, indeces);
 					return opsdone;
 				default:
 					continue;
@@ -66,7 +72,7 @@ std::string	Channel::setBatchMode(std::vector<std::string> const & modes, size_t
 	return opsdone;
 }
 
-std::string	Channel::unsetBatchMode(std::vector<std::string> const & modes, size_t & word,
+std::string	Channel::unsetBatchMode(User & user, std::vector<std::string> const & modes, size_t & word,
 	size_t & character, std::vector<size_t> & indeces){
 
 	std::string					opsdone = "";
@@ -92,9 +98,14 @@ std::string	Channel::unsetBatchMode(std::vector<std::string> const & modes, size
 					break;
 				case ('o'):
 					if (word + ++move_flag < modes.size()){
-						if (this->unsetChop(modes.at(word + move_flag))){
-							opsdone += characters[3];
-							indeces.push_back(word + move_flag);
+						int	ret;
+						if ((ret = this->unsetChop(modes.at(word + move_flag))) != 1){
+								indeces.push_back(word + move_flag);
+								opsdone += characters[3];
+						} else {
+							std::string servername = "PawsitiveIRC";
+							user.send(ERR_USERNOTINCHANNEL(servername,
+								user.getNick(), this->getName()));
 						}
 					}
 					break;
@@ -104,7 +115,7 @@ std::string	Channel::unsetBatchMode(std::vector<std::string> const & modes, size
 					}
 					break;
 				case ('+'):
-					opsdone += "+" + setBatchMode(modes, word, character, indeces);
+					opsdone += "+" + setBatchMode(user, modes, word, character, indeces);
 					return opsdone;
 				default:
 					continue;

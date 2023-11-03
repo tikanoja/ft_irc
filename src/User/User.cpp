@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 15:30:05 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:50:29 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ User::User(int const socket_fd, char const * ipaddress, std::string host) : p_so
 }
 
 User::User()
-{
-	std::cout << "User constructor called" << std::endl;
-}
+{}
 
 User::User(User const& src)
 {
@@ -38,9 +36,7 @@ User::User(User const& src)
 }
 
 User::~User()
-{
-	std::cout << "User destructor called" << std::endl;
-}
+{}
 
 User& User::operator=(User const& rhs)
 {
@@ -158,7 +154,7 @@ void User::send(std::string str) {
 	this->getSendBuffer().addToBuffer(str.c_str());
 }
 
-void	User::setRegistrationFlag(int i, User& user, IRCServer& server)
+void	User::setRegistrationFlag(int i, IRCServer& server)
 {
 	if (i == 1)
 		p_nickFlag = true;
@@ -169,9 +165,12 @@ void	User::setRegistrationFlag(int i, User& user, IRCServer& server)
 
 	if (p_welcomeFlag == false && p_nickFlag == true && p_userFlag == true && p_passFlag == true) {
 		p_welcomeFlag = true;
-		user.setMode(IRCServer::registered);
-		user.send(RPL_WELCOME(server.getName(), user.getNick(), user.getUserName(), "127.0.0.1"));
-		motd(server, user);
+		this->setMode(IRCServer::registered);
+		this->send(RPL_WELCOME(server.getName(), this->getNick(), this->getUserName(), "127.0.0.1"));
+		this->send(RPL_YOURHOST(server.getName(), server.getVersion()));
+		this->send(RPL_CREATED(server.getName(), server.getDate()));
+		this->send(RPL_MYINFO(server.getName(), server.getVersion(), server.getUmodes(), server.getCmodes()));
+		motd(server, *this);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:20 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 17:10:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:44:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class User
 		void				setAwayMsg(std::string const & comment);
 		void				setHostServer(std::string hostname);
 		void 				send(std::string str);
-		void				setRegistrationFlag(int i, User& user, IRCServer& server);
+		void				setRegistrationFlag(int i, IRCServer& server);
 
 		bool				getPassFlag();
 		DynamicBuffer &		getRecvBuffer(void);

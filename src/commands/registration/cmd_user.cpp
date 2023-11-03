@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 11:10:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:37:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 	if (message.getParams()[2] == "8")
 		user.setMode(IRCServer::invisible);
 
-	user.setRegistrationFlag(2, user, server);
+	user.setRegistrationFlag(2, server);
 	server.log(user.getNick() + " was registered", __FILE__, __LINE__);
 	return 0;
 }

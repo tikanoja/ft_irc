@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executeCommand.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:52:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 12:47:38 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:30:57 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int IRCServer::executeCommand(User& user, Message& message) {
 
-	std::map<std::string, CommandFunction>::iterator it = p_commandMap.find(message.getCommand());
+	commandMap::iterator it = p_commandMap.find(message.getCommand());
 	if (it != p_commandMap.end()) {
-		CommandFunction func = it->second;
+		commandFunction func = it->second;
 		return func(*this, user, message);
 	} else {
 		user.send(ERR_UNKNOWNCOMMAND(getName(), message.getCommand()));

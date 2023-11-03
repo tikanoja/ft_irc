@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 17:15:53 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 07:35:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ std::string const & IRCServer::getPassword() const{
 	return p_password;
 }
 
-std::string const & IRCServer::getCaps() const{
-
-	return p_caps;
-}
-
 Uvector const &	IRCServer::getUsers() const{
 	
 	return p_users;
@@ -44,6 +39,23 @@ std::vector<Operator> const & IRCServer::getOpers() const{
 	return p_opers;
 }
 
+std::string const & IRCServer::getDate(void) const{
+	return p_creationDate;
+}
+
+std::string const & IRCServer::getVersion(void) const{
+	return p_version;
+}
+
+std::string const & IRCServer::getUmodes(void) const{
+	return p_modes;
+}
+
+std::string const & IRCServer::getCmodes(void) const{
+	return p_chanModes;
+}
+
+
 void signalHandler(int signum) {
 	
 	if (signum == SIGINT) {
@@ -54,12 +66,15 @@ void signalHandler(int signum) {
 
 IRCServer::IRCServer(uint16_t port, std::string password) : p_port(port), p_password(password){
 
-	p_serverName = "ircserv";
 	p_pfds.reserve(MAXCLIENTS + 1);
 	p_users.reserve(MAXCLIENTS + 1);
-	initServer();
 	p_logger = new Logger("./config/log");
 	p_logger->log("IRCserv started", __FILE__, __LINE__);
+	try{
+		initServer();
+	} catch (std::exception &e){
+		exit(1);
+	}
 	return ;
 }
 
@@ -73,17 +88,31 @@ IRCServer::~IRCServer(void) {
 void IRCServer::initServer() {
 	
 	if (getListenerSocket()){
-		p_logger->log("Coudl not create listener socket", __FILE__, __LINE__);
+		p_logger->log("Could not create listener socket", __FILE__, __LINE__);
 		throw std::runtime_error("Failed to create listener socket");
 	}
+	setGlobals() ;
 	initCommands();
 	initOperators();
+	std::cout << "Running..."<< std::endl;
 	return ;
+}
+
+void IRCServer::setGlobals() {
+	std::time_t p_cur_time = std::time(0);
+	std::tm* now = std::localtime(&p_cur_time);
+	// Mon Sep 11 2023 at 00:21:58 UTC
+
+	p_serverName = "PawsitiveIRC";
+	p_creationDate = std::asctime(now); 
+	p_version = "0.0.1";
+	p_modes = "awiroOs";
+	p_chanModes = "itkol";
 }
 
 void IRCServer::initCommands() {
 
-	std::pair<std::string, CommandFunction> cmdPairs[] = {
+	std::pair<std::string, commandFunction> cmdPairs[] = {
 		std::make_pair("CAP", cmd_cap),
 		std::make_pair("PASS", cmd_pass),
 		std::make_pair("NICK", cmd_nick),
@@ -105,8 +134,6 @@ void IRCServer::initCommands() {
 		std::make_pair("KICK", chan_cmd_kick)
 	};
 	p_commandMap.insert(cmdPairs, cmdPairs + sizeof(cmdPairs) / sizeof(cmdPairs[0]));
-	// for (commandMap::iterator it = p_commandMap.begin(); it != p_commandMap.end(); it++)
-	// 	p_caps += (*it).first + (it != p_commandMap.end() ? " " : "");
 }
 
 void IRCServer::initOperators(){

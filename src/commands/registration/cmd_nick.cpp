@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_nick.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 13:09:14 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:37:04 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 	}
 	server.log("Changed nickname " + user.getNick() + "->" + new_nick, __FILE__, __LINE__);
 	user.setNick(new_nick);
-	user.setRegistrationFlag(1, user, server);
+	user.setRegistrationFlag(1, server);
 	return 0;
 }
 

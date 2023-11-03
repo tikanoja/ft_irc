@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 17:10:17 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:54:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 /*Registration*/
 
 # define RPL_WELCOME(servername, nick, user, host)(":" + servername + " 001 " + nick + " Welcome to the Internet Relay Network " + nick + "!" + user + "@" + host + "\r\n") //001
-# define RPL_YOURHOST(servername, version)(":" + servername + " 002 Your host is " + servername + ", running version " + version + "\r\n") //002
-# define RPL_CREATED(servername, date)(":" + servername + " 003 This server was created" + date + "\r\n") //003
-# define RPL_MYINFO(servername, version, umodes, cmodes)(":" + servername + " 004 " + servername + " " + version + " " + umodes + " " + cmodes + "\r\n") //004
+# define RPL_YOURHOST(servername, version)(":" + servername + " 002 * Your host is " + servername + ", running version " + version + "\r\n") //002
+# define RPL_CREATED(servername, date)(":" + servername + " 003 " + servername + " :This server was created " + date + "\r\n") //003
+# define RPL_MYINFO(servername, version, umodes, cmodes)(":" + servername + " 004 " + "* " + servername + " " + version + " " + umodes + " " + cmodes + "\r\n") //004
 # define RPL_BOUNCE(servername, port)(":" + servername + " 005 Try server " + server name + ", port " + port + "\r\n") //005
 # define RPL_TRACELINK(servername, version, debuglevel,  destination, next_server, protocolversion, linkuptime, bssendq, usbackq)\
 ("Link " + version + " & " debug level + " " + destination + " " + nextserver + " V" + protocolversion + linkuptime + " " + bssendq + " " +  ussendq + "\r\n") //200

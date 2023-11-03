@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/02 17:10:10 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:43:53 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fstream>
 # include <cstdint>
 # include <cstring>
-# include <time.h>
+# include <ctime>
 # include <string>
 # include <poll.h>
 # include <netdb.h>
@@ -66,22 +66,23 @@ class IRCServer {
 		std::vector<Operator>		p_opers;
 		Cvector						p_channels;
 		nfds_t 						p_fd_count;
-		std::string					p_caps;
 
 		std::vector<struct pollfd>	p_pfds;
 		std::string					p_serverName;
 		std::string					p_creationDate;
-		clock_t						p_runningDateTime;
 		std::string					p_version;
+		std::string					p_modes;
+		std::string					p_chanModes;
 
 		Logger *					p_logger;
 
-		typedef int (*CommandFunction)(IRCServer&, User&, Message&);
-		typedef std::map<std::string, CommandFunction> commandMap;
-		
+		typedef int (*commandFunction)(IRCServer&, User&, Message&);
+		typedef std::map<std::string, commandFunction> commandMap;
+	
 		commandMap	p_commandMap;
 
 		void								initServer();
+		void								setGlobals();
 		void 								initCommands();
 		void								initOperators();
 		
@@ -114,13 +115,16 @@ class IRCServer {
 		
 		std::string	const & 			getName() const;
 		std::string	const &				getPassword() const;
-		std::string const & 			getCaps() const;
 		Uvector		const &				getUsers() const;
 		Cvector			  &				getChannels();
 		std::string						getModeStr(User const &user);
 		std::vector<Operator> const &	getOpers() const;
 		Operator &						getOperByNick(std::string nick);
 		bool							getUserMode(User & user, e_uperm mode) const;
+		std::string const & 			getDate(void) const;
+		std::string const & 			getVersion(void) const;
+		std::string const & 			getUmodes(void) const;
+		std::string const & 			getCmodes(void) const;
 
 		void							delFd(User& user);
 		void							delUser(User& user);

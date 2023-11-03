@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/01 14:55:42 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:24:51 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@ Channel::~Channel(void)
 	return ;
 }
 
-std::string Channel::getName()
+std::string const & Channel::getName() const
 {
 	return p_name;
 }
 
-std::string Channel::getTopic()
+std::string const & Channel::getTopic() const
 {
 	return p_topic;
 }
 
-unsigned int Channel::getMode()
+unsigned int Channel::getMode() const
 {
 	return p_mode;
 }
 
-std::string	Channel::getChanModes(){
+std::string	Channel::getChanModes() const {
 	static const chanModes permissions[] = {invite, topic_rest, key, limit};
 	static const std::string characters = "itkl";
 	std::string result = "+";
@@ -51,7 +51,8 @@ std::string	Channel::getChanModes(){
 	}
 	return result;
 }
-std::string		Channel::getChanStr(){
+
+std::string	Channel::getChanStr() const{
 	std::string modestr = "";
 	std::stringstream ss;
 	ss << p_maxusers;
@@ -83,17 +84,17 @@ Uvector* Channel::getInvitelist()
 	return &p_invitelist;
 }
 
-bool Channel::getUserlimit()
+bool Channel::getUserlimit() const
 {
 	return p_maxusers;
 }
 
-std::string Channel::getKey()
+std::string const & Channel::getKey() const
 {
 	return p_key;
 }
 
-size_t Channel::getMaxusers()
+size_t Channel::getMaxusers() const
 {
 	return this->p_maxusers;
 }
@@ -164,25 +165,25 @@ bool Channel::setUserlimit(std::string limitstr) {
 	return true;
 }
 
-bool Channel::setChop(std::string target) {
+int Channel::setChop(std::string target) {
 	User* newChop = this->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
-		return false;
+		return 1;
 	}
 	if (this->getChops()->findUserByNick(target) != NULL) {
-		return false;
+		return 2;
 	}
 	this->getChops()->push_back(newChop);
-	return true;
+	return 0;
 }
 
-bool Channel::unsetChop(std::string target) {
+int Channel::unsetChop(std::string target) {
 	User* newChop = this->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
-		return false;
+		return 1;
 	} 
 	if (this->getChops()->findUserByNick(target) == NULL) {
-		return false;
+		return 2;
 	}
 	for (std::vector<User*>::iterator it = this->getChops()->begin(); \
 		it != this->getChops()->end(); it++){
@@ -191,7 +192,7 @@ bool Channel::unsetChop(std::string target) {
 			break;
 		}
 	}
-	return true;
+	return 0;
 }
 
 bool	Channel::setMode(chanModes mode){

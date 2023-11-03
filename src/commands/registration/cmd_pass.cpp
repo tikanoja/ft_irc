@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:05:53 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 06:37:10 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int cmd_pass(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 
-	user.setRegistrationFlag(3, user, server);
+	user.setRegistrationFlag(3, server);
 	return 0;
 }

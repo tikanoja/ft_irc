@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 17:10:38 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:07:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
 	Channel * chan, std::vector<std::string> const & params);
 	
-static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
-	std::string& removals, std::vector<size_t> & indeces);
+static void setModes(User & user, Channel * chan, std::vector<std::string> const & params,
+	std::string& additions, std::string& removals, std::vector<size_t>& indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	
@@ -72,15 +72,13 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string				additions;
 	std::string				removals;
 	std::vector<size_t>		indeces;
-	
-	setModes(chan, params, additions, removals, indeces);
 
-	std::cout << removals << std::endl;
-	std::cout << additions << std::endl;
-	std::cout << additions << std::endl;
+	setModes(user, chan, params, additions, removals, indeces);
+	
 	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
-	reply += !additions.empty() ? ("+" + additions) : "";
-	reply += !removals.empty() ? ("-" + removals) : "";
+	
+	reply += !additions.empty() ? ("+" + additions + " ") : "";
+	reply += !removals.empty() ? ("-" + removals) : " ";
 	reply += getSetValues(params, indeces);
 	user.send(reply + "\r\n");
 	if (0 < indeces.size())
@@ -112,19 +110,21 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 	return true;
 }
 
-static void setModes(Channel * chan, std::vector<std::string> const & params, std::string& additions,
-	std::string& removals, std::vector<size_t> & indeces){
+static void setModes(User & user, Channel * chan, std::vector<std::string> const & params,
+	std::string& additions, std::string& removals, std::vector<size_t> & indeces){
 	
 		for (size_t i = 1; i < params.size(); i++){
 		size_t pos = 0;
 		while (i < params.size() && pos < params[i].size())
 		{
-			if (params[i][pos] == '+')
-				additions += chan->setBatchMode(params, i, pos, indeces);
-			else if (params[i][pos] == '-')
-				removals += chan->unsetBatchMode(params, i, pos, indeces);
-			else
-				pos++;
+			if (additions.size() + removals.size() <= 3){
+				if (params[i][pos] == '+')
+					additions += chan->setBatchMode(user, params, i, pos, indeces);
+				else if (params[i][pos] == '-')
+					removals += chan->unsetBatchMode(user, params, i, pos, indeces);
+				else
+					pos++;
+			}
 		}
 	}
 	removeCommonCharacters(additions, removals);
