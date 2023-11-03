@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:35:31 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 15:21:02 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:32:28 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ class DynamicBuffer {
 		std::string		extractBuffer();
 		void			replaceUnsent(std::string message);
 		int				emptyCheck();
-		void			printbuf() const;
 		void			clear();
 		
 		std::vector<std::string> p_buf;

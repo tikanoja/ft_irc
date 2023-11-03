@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 09:37:13 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:32:12 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,6 @@ int DynamicBuffer::findCRLF() const {
 
 void DynamicBuffer::clear() {
 	p_buf.clear();
-}
-
-void DynamicBuffer::printbuf() const {
-	for (size_t i = 0; i < p_buf.size(); ++i) {
-        std::cout << p_buf[i] << std::endl;
-    }
-	std::cout << std::endl;
-	return ;
 }
 
 std::vector<std::string> nlsplit(const std::string& str, char c){

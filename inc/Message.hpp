@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/13 10:21:08 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:33:13 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ class Message
 		~Message();
 		Message &	operator=(Message const& rhs);
 
-		void								printContent();
 		std::string const &					getPrefix() const;
 		std::vector<std::string> const &	getParams() const;
 		std::string const &					getTrailing() const;
