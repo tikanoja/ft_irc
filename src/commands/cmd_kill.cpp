@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:17 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/20 09:57:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:43:16 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,10 @@
 
 int cmd_kill(IRCServer& server, User& user, Message& message){
 
-	User *toBeKilled = server.getUsers().findUserByNick(user.getNick());
 
-	if (user.getMode() & IRCServer::registered){
+	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
-		return 1;
-	}
-	if ((user.getMode() & IRCServer::Oper) || (user.getMode() & IRCServer::oper)){
-		user.send(ERR_NOPRIVILEGES(server.getName()));
-		return 1;
-	}
-	if (!toBeKilled){
-		user.send(ERR_NOSUCHNICK(server.getName(),
-			user.getNick(), "user"));
 		return 1;
 	}
 	if (message.getParams()[0].empty() || message.getParams()[1].empty()){
@@ -38,9 +28,20 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 			message.getCommand()));
 		return 1;
 	}
-	close(user.getSocket()); //might need refinement, my hope is that
-	/// when we close, we continue into the polling loop, and catch the closed fd
-	// with POLLERR or POLLNVAL. Alternatively, we can call a version of dropConnection
-	// and do the clean up right here.
+	if (!(user.getMode() & IRCServer::Oper) && !(user.getMode() & IRCServer::oper)){
+		user.send(ERR_NOPRIVILEGES(server.getName()));
+		return 1;
+	}
+	if (message.getParams()[0] == user.getNick()){
+		close(user.getSocket());
+		return 0;
+	}
+	User *toBeKilled = server.getUsers().findUserByNick(message.getParams()[0]);
+	if (!toBeKilled){
+		user.send(ERR_NOSUCHNICK(server.getName(),
+			user.getNick(), "user"));
+		return 1;
+	}
+	close(toBeKilled->getSocket());
 	return 0;
 }

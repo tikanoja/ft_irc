@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cvector.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:09 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/10/20 14:50:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:07:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ class Cvector : public std::vector<Channel*>
 
 	private:
 		std::string toIRCLower(std::string const & str) const;
-
-		// class ChannelNotFound : public std::exception{
-		// 	char const * what() const throw();
-		// };
-
 };
 
 #endif

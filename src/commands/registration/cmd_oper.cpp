@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 08:47:54 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:07:14 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ int cmd_oper(IRCServer& server, User& user, Message& message){
 	std::vector<std::string> const & params = message.getParams();
 	if (params.size() < 2 || params[0].empty() || params[1].empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), message.getCommand()));
-		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
+		server.log("Rejected " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
 	}
-	if (!hasOperAccount(server, user, params))
-		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
+	if (!hasOperAccount(server, user, params)){
+		server.log("Rejected " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
+	}
 	try {
 		server.getOperByNick(params[0]).setUser(&user);
 		user.setMode(IRCServer::Oper);
@@ -44,9 +45,10 @@ int cmd_oper(IRCServer& server, User& user, Message& message){
 		return 0;
 	} catch (std::exception & e){
 		user.send(ERR_NOOPERHOST(server.getName()));
-		server.log("Refused " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
+		server.log("Rejected " + user.getNick() + " from becoming oper", __FILE__, __LINE__);
 		return 1;
 	}
+	user.send(RPL_YOUREOPER(server.getName(), user.getNick()));
 }
 
 static bool checkOpers(std::vector<Operator> const & opers,
@@ -67,8 +69,11 @@ static bool checkOpers(std::vector<Operator> const & opers,
 				toCompare = it->getPW();
 				break;
 		}
-		if (input == toCompare)
+		std::cout << input << " | " << toCompare << std::endl;
+		if (input == toCompare){
+			std::cout << "Success" << std::endl;
 			return true;
+		}
 	}
 	return false;
 }

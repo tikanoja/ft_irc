@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 08:53:33 by djagusch          #+#    #+#             */
-/*   Updated: 2023/10/27 12:09:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:07:39 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ class Uvector : public std::vector<User*>
 		User*		findUserByIP(std::string const & ip_address) const;
 
 	private:
-		class UserNotFound : public std::exception{
-			char const * what() const throw();
-		};
 };
 
 #endif

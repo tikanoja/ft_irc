@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 08:33:24 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:50:47 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 				case ('o'):
 					if (word + ++move_flag < modes.size()){
 						int	ret;
-						if ((ret = this->setChop(modes.at(word + move_flag))) != 1){
+						if (!(ret = this->setChop(modes.at(word + move_flag)))){
 							indeces.push_back(word + move_flag);
 							opsdone += characters[3];
-						} else {
+						} else if (ret == 1) {
+							std::string servername = "PawsitiveIRC";
+							user.send(ERR_USERNOTINCHANNEL(servername,
+								user.getNick(), this->getName()));
+						} else if (ret == 2) {
 							std::string servername = "PawsitiveIRC";
 							user.send(ERR_USERNOTINCHANNEL(servername,
 								user.getNick(), this->getName()));
