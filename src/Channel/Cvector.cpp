@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:06 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/04 10:12:33 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:34:51 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ Cvector Cvector::findChannelsByUser(std::string const & nick) const
 		it != this->end(); it++){
 		if ((*it)->getMembers()->findUserByNick(toIRCLower(nick)) == NULL)
 			continue;
-		std::cout << (*it)->getName() << std::endl;
 		userChannels.push_back(*it);
 	}
 	return (userChannels);
