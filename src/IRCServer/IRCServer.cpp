@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 07:35:17 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:34:59 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void IRCServer::initOperators(){
 
 	operFile.open("config/operators.config", std::fstream::in);
 	if (!operFile.good() || !operFile.is_open() || operFile.peek() < 0){
-		std::cout << "Cannot set any operators" << std::endl;
+		p_logger->log("Cannot set any operators", __FILE__, __LINE__);
 		return ;
 	}
 	char line[256];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/01 16:04:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:33:05 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ Message::Message(std::string msg)
 		index++;
 	}
 	return ;
-}
-
-void Message::printContent()
-{
-	std::cout << std::endl << "*** constructed msg ***" << std::endl;
-	std::cout << "Prefix: " << this->p_prefix << "$" << std::endl;
-	std::cout << "Command: " << this->p_command << "$" << std::endl;
-	for (unsigned long i = 0; i < p_params.size(); i++)
-		std::cout << "Params[" << i << "]: " << p_params[i] << "$" << std::endl;
-	std::cout << "Trailing: " << this->p_trailing << "$" << std::endl;
 }
 
 Message::Message(Message const& src){

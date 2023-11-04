@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 12:59:19 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:27:47 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int IRCServer::receiveMsg(User* user, nfds_t i) {
 	
-	char buf[MAXDATASIZE];
-	std::memset(buf, '\0', MAXDATASIZE);
+	char buf[MAXDATASIZE * 4];
+	std::memset(buf, '\0', MAXDATASIZE * 4);
 	ssize_t numbytes;
 	numbytes = recv(p_pfds[i].fd, buf, MAXDATASIZE - 1, 0);
 	if (numbytes <= 0) {
@@ -47,12 +47,21 @@ int IRCServer::checkSendBuffer(User* user) {
 		return 0;
 	} 
 	if (user->getSendBuffer().emptyCheck() == 1) {
+		bool tooLong = false;
 		std::string toSend = user->getSendBuffer().extractBuffer();
 		ssize_t toSendLen = static_cast<ssize_t>(toSend.length());
+		if (toSendLen > 512) {
+			toSendLen = 512;
+			tooLong = true;
+		}
 		char* toSendC = new char[toSendLen];
-		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen));
+		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen)); //is this necessary since we are filling it up to its len anyways?
 		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
 			toSendC[i] = toSend[i];
+		if (tooLong == true) {
+			toSendC[510] = '\r';
+			toSendC[511] = '\n';
+		}
 		ssize_t n_sent = 0;
 		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
 			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);

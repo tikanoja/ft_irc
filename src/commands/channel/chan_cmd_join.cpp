@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 09:17:48 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:28:17 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 }
 
 static int checkChannelName(std::string name) {
+	
 	if (name.length() > 50)
 		return 1;
 	if (name.empty() || (name[0] != '#' && name[0] != '&'))
