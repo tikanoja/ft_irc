@@ -47,6 +47,21 @@ Channel* Cvector::findChannel(std::string const & name) const
 			return (*it);
 	}
 	return (NULL);
+
+}
+
+Cvector Cvector::findChannelsByUser(std::string const & nick) const
+{
+	Cvector userChannels;
+	
+	for (std::vector<Channel*>::const_iterator it = this->begin();
+		it != this->end(); it++){
+		if ((*it)->getMembers()->findUserByNick(toIRCLower(nick)) == NULL)
+			continue;
+		std::cout << (*it)->getName() << std::endl;
+		userChannels.push_back(*it);
+	}
+	return (userChannels);
 }
 
 Channel* Cvector::createChannel(std::string const & name)

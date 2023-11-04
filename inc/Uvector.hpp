@@ -30,6 +30,8 @@ class Uvector : public std::vector<User*>
 		User*		findUserBySocket(int const socket_fd) const;
 		User*		findUserByNick(std::string const & nick) const;
 		User*		findUserByIP(std::string const & ip_address) const;
+		
+		void		removeUserByNick(std::string const & nick);
 
 	private:
 };

@@ -34,8 +34,10 @@
 # include <sys/types.h> //types needed for socket() functions
 # include <sys/socket.h> //socket(), connect(), struct sockaddr
 # include "DynamicBuffer.hpp"
-# include "Uvector.hpp"
 # include "Cvector.hpp"
+# include "Channel.hpp"
+# include "Uvector.hpp"
+# include "Uvector.hpp"
 # include "Message.hpp"
 # include "User.hpp"
 # include "Operator.hpp"
@@ -55,6 +57,7 @@
 
 class User;
 class Channel;
+class Cvector;
 class DynamicBuffer;
 class Message;
 

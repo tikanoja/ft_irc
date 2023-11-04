@@ -6,12 +6,14 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 08:24:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 14:35:39 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Channel.hpp"
+#include "../../inc/Reply.hpp"
 #include <sstream>
+
 
 Channel::Channel(const std::string name) : p_name(name)
 {
@@ -97,6 +99,22 @@ std::string const & Channel::getKey() const
 size_t Channel::getMaxusers() const
 {
 	return this->p_maxusers;
+}
+
+std::string	Channel::getNicks() const{
+	
+	std::string result;
+
+	for (Uvector::const_iterator it = p_members.begin(); it != p_members.end(); it++){
+
+		User* op = p_chops.findUserByNick((*it)->getNick());
+		if (it != p_members.begin())
+			result += " ";
+		if (op)
+			result += "@";
+		result += (*it)->getNick();
+	}
+	return result;
 }
 
 void Channel::broadcastToChannel(std::string message, User* sender)
@@ -193,6 +211,16 @@ int Channel::unsetChop(std::string target) {
 		}
 	}
 	return 0;
+}
+
+void Channel::reopChannel(std::string const & servername){
+
+	if (this->getMembers()->size() > 0 && this->getChops()->size() == 0){
+		User *new_chop = this->getMembers()->front();
+		this->setChop(new_chop->getNick());
+		this->broadcastToChannel(RPL_CHANNELMODEIS(servername, new_chop->getNick(),
+			this->getName(), "+o", new_chop->getNick()), NULL);
+	}
 }
 
 bool	Channel::setMode(chanModes mode){

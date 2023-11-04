@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:09 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/03 10:07:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 10:57:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Cvector : public std::vector<Channel*>
 		Channel*	findChannel(std::string const & name) const;
 		Channel*	createChannel(std::string const & name);
 		void		deleteChannel(Channel* toDelete);
+		Cvector		findChannelsByUser(std::string const & name) const;
 
 	private:
 		std::string toIRCLower(std::string const & str) const;

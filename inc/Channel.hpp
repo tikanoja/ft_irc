@@ -48,6 +48,7 @@ class Channel
 		std::string				getChanModes()const;
 		std::string				getChanStr()const;
 		size_t					getMaxusers() const;
+		std::string				getNicks() const;
 
 		//setters
 		void			setTopic(std::string newTopic);
@@ -69,6 +70,7 @@ class Channel
 		void			removeFromChops(User& user);
 		void			removeFromInvlist(User& user);
 		void			removeFromMembers(User& user);
+		void			reopChannel(std::string const & servername);
 
 	private:
 		Channel();

@@ -77,6 +77,30 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	return 0;
 }
 
+static void removeUserFromAllChannels(IRCServer& server, User& user, Message& message){
+
+	Cvector channels = server.getChannels().findChannelsByUser(user.getNick());
+
+	for (Cvector::iterator it = channels.begin(); it != channels.end(); it++){
+		if (user.getNick() == user.getNick()) {
+			(*it)->broadcastToChannel(":" + USER_ID(user.getNick(),
+			user.getUserName(), user.getIP()) + " PART " + (*it)->getName(), NULL);
+		}
+		if (!message.getTrailing().empty())
+			(*it)->broadcastToChannel(" :" + message.getTrailing() + "\r\n", NULL);
+		else
+			(*it)->broadcastToChannel("\r\n", NULL);
+
+		(*it)->getMembers()->removeUserByNick(user.getNick());
+		(*it)->removeFromChops(user);
+		(*it)->reopChannel(server.getName());
+		if ((*it)->getMembers()->size() == 0) {
+			server.getChannels().deleteChannel((*it));
+		}
+	}
+}
+
+
 static int checkChannelName(std::string name) {
 	
 	if (name.length() > 50)

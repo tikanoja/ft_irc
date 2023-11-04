@@ -49,6 +49,7 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 					partFrom->broadcastToChannel("\r\n", NULL);
 				partFrom->getMembers()->erase(it);
 				partFrom->removeFromChops(user);
+				partFrom->reopChannel(server.getName());
 				if (partFrom->getMembers()->size() == 0) {
 					server.getChannels().deleteChannel(partFrom);
 				}

@@ -66,3 +66,13 @@ User*		Uvector::findUserByIP(std::string const & ip_address) const
 	}
 	return NULL;
 }
+
+void		Uvector::removeUserByNick(std::string const & nick){
+	
+	for (std::vector<User*>::iterator it = this->begin(); it != this->end(); it++){
+		if (toIRCLower((*it)->getNick()) == toIRCLower(nick)){
+			this->erase(it);
+			it--;
+		}
+	}
+}

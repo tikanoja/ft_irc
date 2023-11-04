@@ -15,6 +15,7 @@
 
 #include <string>
 #include <iterator>
+#include <algorithm>
 #include "IRCServer.hpp"
 #include "Message.hpp"
 #include "Uvector.hpp"
@@ -27,7 +28,7 @@
 class IRCServer;
 class User;
 class Uvector;
-class Cvector;
+class Channel;
 class Message;
 class Operator;
 
