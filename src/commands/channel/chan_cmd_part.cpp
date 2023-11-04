@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 09:36:57 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 11:32:40 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 			user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), chan));
 			continue ;
 		}
-		for (std::vector<User*>::iterator it = partFrom->getMembers()->begin();\
+		for (Uvector::iterator it = partFrom->getMembers()->begin();\
 		it != partFrom->getMembers()->end(); it++) {
 			if ((*it)->getNick() == user.getNick()) {
 				partFrom->broadcastToChannel(":" + USER_ID(user.getNick(),

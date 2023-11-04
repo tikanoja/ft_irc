@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 16:34:59 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/04 08:15:00 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,19 @@ void IRCServer::initServer() {
 	setGlobals() ;
 	initCommands();
 	initOperators();
+	std::cout << "\033[0;32mPawsitiveIRC server is starting"<< std::endl;
+	std::cout << "   _______________                       _______________" << "\n"
+	<< "  |  ___________  |     .-.     .-.     |  ___________  |" << "\n"
+	<< "  | |           | |    .****. .****.    | |           | |" << "\n"
+	<< "  | |   0   0   | |    .*****.*****.    | |   0   0   | |" << "\n"
+	<< "  | |     -     | |     .*********.     | |     -     | |" << "\n"
+	<< "  | |   \\___/   | |      .*******.      | |   \\___/   | |" << "\n"
+	<< "  | |___     ___| |       .*****.       | |___     ___| |" << "\n"
+	<< "  |_____|\\_/|_____|        .***.        |_____|\\_/|_____|" << "\n"
+	<< "    _|__|/ \\|_|_.............*........... _|__|/ \\|_|_" << "\n"
+	<< "   / ********** \\                         / ********** \\" << "\n"
+	<< " /  ************  \\                     /  ************  \\" << "\n"
+	<< "--------------------                   -------------------- \033[0m" << std::endl;
 	std::cout << "Running..."<< std::endl;
 	return ;
 }
@@ -101,7 +114,6 @@ void IRCServer::initServer() {
 void IRCServer::setGlobals() {
 	std::time_t p_cur_time = std::time(0);
 	std::tm* now = std::localtime(&p_cur_time);
-	// Mon Sep 11 2023 at 00:21:58 UTC
 
 	p_serverName = "PawsitiveIRC";
 	p_creationDate = std::asctime(now); 

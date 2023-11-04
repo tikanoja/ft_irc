@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 22:45:35 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 16:45:59 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/04 10:08:28 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ int main(int ac, char** av) {
 			std::cerr << "usage: " << av[0] << " <port> <password>" << std::endl;
 			return (1);
 		}
-		
+		if (std::strncmp(av[2], "", 1) == 0){
+			std::cerr << "Error: Pawsword must not be an empty string" << std::endl;
+			return (1);
+		}
 		int portInt = 0;
 		std::istringstream(av[1]) >> portInt;
 		if (portInt <= 0 || portInt > 65535) {
-			std::cerr << "bad port number: " << av[1] << std::endl;
+			std::cerr << "Error: bad port number: " << av[1] << std::endl;
 			return (1);
 		}
 		uint16_t port = static_cast<uint16_t>(portInt);
@@ -35,9 +38,7 @@ int main(int ac, char** av) {
 	}
 	catch (std::exception& e) {
 		std::cerr << "Server quit: " << e.what() << std::endl;
-	}
-	catch (std::bad_alloc& e) {
-		std::cerr << "Server quit: " << e.what() << std::endl;
+		exit (1);
 	}
 	return (0);
 }

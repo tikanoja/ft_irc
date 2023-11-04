@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:21 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 09:40:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 13:17:50 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static bool checkPermission(IRCServer & server, User & user, Message const & mes
 		return false;
 	}
 	if ((*invited)->getMode() & IRCServer::away) {
-		user.send(RPL_AWAY(server.getName(), (*invited)->getNick(), (*invited)->getAwayMsg()));
+		user.send(RPL_AWAY(server.getName(), user.getNick(), (*invited)->getNick(), (*invited)->getAwayMsg()));
 		return false;
 	}
 	if ((*chan)->getMembers()->findUserByNick((*invited)->getNick()) != NULL) {

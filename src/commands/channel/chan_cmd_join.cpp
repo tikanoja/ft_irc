@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 16:28:17 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:22:34 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				toJoin->getName(), toJoin->getTopic()));
 			else
 				user.send(RPL_NOTOPIC(server.getName(), toJoin->getName()));
+			std::string userList = toJoin->getNicks();
+			user.send(RPL_NAMREPLY(server.getName(), user.getNick(), toJoin->getName(), userList));
+			user.send(RPL_ENDOFNAMES(server.getName(), user.getNick(), toJoin->getName()));
 		} else {
 			if (checkChannelName(chan) == 1) {
 				user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), chan));

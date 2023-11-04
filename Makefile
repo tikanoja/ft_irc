@@ -3,12 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
+#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/03 16:43:49 by ttikanoj         ###   ########.fr        #
+#    Updated: 2023/11/04 12:53:52 by djagusch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+### COLOURS ###
+
+COLOUR_GREEN=\033[0;32m
+COLOUR_RED=\033[0;31m
+COLOUR_BLUE=\033[0;34m
+COLOUR_END=\033[0m
+
+### PARAMS ###
 
 NAME = ircserv
 
@@ -82,6 +91,8 @@ OBJ_DIRS = $(dir $(OBJ))
 
 HEADER = $(addprefix $I/,$(addsuffix .hpp,$(INC_FILES)))
 
+### RULES ###
+
 all: $(NAME)
 
 $O:
@@ -92,10 +103,12 @@ print: $(TST)
 
 $O/%.o: $S/%.cpp $(HEADER) | $O
 	@$(CC) $(FLAGS) -c $< -o $@
+	@echo "$(COLOUR_GREEN) $@ successfully created$(COLOUR_END)"
 
 $(NAME): $(OBJ) src/main.cpp
 	@$(CC) $(FLAGS) -c src/main.cpp -o obj/main.o
 	@$(CC) $(FLAGS) $^ -o $@
+	@echo "$(COLOUR_GREEN) $@ successfully created$(COLOUR_END)"
 
 clean:
 	@rm -rf $O $T

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 15:02:48 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 12:24:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 
 static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
 	Channel * chan, std::vector<std::string> const & params){
+		
 	if (!(user.getMode() & IRCServer::registered)){
 		user.send(ERR_NOTREGISTERED(server.getName(),
 			message.getCommand()));
@@ -113,7 +114,7 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 
 static void setModes(User & user, Channel * chan, std::vector<std::string> const & params,
 	std::string& additions, std::string& removals, std::vector<size_t> & indeces){
-	
+
 		for (size_t i = 1; i < params.size(); i++){
 		size_t pos = 0;
 		while (i < params.size() && pos < params[i].size())

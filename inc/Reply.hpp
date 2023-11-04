@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 06:54:43 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:18:17 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define RPL_TRACELOG(servername, logfile, debuglevel)(":" + servername + " 261 File " + logfile + " " + debuglevel + "\r\n") //261
 # define RPL_TRACEEND(servername, version, debuglevel)(":" + servername + " 262 " + servername +  + " " + version + "" & debuglevel + " :End of TRACE\r\n") //262
 # define RPL_TRYAGAIN(servername, command)(":" + servername + " 263 " + command + " :Please wait a while and try again.\r\n") //263
-# define RPL_AWAY(servername, nick, message)(":" + servername + " 301 " + nick + " :" + message + "\r\n") //301
+# define RPL_AWAY(servername, nick, recipient, message)(":" + servername + " 301 " + nick + " " + recipient+ " :" + message + "\r\n") //301
 # define RPL_USERHOST(servername)(":" + servername + " 302 \r\n") //302 ??????
 # define RPL_ISON(servername)(":" + servername + " 303 \r\n") //303 ??????????
 # define RPL_UNAWAY(servername)(":" + servername + " 305 :You are no longer marked as being away\r\n") //305
@@ -73,7 +73,7 @@
 # define RPL_WHOISCHANNELS(servername)(":" + servername + " 319 \r\n") //319 ?????
 # define RPL_LIST(servername, channel, n_visible, topic)(":" + servername + " 322 " + channel + " " + n_visible + " :" + topic + "\r\n") //322
 # define RPL_LISTEND(servername)(":" + servername + " 323 :End of LIST\r\n") //323
-# define RPL_CHANNELMODEIS(servername, user, channel, mode, mode_params)(":" + servername + " 324 " + user + " " + channel +  + " " + mode + " " + mode_params + "\r\n") //324
+# define RPL_CHANNELMODEIS(servername, user, channel, mode, mode_params)(":" + servername + " 324 " + user + " " + channel + " " + mode + " " + mode_params + "\r\n") //324
 # define RPL_UNIQOPIS(servername, channel, nickname)(":" + servername + " 325 " + channel + " " + nickname + "\r\n") //325
 # define RPL_NOTOPIC(servername, channel)(":" + servername + " 331 " + channel + " :No topic is set\r\n") //331
 # define RPL_TOPIC(servername, nick, channel, topic)(":" + servername + " 332 " + nick + " " + channel + " :" + topic + "\r\n") //332
@@ -85,10 +85,10 @@
 # define RPL_ENDOFEXCEPTLIST(servername, channel)(":" + servername + " 349 " + channel + " :End of channel exception list\r\n") //349
 # define RPL_VERSION(servername, version, debuglevel, server, comments)(":" + servername + " 351 " + version + "." + debuglevel + " " + server + " :" + comments + "\r\n") //351
 # define RPL_WHOREPLY(servername)(":" + servername + " 352 " + nick + " " + channel + " " + username + " " + host + " " + servername + " " + nick + " " + status + " :0 " + realname + "\r\n")
-# define RPL_NAMREPLY(servername)(":" + servername + " 353 \r\n") //353 ???????
+# define RPL_NAMREPLY(servername, user, channel, userlist)(":" + servername + " 353 " + user + " @ " + channel + " :" + userlist + "\r\n") //353
 # define RPL_LINKS(servername, mask, server, hopcount, serverinfo)(":" + servername + " 364 " + mask +  + " " + server + " :" + hopcount + " " + serverinfo + "\r\n") //364 ????? not sure we need it
 # define RPL_ENDOFLINKS(servername, mask)(":" + servername + " 365 " +  mask + " :End of LINKS list\r\n") //365
-# define RPL_ENDOFNAMES(servername, channel)(":" + servername + " 366 " + channel + " :End of NAMES list\r\n") //366
+# define RPL_ENDOFNAMES(servername, user, channel)(":" + servername + " 366 " + user + channel + " :End of NAMES list\r\n") //366
 # define RPL_BANLIST(servername, channel, banmask)(":" + servername + " 367 " + channel +  + " " + banmask + "\r\n") //367
 # define RPL_ENDOFBANLIST(servername)(":" + servername + " 368 \r\n") //368
 # define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of WHOWAS\r\n") //369
