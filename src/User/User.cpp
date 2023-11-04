@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 06:50:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:15:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	User::setRegistrationFlag(int i, IRCServer& server)
 	if (p_welcomeFlag == false && p_nickFlag == true && p_userFlag == true && p_passFlag == true) {
 		p_welcomeFlag = true;
 		this->setMode(IRCServer::registered);
-		this->send(RPL_WELCOME(server.getName(), this->getNick(), this->getUserName(), "127.0.0.1"));
+		this->send(RPL_WELCOME(server.getName(), this->getNick(), this->getUserName(), server.getName()));
 		this->send(RPL_YOURHOST(server.getName(), server.getVersion()));
 		this->send(RPL_CREATED(server.getName(), server.getDate()));
 		this->send(RPL_MYINFO(server.getName(), server.getVersion(), server.getUmodes(), server.getCmodes()));
