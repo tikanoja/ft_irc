@@ -1,0 +1,51 @@
+Loging start: [20231104_152245] [20231104_152245] IRCserv started	src/IRCServer/IRCServer.cpp 72
+[20231104_152251] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231104_152251] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152251] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152251] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152251] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152251] Changed nickname ->dorian	src/commands/registration/cmd_nick.cpp 39
+[20231104_152251] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152251] dorian was registered	src/commands/registration/cmd_user.cpp 43
+[20231104_152254] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152254] Modes for user dorian were changed to +i	src/commands/cmd_mode.cpp 79
+[20231104_152255] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255]  was registered	src/commands/registration/cmd_user.cpp 43
+[20231104_152255] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152255] Changed nickname ->dorian_	src/commands/registration/cmd_nick.cpp 39
+[20231104_152257] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152257] Modes for user dorian_ were changed to +i	src/commands/cmd_mode.cpp 79
+[20231104_152259] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152300] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152302] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152307] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152307] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152309] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152325] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152331] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331]  was registered	src/commands/registration/cmd_user.cpp 43
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231104_152331] Changed nickname ->dorian__	src/commands/registration/cmd_nick.cpp 39
+[20231104_152334] Received message from dorian__	src/IRCServer/handleIO.cpp 37
+[20231104_152334] Modes for user dorian__ were changed to +i	src/commands/cmd_mode.cpp 79
+[20231104_152336] Received message from dorian__	src/IRCServer/handleIO.cpp 37
+[20231104_152340] Received message from dorian__	src/IRCServer/handleIO.cpp 37
+[20231104_152345] Received message from dorian__	src/IRCServer/handleIO.cpp 37
+[20231104_152400] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152408] Received message from dorian_	src/IRCServer/handleIO.cpp 37
+[20231104_152446] Received message from dorian__	src/IRCServer/handleIO.cpp 37
+[20231104_152501] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152507] Received message from dorian	src/IRCServer/handleIO.cpp 37
+[20231104_152507] Removed dorian	src/commands/registration/cmd_quit.cpp 45
+[20231104_152509] 

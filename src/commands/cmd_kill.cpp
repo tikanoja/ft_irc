@@ -23,7 +23,8 @@ int cmd_kill(IRCServer& server, User& user, Message& message){
 			message.getCommand()));
 		return 1;
 	}
-	if (message.getParams()[0].empty() || message.getParams()[1].empty()){
+	if (message.getParams()[0].empty() 
+		|| (message.getParams().size() > 1 &&  message.getParams()[1].empty())){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
 		return 1;

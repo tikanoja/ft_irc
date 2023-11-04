@@ -29,26 +29,48 @@
 		RPL_TOPIC				//sent upon successful JOIN
 */
 
+static void removeUserFromAllChannels(IRCServer& server, User& user, Message& message);
 static int checkChannelName(std::string name);
-static bool checkPermissions(IRCServer& server, User& user, Message& message, Channel * toJoin);
+static bool checkPermissions(IRCServer& server, User& user,
+	std::vector<std::string> const &params, Channel * toJoin, std::string const & key);
 
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
+	
+	std::vector<std::string> const & params = message.getParams();
+	
 	if (!(user.getMode() & IRCServer::registered)) {
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
 	}
-	if (message.getParams().size() < 1) {
+	if (params.size() < 1) {
 		user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 		return 1;
 	}
-	
-	std::stringstream ss(message.getParams().front());
+	if (params.front() == "0"){
+		removeUserFromAllChannels(server, user, message);
+		return 0;
+	}
+	if (params.size() > 1){
+		ssize_t n_chan = std::count(params[0].begin(), params[0].end(), ',');
+		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',');
+		if (n_chan != n_key){
+			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
+			return 1;
+		}
+	}
+
+	std::stringstream ss(params.front());
 	std::string chan;
-	while (std::getline(ss, chan, ',')) {
+	std::stringstream key_ss;
+	std::string key = "";
+	if (params.size() > 1){
+		key_ss << params.at(1);
+	}
+	while (std::getline(ss, chan, ',') || (params.size() > 1 && std::getline(key_ss, key, ','))) {
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		
-		if (toJoin != NULL) { //JOINING AN EXISTING CHANNEL
-			if (!checkPermissions(server, user, message, toJoin))
+		if (toJoin != NULL) {
+			if (!checkPermissions(server, user, params, toJoin, key))
 				continue ;
 				
 			toJoin->getMembers()->push_back(&user);
@@ -70,6 +92,12 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			toJoin = server.getChannels().createChannel(chan);
 			toJoin->getMembers()->push_back(&user);
 			toJoin->getChops()->push_back(&user);
+			if (params.size() > 1){
+				toJoin->setKey(key);
+				toJoin->setMode(Channel::key);
+				toJoin->broadcastToChannel(RPL_CHANNELMODEIS(server.getName(), user.getNick(),
+					toJoin->getName(), "+k", key), NULL);
+			}
 			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
 				user.getIP()) + " JOIN :" + toJoin->getName() + "\r\n", NULL);
 		}
@@ -111,26 +139,26 @@ static int checkChannelName(std::string name) {
 	for (size_t i = 0; i < limit; i++) {
 		if (name[i] == 7 || name[i] == ',' || std::isspace(name[i]))
 			return 1;
-	}	
+	}
 	return 0;
 }
 
-
-static bool checkPermissions(IRCServer& server, User& user, Message& message, Channel * toJoin){
+static bool checkPermissions(IRCServer& server, User& user,
+	std::vector<std::string> const & params, Channel * toJoin, std::string const & key){
 
 	if (toJoin->getMode() & Channel::key) {
-		if (message.getParams().size() < 2 || \
-			message.getParams()[1] != toJoin->getKey()) {
+		if (params.size() < 2 || \
+			key != toJoin->getKey()) {
 			user.send(ERR_BADCHANNELKEY(server.getName(), user.getNick(),\
 				toJoin->getName()));
 			return false;
 		}
 	}
 	if (toJoin->getMode() & Channel::limit && \
-		toJoin->getMembers()->size() == toJoin->getMaxusers()) {
+		(toJoin->getMembers()->size() >= toJoin->getMaxusers() || toJoin->getMaxusers() == 0)) {
 		user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(),\
 			toJoin->getName()));
-	return false;
+		return false;
 	}
 	if (toJoin->getMode() & Channel::invite) {
 		if (toJoin->getInvitelist()->findUserByNick(user.getNick()) == NULL) {

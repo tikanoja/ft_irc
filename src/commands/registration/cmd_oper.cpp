@@ -69,6 +69,7 @@ static bool checkOpers(std::vector<Operator> const & opers,
 				toCompare = it->getPW();
 				break;
 		}
+		std::cout << "To compare: " << toCompare << " input: " << input << std::endl;
 		if (input == toCompare){
 			return true;
 		}

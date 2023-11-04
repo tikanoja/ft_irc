@@ -58,10 +58,11 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 					break;
 				case ('l'):
 					if (word + ++move_flag < modes.size()){
+						if (this->setUserlimit(modes.at(word + move_flag))){
 							this->setMode(limit);
-							this->setUserlimit(modes.at(word + move_flag));
 							indeces.push_back(word + move_flag);
 							opsdone += characters[4];
+						}
 					}
 					break;
 				case ('-'):
