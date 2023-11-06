@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_oper.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:26:15 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 12:44:53 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:36:54 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static bool checkOpers(std::vector<Operator> const & opers,
 				toCompare = it->getPW();
 				break;
 		}
-		std::cout << "To compare: " << toCompare << " input: " << input << std::endl;
 		if (input == toCompare){
 			return true;
 		}

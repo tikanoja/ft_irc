@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 10:12:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:36:44 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), message.getParams().front()));
 		return 1;
 	}
-	
-	std::cout << "in topic" << std::endl;
-	std::cout << "cmd: " << message.getCommand() << "$" << std::endl;
-	std::cout << "params: ";
-	for (size_t i = 0; i < message.getParams().size(); i++) {
-		std::cout << message.getParams()[i] << "$" << std::endl;
-	}
-	std::cout << "trailing: " << message.getTrailing() << "$" << std::endl;
 	
 	if (message.getTrailing().empty()) {
 		if (chan->getTopic().empty()) {

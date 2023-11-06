@@ -1,36 +1,35 @@
-Loging start: [20231106_111533] [20231106_111533] IRCserv started	src/IRCServer/IRCServer.cpp 72
-[20231106_111534] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
-[20231106_111536] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111538] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111538] Changed nickname ->t	src/commands/registration/cmd_nick.cpp 40
-[20231106_111541] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111541] t was registered	src/commands/registration/cmd_user.cpp 41
-[20231106_111541] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
-[20231106_111541] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111541] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111541] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111541] Received message from 	src/IRCServer/handleIO.cpp 37
-[20231106_111541] Changed nickname ->tuukka	src/commands/registration/cmd_nick.cpp 40
-[20231106_111541] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111541] tuukka was registered	src/commands/registration/cmd_user.cpp 41
-[20231106_111544] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111544] Modes for user tuukka were changed to +i	src/commands/cmd_mode.cpp 79
-[20231106_111546] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111548] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111551] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111554] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111600] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111610] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111616] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111628] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111638] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111652] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111658] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111705] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111716] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111726] Received message from t	src/IRCServer/handleIO.cpp 37
-[20231106_111753] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111854] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111905] Connection #1 closed.	src/IRCServer/connectToUser.cpp 155
-[20231106_111909] Received message from tuukka	src/IRCServer/handleIO.cpp 37
-[20231106_111909] 
+Loging start: [20231106_121912] [20231106_121912] IRCserv started	src/IRCServer/IRCServer.cpp 72
+[20231106_121924] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231106_121924] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_121924] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_121924] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_121924] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_121924] Changed nickname ->tuukka	src/commands/registration/cmd_nick.cpp 39
+[20231106_121924] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121924] tuukka was registered	src/commands/registration/cmd_user.cpp 41
+[20231106_121926] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121926] Modes for user tuukka were changed to +i	src/commands/cmd_mode.cpp 79
+[20231106_121929] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121931] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121936] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121939] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_121949] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_122007] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_122010] New client accepted from ::ffff:127.0.0.1	src/IRCServer/connectToUser.cpp 114
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010]  was registered	src/commands/registration/cmd_user.cpp 41
+[20231106_122010] Received message from 	src/IRCServer/handleIO.cpp 37
+[20231106_122010] Changed nickname ->tuukka_	src/commands/registration/cmd_nick.cpp 39
+[20231106_122013] Received message from tuukka_	src/IRCServer/handleIO.cpp 37
+[20231106_122013] Modes for user tuukka_ were changed to +i	src/commands/cmd_mode.cpp 79
+[20231106_122015] Received message from tuukka_	src/IRCServer/handleIO.cpp 37
+[20231106_122018] Received message from tuukka_	src/IRCServer/handleIO.cpp 37
+[20231106_122023] Received message from tuukka_	src/IRCServer/handleIO.cpp 37
+[20231106_122033] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_122036] Received message from tuukka	src/IRCServer/handleIO.cpp 37
+[20231106_122039] Received message from tuukka_	src/IRCServer/handleIO.cpp 37
+[20231106_122040] 

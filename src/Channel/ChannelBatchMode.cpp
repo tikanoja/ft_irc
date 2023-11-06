@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelBatchMode.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 12:21:29 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:19:02 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,11 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 					return opsdone;
 				default:
 					continue;
+				std::cout << modes.at(word) << std::endl;
 			}
 		}
 	}
-	word += move_flag;
+	word += move_flag + 1;
 	return opsdone;
 }
 
@@ -82,7 +83,7 @@ std::string	Channel::unsetBatchMode(User & user, std::vector<std::string> const 
 
 	std::string					opsdone = "";
 	static const std::string	characters = "itkol";
-	size_t						move_flag = 1;
+	size_t						move_flag = 0;
 
 	if (modes.at(word)[character] == '-')
 	{
@@ -127,6 +128,6 @@ std::string	Channel::unsetBatchMode(User & user, std::vector<std::string> const 
 			}
 		}
 	}
-	word += move_flag - 1;
+	word += move_flag + 1;
 	return opsdone;
 }

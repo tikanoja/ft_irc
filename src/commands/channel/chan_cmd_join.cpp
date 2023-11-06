@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_join.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 10:02:32 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:56:51 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	if (params.size() > 1){
 		ssize_t n_chan = std::count(params[0].begin(), params[0].end(), ',');
 		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',') - 1;
-		std::cout << "n_chan: " << n_chan << " n_key: " << n_key << std::endl;
 		if (n_chan != n_key){
 			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 			return 1;
@@ -160,7 +159,7 @@ static bool checkPermissions(IRCServer& server, User& user,
 		}
 	}
 	if (toJoin->getMode() & Channel::limit && \
-		(toJoin->getMembers()->size() >= toJoin->getMaxusers() || toJoin->getMaxusers() == 0)) {
+		(toJoin->getMembers()->size() >= static_cast<size_t>(toJoin->getMaxusers()) || toJoin->getMaxusers() == 0)) {
 		user.send(ERR_CHANNELISFULL(server.getName(), user.getNick(),\
 			toJoin->getName()));
 		return false;
