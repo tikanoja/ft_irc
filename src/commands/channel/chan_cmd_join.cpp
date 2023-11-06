@@ -104,6 +104,9 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			}
 			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
 				user.getIP()) + " JOIN :" + toJoin->getName() + "\r\n", NULL);
+			std::string userList = toJoin->getNicks();
+			user.send(RPL_NAMREPLY(server.getName(), user.getNick(), toJoin->getName(), userList));
+			user.send(RPL_ENDOFNAMES(server.getName(), user.getNick(), toJoin->getName()));
 		}
 	}
 	return 0;
