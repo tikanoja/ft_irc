@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelBatchMode.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 12:19:02 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:37:28 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 					break;
 				case ('l'):
 					if (word + ++move_flag < modes.size()){
-						if (this->setUserlimit(modes.at(word + move_flag))){
+						if (this->setUserlimit(modes.at(word + move_flag)))
 							this->setMode(limit);
 							indeces.push_back(word + move_flag);
 							opsdone += characters[4];
-						}
 					}
 					break;
 				case ('-'):
@@ -70,7 +69,6 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 					return opsdone;
 				default:
 					continue;
-				std::cout << modes.at(word) << std::endl;
 			}
 		}
 	}
