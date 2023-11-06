@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/03 13:07:49 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 13:51:19 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 			}
 		}
 		chan->removeFromChops(*toKick);
+		chan->reopChannel(server.getName());
 		if (chan->getMembers()->size() == 0) {
 				server.log("Deleted " + chan->getName(), __FILE__, __LINE__);
 				server.getChannels().deleteChannel(chan);

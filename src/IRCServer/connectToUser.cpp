@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 07:33:07 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 13:50:29 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void static cleanupChannels(IRCServer &server, User *user)
 			(*it)->broadcastToChannel(":" + USER_ID(user->getNick(), user->getUserName(), user->getIP()) + " QUIT\r\n", user);
 			(*it)->removeFromChops(*user);
 			(*it)->removeFromMembers(*user);
+			(*it)->reopChannel(server.getName());
 		}
 		if ((*it)->getMembers()->size() == 0)
 		{
