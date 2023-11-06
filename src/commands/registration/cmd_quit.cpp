@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_quit.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/02 15:28:00 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:41:06 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 		if ((*it)->getMembers()->findUserByNick(user.getNick())) { 
 			if ((*it)->getChops()->findUserByNick(user.getNick())) { 
 				(*it)->removeFromChops(user);
+				(*it)->reopChannel(server.getName());
 			}
 			(*it)->removeFromMembers(user);
 			(*it)->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(), user.getIP()) \
