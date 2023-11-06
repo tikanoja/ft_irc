@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 15:05:13 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:41:18 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define ERR_WILDTOPLEVEL(servername, mask)(":" + servername + " 414 " + mask + " :Wildcard in toplevel domain" + "\r\n") //414
 # define ERR_BADMASK(servername, mask)(":" + servername + " 415 " + mask + " :Bad Server/host mask" + "\r\n") //415
 # define ERR_UNKNOWNCOMMAND(servername, command)(":" + servername + " 421 " + command + " :Unknown command" + "\r\n") //421
-# define ERR_NOMOTD(servername)(":" + servername + " 422 :MOTD File is missing" + "\r\n") //422
+# define ERR_NOMOTD(servername, user)(":" + servername + " 422 " + user + " :MOTD File is missing" + "\r\n") //422
 # define ERR_NOADMININFO(servername, server)(":" + servername + " 423 " + server + " :No administrative info available" + "\r\n") //423
 # define ERR_FILEERROR(servername, fileop, file)(":" + servername + " 424 :File error doing " + fileop + " on " + file + "" + "\r\n") //424
 # define ERR_NONICKNAMEGIVEN(servername)(":" + servername + " 431  :No nickname given" + "\r\n") //431

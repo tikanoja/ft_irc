@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 12:59:43 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:49:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool isNickvalid(std::string& nick);
 
 int cmd_nick(IRCServer& server, User& user, Message& message){
 	if (user.getPassFlag() == false) {
-		user.send(ERR_PASSWDMISMATCH(server.getName()));
+		user.send(ERR_RESTRICTED(server.getName()));
 		return 1;
 	}
 	std::string new_nick = message.getParams().front();

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:16:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 14:09:47 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:47:31 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,18 @@ int cmd_motd(IRCServer& server, User& user, Message& message){
 	std::string		line;
 
 	stream.open("config/motd.config", std::ifstream::in);
+	if(!stream.is_open() || stream.bad()){
+		ERR_NOMOTD(server.getName(), user.getNick());
+		if (stream.is_open())
+			stream.close();
+		return 1;
+	}
+
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
-	
 	while (std::getline(stream, line)){
 		RPL_MOTD(servername, line);
 	}
-	
 	user.send(RPL_ENDOFMOTD(server.getName()));
 	stream.close();
 	return 0;
@@ -48,13 +53,18 @@ int motd(IRCServer& server, User& user){
 	std::string		line;
 
 	stream.open("config/motd.config", std::ifstream::in);
+	if(!stream.is_open() || stream.bad()){
+		ERR_NOMOTD(server.getName(), user.getNick());
+		if (stream.is_open())
+			stream.close();
+		return 1;
+	}
+
 	std::string servername = server.getName();
 	user.send(RPL_MOTDSTART(servername));
-	
 	while (std::getline(stream, line)){
 		user.send(RPL_MOTD(servername, line));
 	}
-	
 	user.send(RPL_ENDOFMOTD(server.getName()));
 	stream.close();
 	return 0;
