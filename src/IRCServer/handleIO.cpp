@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 10:56:36 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:04:15 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	char buf[MAXDATASIZE * 4];
 	std::memset(buf, '\0', MAXDATASIZE * 4);
 	ssize_t numbytes;
-	numbytes = recv(p_pfds[i].fd, buf, MAXDATASIZE - 1, 0);
+	numbytes = recv(p_pfds[i].fd, buf, MAXDATASIZE - 1, MSG_DONTWAIT);
 	if (numbytes <= 0) {
 		dropConnection(numbytes, i);
 		return (-1);
@@ -63,7 +63,8 @@ int IRCServer::checkSendBuffer(User* user) {
 			toSendC[511] = '\n';
 		}
 		ssize_t n_sent = 0;
-		if ( (n_sent = send(user->getSocket(),  &(toSendC[0]), static_cast<size_t>(toSendLen), 0) ) <= 0)
+		if ((n_sent = send(user->getSocket(),  &(toSendC[0]), 
+			static_cast<size_t>(toSendLen), MSG_DONTWAIT) ) <= 0)
 			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);
 		if (n_sent > 0 && n_sent < toSendLen) {
 			toSend.erase(0, static_cast<size_t>(n_sent));

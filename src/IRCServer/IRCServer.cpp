@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/06 14:50:45 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:47:08 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,19 +180,17 @@ int IRCServer::pollingRoutine() {
 		if ((poll_count = poll(&(p_pfds[0]), p_fd_count, 0)) == -1)
 			return (-1);
 		for (nfds_t i = 0; i < p_fd_count; i++) {
-			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR)) {
-				if (i == 0) {
-					if (acceptClient()){
-						p_logger->log("Failed to accept new client", __FILE__, __LINE__);
-					}
-				} else if (p_pfds[i].revents & POLLIN) {
-					receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i);
+			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {
+				if (p_pfds[i].revents & POLLIN) {
+					if (i == 0)
+						acceptClient();
+					else
+						receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i);
 				} else if (p_pfds[i].revents & POLLOUT) {
 					checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
 					checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);
-				}
-				else {
-					dropConnection(-1, i);
+				} else if (p_pfds[i].revents & (POLLNVAL | POLLERR | POLLHUP) && i != 0) {
+					dropConnection(0, i);
 					p_logger->log("Connection dropped", __FILE__, __LINE__);
 				}
 			}

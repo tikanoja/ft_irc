@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:43:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 11:15:11 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:04:50 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ Message::Message(std::string msg)
 		}
 		else if (index >= 1 && token[0] == ':')
 		{
-			if (p_command == "TOPIC" && token.length() == 1) {
+			if ((p_command == "TOPIC" || p_command == "topic") && token.length() == 1) {
 				p_trailing = ":";
 				break ;
 			}
