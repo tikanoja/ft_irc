@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/04 14:35:39 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:55:48 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ std::string const & Channel::getKey() const
 	return p_key;
 }
 
-size_t Channel::getMaxusers() const
+int Channel::getMaxusers() const
 {
 	return this->p_maxusers;
 }
@@ -174,9 +174,9 @@ void Channel::removeFromMembers(User& user)
 
 bool Channel::setUserlimit(std::string limitstr) {
 	std::stringstream ss(limitstr);
-	unsigned int limit;
+	int limit;
 	ss >> limit;
-	if (ss.fail()) {
+	if (ss.fail() || limit < 0 || limit > std::numeric_limits<int>::max()) {
 		return false;
 	}
 	this->p_maxusers = limit;

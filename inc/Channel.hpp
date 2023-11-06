@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/04 13:38:52 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:16:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ class Channel
 		unsigned int			getMode() const;
 		std::string				getChanModes()const;
 		std::string				getChanStr()const;
-		size_t					getMaxusers() const;
+		int						getMaxusers() const;
 		std::string				getNicks() const;
 
 		//setters
@@ -77,7 +77,7 @@ class Channel
 		std::string		p_name;
 		std::string 	p_topic;
 		std::string 	p_key;
-		unsigned int	p_maxusers;
+		int	p_maxusers;
 		unsigned int	p_curusers;
 		Uvector			p_invitelist;
 		Uvector			p_members;

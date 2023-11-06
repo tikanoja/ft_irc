@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:04 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 13:36:06 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:36:44 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 		user.send(ERR_NOSUCHCHANNEL(server.getName(), user.getNick(), message.getParams().front()));
 		return 1;
 	}
+	
 	if (message.getTrailing().empty()) {
 		if (chan->getTopic().empty()) {
 			user.send(RPL_NOTOPIC(server.getName(), \
@@ -48,7 +49,7 @@ int chan_cmd_topic(IRCServer& server, User& user, Message& message){
 			user.send(ERR_CHANOPRIVSNEEDED(server.getName(), chan->getName()));
 			return 1;
 		}
-		if (message.getTrailing() == "\"\"")
+		if (message.getTrailing() == ":")
 			chan->setTopic("");
 		else
 			chan->setTopic(message.getTrailing());

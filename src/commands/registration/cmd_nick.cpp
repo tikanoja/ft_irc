@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_nick.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:33:05 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 09:24:36 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:36:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int cmd_nick(IRCServer& server, User& user, Message& message){
 		return 1;
 	}
 	std::string new_nick = message.getParams().front();
-	std::cout << message.toString() << std::endl;
 	if (new_nick == ""){
 		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
 		return 1;
