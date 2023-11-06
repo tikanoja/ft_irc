@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 10:02:32 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:45:34 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	}
 	if (params.size() > 1){
 		ssize_t n_chan = std::count(params[0].begin(), params[0].end(), ',');
-		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',') - 1;
+		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',');
 		std::cout << "n_chan: " << n_chan << " n_key: " << n_key << std::endl;
 		if (n_chan != n_key){
 			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
