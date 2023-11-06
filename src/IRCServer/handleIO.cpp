@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 11:26:38 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:56:36 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int IRCServer::checkSendBuffer(User* user) {
 			tooLong = true;
 		}
 		char* toSendC = new char[static_cast<size_t>(toSendLen)];
-		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen)); //is this necessary since we are filling it up to its len anyways?
+		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen));
 		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
 			toSendC[i] = toSend[i];
 		if (tooLong == true) {
