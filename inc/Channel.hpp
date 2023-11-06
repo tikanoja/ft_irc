@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:24:23 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/06 12:16:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:19:08 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <iostream>
 # include <sstream>
 # include <cstdlib>
+# include <limits>
+# include <sstream>
 # include "Error.hpp"
 # include "Uvector.hpp"
 
@@ -58,7 +60,7 @@ class Channel
 		bool 			setUserlimit(std::string limitstr);
 		bool			setMode(chanModes mode);
 		bool			unsetMode(chanModes mode);
-		
+
 		std::string		setBatchMode(User & user, std::vector<std::string> const & modes, size_t & word,
 										size_t & character, std::vector<size_t> & indeces);
 		std::string		unsetBatchMode(User & user, std::vector<std::string> const & modes, size_t & word,

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:57:06 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/04 15:34:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:16:43 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Cvector::Cvector()
 {}
 
-Cvector::Cvector(Cvector const& src)
+Cvector::Cvector(Cvector const& src) : std::vector<Channel *>(src)
 {
 	*this = src;
 }
@@ -31,9 +31,9 @@ Cvector& Cvector::operator=(Cvector const & rhs)
 }
 
 std::string Cvector::toIRCLower(std::string const & str) const {
-	
+
 	std::string result;
-	
+
 	for (size_t i = 0; i < str.size(); i++)
 		result += (str[i] >= 'A' && str[i] <= '^' ? str[i] + 32 : str[i]);
 	return (result);
@@ -53,7 +53,7 @@ Channel* Cvector::findChannel(std::string const & name) const
 Cvector Cvector::findChannelsByUser(std::string const & nick) const
 {
 	Cvector userChannels;
-	
+
 	for (std::vector<Channel*>::const_iterator it = this->begin();
 		it != this->end(); it++){
 		if ((*it)->getMembers()->findUserByNick(toIRCLower(nick)) == NULL)
@@ -75,7 +75,7 @@ void Cvector::deleteChannel(Channel* toDelete)
 		it != this->end(); it++){
 		if ((*it) == toDelete) {
 			delete *it;
-			it = this->erase(it); 
+			it = this->erase(it);
 			break;
 		}
 	}

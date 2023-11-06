@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:29:10 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/06 11:55:48 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:18:18 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Channel.hpp"
 #include "../../inc/Reply.hpp"
-#include <sstream>
 
 
 Channel::Channel(const std::string name) : p_name(name)
@@ -102,7 +101,7 @@ int Channel::getMaxusers() const
 }
 
 std::string	Channel::getNicks() const{
-	
+
 	std::string result;
 
 	for (Uvector::const_iterator it = p_members.begin(); it != p_members.end(); it++){
@@ -199,7 +198,7 @@ int Channel::unsetChop(std::string target) {
 	User* newChop = this->getMembers()->findUserByNick(target);
 	if (newChop == NULL) {
 		return 1;
-	} 
+	}
 	if (this->getChops()->findUserByNick(target) == NULL) {
 		return 2;
 	}

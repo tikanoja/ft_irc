@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 12:26:49 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:44:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static bool checkPermissions(IRCServer& server, User& user,
 	std::vector<std::string> const &params, Channel * toJoin, std::string const & key);
 
 int chan_cmd_join(IRCServer& server, User& user, Message& message){
-	
+
 	std::vector<std::string> const & params = message.getParams();
-	
+
 	if (!(user.getMode() & IRCServer::registered)) {
 		user.send(ERR_NOTREGISTERED(server.getName(), message.getCommand()));
 		return 1;
@@ -52,8 +52,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	}
 	if (params.size() > 1){
 		ssize_t n_chan = std::count(params[0].begin(), params[0].end(), ',');
-		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',') - 1;
-		std::cout << "n_chan: " << n_chan << " n_key: " << n_key << std::endl;
+		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',');
 		if (n_chan != n_key){
 			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 			return 1;
@@ -73,11 +72,11 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 			return 1;
 		}
 		Channel* toJoin = server.getChannels().findChannel(chan);
-		
+
 		if (toJoin != NULL) {
 			if (!checkPermissions(server, user, params, toJoin, key))
 				continue ;
-				
+
 			toJoin->getMembers()->push_back(&user);
 			toJoin->broadcastToChannel(":" + USER_ID(user.getNick(), user.getUserName(),\
 				user.getIP()) + " JOIN :" + toJoin->getName() + "\r\n", NULL);
@@ -135,7 +134,7 @@ static void removeUserFromAllChannels(IRCServer& server, User& user, Message& me
 
 
 static int checkChannelName(std::string name) {
-	
+
 	if (name.length() > 50)
 		return 1;
 	if (name.empty() || (name[0] != '#' && name[0] != '&'))

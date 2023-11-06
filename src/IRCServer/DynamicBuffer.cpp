@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DynamicBuffer.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:38:17 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/03 16:32:12 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:12:42 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int DynamicBuffer::emptyCheck() {
 int DynamicBuffer::findCRLF() const {
 	if (p_buf.size() == 0)
 		return -1;
-	
+
 	std::string message = p_buf.front();
 	if (message.find("\n") != std::string::npos)
 		return 0;
@@ -51,7 +51,7 @@ std::vector<std::string> nlsplit(const std::string& str, char c){
 	while (std::getline(stream, token, c)) {
 		tokens.push_back(token);
 		if (!stream.eof())
-            tokens.back() += c;
+			tokens.back() += c;
 	}
 	return (tokens);
 }
@@ -59,8 +59,8 @@ std::vector<std::string> nlsplit(const std::string& str, char c){
 void DynamicBuffer::addToBuffer(const char* buf) {
 	std::string toAdd = buf;
 	size_t index = 0;
-    while ((index = toAdd.find("^D", index)) != std::string::npos)
-        toAdd.replace(index, 2, "");
+	while ((index = toAdd.find("^D", index)) != std::string::npos)
+		toAdd.replace(index, 2, "");
 
 	std::vector<std::string> toAddVec = nlsplit(toAdd, '\n');
 	for (size_t j = 0; j < toAddVec.size(); j++) {

@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 12:37:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:53:22 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ std::string	Channel::setBatchMode(User &user, std::vector<std::string> const & m
 					}
 					break;
 				case ('l'):
-					if (word + ++move_flag < modes.size()){
-						if (this->setUserlimit(modes.at(word + move_flag)))
+					if (word + ++move_flag < modes.size()
+						&& this->setUserlimit(modes.at(word + move_flag))){
 							this->setMode(limit);
 							indeces.push_back(word + move_flag);
 							opsdone += characters[4];

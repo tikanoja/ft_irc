@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:40:28 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 09:22:21 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:25:13 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 int cmd_cap(IRCServer& server, User& user, Message& message){
 
-	std::string type = message.getParams()[1];
+	std::string type = message.getParams()[0];
 	if (type == "LS" || type == "LIST" || type == "REQ"
 		|| type == "ACK" || type == "NAK" || type == "REQ"){
 		user.setMode(IRCServer::cap_negotiation);
 		user.send(RPL_CAP(server.getName(), type, ""));
 		return 0;
 	}
-	if (type == "END")
+	if (type == "END"){
 		user.unsetMode(IRCServer::cap_negotiation);
 		return 0;
+	}
 	user.send(ERR_INVALIDCAPCMD(server.getName(), user.getNick(), type));
 	return 1;
 }

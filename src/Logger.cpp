@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 11:14:29 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 09:20:40 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:23:15 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ Logger::Logger(char const * file){
 		std::cerr << "Error initialising Logger" << std::endl;
 		exit(2);
 	}
-		p_outstream << "Loging start: ";
-		p_displayTimestamp();
+	p_outstream << "Loging start: ";
+	p_displayTimestamp();
 }
 
 Logger::Logger(Logger const& src){
@@ -36,13 +36,12 @@ Logger::~Logger(){
 }
 
 Logger& Logger::operator=(Logger const& rhs){
-	if(this != &rhs)
-		;
+	if(this != &rhs) {;}
 	return *this;
 }
 
 void Logger::p_displayTimestamp(){
-	
+
 	std::time_t p_cur_time = std::time(0);
 	std::tm* now = std::localtime(&p_cur_time);
 
@@ -58,7 +57,7 @@ void Logger::p_displayTimestamp(){
 }
 
 void	Logger::log(std::string const str, std::string file, int line){
-	
+
 	p_displayTimestamp();
 	p_outstream << str << "\t" << file << " " << line << "\n";
 }

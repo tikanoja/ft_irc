@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/06 14:58:51 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:17:25 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <map>
 # include <utility>
 # include <iostream>
+# include <csignal>
 # include <sstream>
 # include <fstream>
-# include <cstdint>
 # include <cstring>
 # include <ctime>
 # include <string>
@@ -81,19 +81,19 @@ class IRCServer {
 
 		typedef int (*commandFunction)(IRCServer&, User&, Message&);
 		typedef std::map<std::string, commandFunction> commandMap;
-	
+
 		commandMap	p_commandMap;
 
 		void								initServer();
 		void								setGlobals();
 		void 								initCommands();
 		void								initOperators();
-		
+
 		int									getListenerSocket();
 		void*								get_in_addr(struct sockaddr *sa);
 		int									acceptClient();
 		void								dropConnection(ssize_t numbytes, nfds_t i);
-		
+
 		int									receiveMsg(User* user, nfds_t i);
 		int									checkRecvBuffer(User* user, nfds_t i);
 		int									checkSendBuffer(User* user);
@@ -115,7 +115,7 @@ class IRCServer {
 		~IRCServer(void);
 
 		int								pollingRoutine();
-		
+
 		std::string	const & 			getName() const;
 		std::string	const &				getPassword() const;
 		Uvector		const &				getUsers() const;
