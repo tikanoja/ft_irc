@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:40:28 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 14:06:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:22:21 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int cmd_cap(IRCServer& server, User& user, Message& message){
 
-	std::string type = message.getParams()[2];
+	std::string type = message.getParams()[1];
 	if (type == "LS" || type == "LIST" || type == "REQ"
 		|| type == "ACK" || type == "NAK" || type == "REQ"){
 		user.setMode(IRCServer::cap_negotiation);

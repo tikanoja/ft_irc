@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 15:22:34 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:02:32 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	}
 	if (params.size() > 1){
 		ssize_t n_chan = std::count(params[0].begin(), params[0].end(), ',');
-		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',');
+		ssize_t n_key = std::count(params[1].begin(), params[1].end(), ',') - 1;
+		std::cout << "n_chan: " << n_chan << " n_key: " << n_key << std::endl;
 		if (n_chan != n_key){
 			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
 			return 1;
@@ -66,7 +67,11 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 	if (params.size() > 1){
 		key_ss << params.at(1);
 	}
-	while (std::getline(ss, chan, ',') || (params.size() > 1 && std::getline(key_ss, key, ','))) {
+	while (std::getline(ss, chan, ',')) {
+		if (params.size() > 1 && !std::getline(key_ss, key, ',')){
+			user.send(ERR_NEEDMOREPARAMS(server.getName(), "JOIN"));
+			return 1;
+		}
 		Channel* toJoin = server.getChannels().findChannel(chan);
 		
 		if (toJoin != NULL) {

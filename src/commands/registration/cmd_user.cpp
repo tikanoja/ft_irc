@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 20:44:00 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 07:53:28 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:29:11 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ int cmd_user(IRCServer& server, User& user, Message& message){
 		user.send(ERR_RESTRICTED(server.getName()));
 		return 1;
 	}
-	if (user.getNick().empty()){
-		user.send(ERR_NONICKNAMEGIVEN(server.getName()));
-		return 1;
-	}
+	// if (user.getNick().empty()){
+	// 	std::cout << "in USER: nick empty? " << std::boolalpha << user.getNick().empty() << " " << user.getNick() << std::endl;
+	// 	// user.send(ERR_NONICKNAMEGIVEN(server.getName()));
+	// 	return 1;
+	// }
 	if (message.getParams()[2].empty() || message.getTrailing().empty()){
 		user.send(ERR_NEEDMOREPARAMS(server.getName(),
 			message.getCommand()));
