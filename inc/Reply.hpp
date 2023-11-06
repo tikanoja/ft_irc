@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 15:18:17 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:16:51 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@
 # define RPL_NAMREPLY(servername, user, channel, userlist)(":" + servername + " 353 " + user + " @ " + channel + " :" + userlist + "\r\n") //353
 # define RPL_LINKS(servername, mask, server, hopcount, serverinfo)(":" + servername + " 364 " + mask +  + " " + server + " :" + hopcount + " " + serverinfo + "\r\n") //364 ????? not sure we need it
 # define RPL_ENDOFLINKS(servername, mask)(":" + servername + " 365 " +  mask + " :End of LINKS list\r\n") //365
-# define RPL_ENDOFNAMES(servername, user, channel)(":" + servername + " 366 " + user + channel + " :End of NAMES list\r\n") //366
+# define RPL_ENDOFNAMES(servername, user, channel)(":" + servername + " 366 " + user + " " + channel + " :End of /NAMES list\r\n") //366
 # define RPL_BANLIST(servername, channel, banmask)(":" + servername + " 367 " + channel +  + " " + banmask + "\r\n") //367
 # define RPL_ENDOFBANLIST(servername)(":" + servername + " 368 \r\n") //368
 # define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of WHOWAS\r\n") //369
