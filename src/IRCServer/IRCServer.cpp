@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/04 08:15:00 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:50:45 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,25 +125,25 @@ void IRCServer::setGlobals() {
 void IRCServer::initCommands() {
 
 	std::pair<std::string, commandFunction> cmdPairs[] = {
-		std::make_pair("CAP", cmd_cap),
-		std::make_pair("PASS", cmd_pass),
-		std::make_pair("NICK", cmd_nick),
-		std::make_pair("USER", cmd_user),
-		std::make_pair("MODE", cmd_mode),
-		std::make_pair("MOTD", cmd_motd),
-		std::make_pair("OPER", cmd_oper),
-		std::make_pair("AWAY", cmd_away),
-		std::make_pair("QUIT", cmd_quit),
-		std::make_pair("PING", cmd_ping),
-		std::make_pair("PONG", cmd_pong),
-		std::make_pair("PRIVMSG", cmd_privmsg),
-		std::make_pair("NOTICE", cmd_notice),
-		std::make_pair("KILL", cmd_kill),
-		std::make_pair("JOIN", chan_cmd_join),
-		std::make_pair("PART", chan_cmd_part),
-		std::make_pair("TOPIC", chan_cmd_topic),
-		std::make_pair("INVITE", chan_cmd_invite),
-		std::make_pair("KICK", chan_cmd_kick)
+		std::make_pair("cap", cmd_cap),
+		std::make_pair("pass", cmd_pass),
+		std::make_pair("nick", cmd_nick),
+		std::make_pair("user", cmd_user),
+		std::make_pair("mode", cmd_mode),
+		std::make_pair("motd", cmd_motd),
+		std::make_pair("oper", cmd_oper),
+		std::make_pair("away", cmd_away),
+		std::make_pair("quit", cmd_quit),
+		std::make_pair("ping", cmd_ping),
+		std::make_pair("pong", cmd_pong),
+		std::make_pair("privmsg", cmd_privmsg),
+		std::make_pair("notice", cmd_notice),
+		std::make_pair("kill", cmd_kill),
+		std::make_pair("join", chan_cmd_join),
+		std::make_pair("part", chan_cmd_part),
+		std::make_pair("topic", chan_cmd_topic),
+		std::make_pair("invite", chan_cmd_invite),
+		std::make_pair("kick", chan_cmd_kick)
 	};
 	p_commandMap.insert(cmdPairs, cmdPairs + sizeof(cmdPairs) / sizeof(cmdPairs[0]));
 }
