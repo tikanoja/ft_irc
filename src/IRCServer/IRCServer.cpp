@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/07 08:12:23 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 08:41:44 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ void IRCServer::initOperators(){
 	operFile.open("config/operators.config", std::fstream::in);
 	if (!operFile.good() || !operFile.is_open() || operFile.peek() < 0){
 		p_logger->log("Cannot set any operators", __FILE__, __LINE__);
+		if (operFile.is_open())
+			operFile.close();
 		return ;
 	}
 	char line[256];
@@ -166,6 +168,7 @@ void IRCServer::initOperators(){
 		rawOper = split(string, ' ');
 		p_opers.push_back(Operator(rawOper[0], rawOper[1], rawOper[2]));
 	}
+	operFile.close();
 }
 
 void IRCServer::log(std::string string, std::string file, int line){
