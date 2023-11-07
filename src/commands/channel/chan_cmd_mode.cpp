@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/04 12:24:15 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 07:43:56 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@
 */
 
 
-#define ALLCHANMODES "+-itkol"
+#define ALLCHANMODES "+-itkobl"
 
 static bool checkChanmodePerms(IRCServer const & server, User & user, Message const & message,
 	Channel * chan, std::vector<std::string> const & params);
 	
-static void setModes(User & user, Channel * chan, std::vector<std::string> const & params,
+static void setModes(IRCServer &server, User & user, Channel * chan, std::vector<std::string> const & params,
 	std::string& additions, std::string& removals, std::vector<size_t>& indeces);
 
 int chan_cmd_mode(IRCServer& server, User& user, Message& message){
@@ -74,7 +74,7 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 	std::string				removals;
 	std::vector<size_t>		indeces;
 
-	setModes(user, chan, params, additions, removals, indeces);
+	setModes(server, user, chan, params, additions, removals, indeces);
 	
 	std::string reply = ":" + user.getNick() + " MODE " +  chan->getName() + " :";
 	
@@ -112,7 +112,7 @@ static bool checkChanmodePerms(IRCServer const & server, User & user, Message co
 	return true;
 }
 
-static void setModes(User & user, Channel * chan, std::vector<std::string> const & params,
+static void setModes(IRCServer &server, User & user, Channel * chan, std::vector<std::string> const & params,
 	std::string& additions, std::string& removals, std::vector<size_t> & indeces){
 
 		for (size_t i = 1; i < params.size(); i++){
@@ -124,6 +124,8 @@ static void setModes(User & user, Channel * chan, std::vector<std::string> const
 					additions += chan->setBatchMode(user, params, i, pos, indeces);
 				else if (params[i][pos] == '-')
 					removals += chan->unsetBatchMode(user, params, i, pos, indeces);
+				else if (params[i][pos] == 'b')
+					user.send(RPL_ENDOFBANLIST(server.getName(), user.getNick(), chan->getName()));
 				else
 					pos++;
 			}

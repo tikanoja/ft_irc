@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:58:57 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 16:29:23 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 08:16:05 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERR_UNAVAILRESOURCE(servername, nick, label)(":" + servername + " 437 " +  nick + " :" + label + " is temporarily unavailable" + "\r\n") //437
 # define ERR_USERNOTINCHANNEL(servername, nick, channel)(":" + servername + " 441 " + channel + " " + nick  + " :They aren't on that channel" + "\r\n") //441
 # define ERR_NOTONCHANNEL(servername, channel)(":" + servername + " 442 " + channel + " :You're not on that channel" + "\r\n") //442
-# define ERR_USERONCHANNEL(servername, user, channel)(":" + servername + " 443 " + user + " " + channel + " :is already on channel" + "\r\n") //443
+# define ERR_USERONCHANNEL(servername, user, channel)(":" + servername + " 443 " + channel + " " + user + " :is already on channel" + "\r\n") //443
 # define ERR_NOLOGIN(servername, user)(":" + servername + " 444 " + user + " :User not logged in" + "\r\n") //444
 # define ERR_SUMMONDISABLED(servername)(":" + servername + " 445 :SUMMON has been disabled" + "\r\n") //445
 # define ERR_USERSDISABLED(servername)(":" + servername + " 446 :USERS has been disabled" + "\r\n") //446

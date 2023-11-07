@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:52:25 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 15:03:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 08:12:12 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int cmd_notice(IRCServer& server, User &user, Message &message);
 int cmd_privmsg(IRCServer& server, User &user, Message &message);
 int cmd_ping(IRCServer& server, User &user, Message &message);
 int cmd_pong(IRCServer& server, User &user, Message &message);
+int cmd_who(IRCServer& server, User& user, Message& message);
+int cmd_whois(IRCServer& server, User& user, Message& message);
 
 //Channel functions
 

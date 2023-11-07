@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 18:46:55 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/07 08:21:28 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void IRCServer::delUser(User &user)
 	{
 		if (user.getSocket() == p_users[i]->getSocket())
 		{
+			delete &user;
 			p_users.erase(p_users.begin() + static_cast<ssize_t>(i));
 			break;
 		}

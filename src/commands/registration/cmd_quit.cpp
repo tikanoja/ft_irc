@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/06 12:41:06 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 08:21:07 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 			(*it)->removeFromInvlist(user);
 		}
 		if ((*it)->getMembers()->findUserByNick(user.getNick())) { 
-			if ((*it)->getChops()->findUserByNick(user.getNick())) { 
+			if ((*it)->getChops()->findUserByNick(user.getNick())) {
 				(*it)->removeFromChops(user);
 				(*it)->reopChannel(server.getName());
 			}
@@ -46,7 +46,6 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 	server.log("Removed " + user.getNick(), __FILE__, __LINE__);
 	server.delFd(user);
 	server.delUser(user);
-	delete &user;
 	(void)message;
 	return 0;
 }

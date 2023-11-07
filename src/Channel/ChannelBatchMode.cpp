@@ -6,7 +6,7 @@
 /*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:56:03 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/06 16:53:22 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 07:19:33 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ std::string	Channel::unsetBatchMode(User & user, std::vector<std::string> const 
 		for (; character < modes.at(word).size(); character++ ){
 			switch (modes.at(word)[character]){
 				case ('i'):
-					if (this->setMode(invite))
+					if (this->unsetMode(invite))
 						opsdone += characters[0];
 					break;
 				case ('t'):
-					if (this->setMode(topic_rest))
+					if (this->unsetMode(topic_rest))
 						opsdone += characters[1];
 					break;
 				case ('k'):
