@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/17 22:43:37 by tuukka            #+#    #+#              #
-#    Updated: 2023/11/07 08:43:16 by djagusch         ###   ########.fr        #
+#    Updated: 2023/11/07 12:17:04 by ttikanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ T = test_dir
 CC = c++
 
 FLAGS = -Wall -Wextra -Werror -pedantic -std=c++98 \
-	-Wconversion -Wshadow -I $I -g #-fsanitize=address -static-libsan
+	-Wconversion -Wshadow -I $I -g -fsanitize=address -static-libsan
 
 SRC_FILES = DynamicBuffer \
 			User \

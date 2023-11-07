@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Operator.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:03:46 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/02 10:10:37 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:19:06 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ std::string Operator::convertToIPv6(std::string const& configAddress){
 		std::memset(&ipv6MappedAddress, 0, sizeof(ipv6MappedAddress));
 		ipv6MappedAddress.s6_addr[10] = 0xff;
 		ipv6MappedAddress.s6_addr[11] = 0xff;
-		memcpy(&ipv6MappedAddress.s6_addr[12], &ipv4Address.s_addr, 4);
+		std::memcpy(&ipv6MappedAddress.s6_addr[12], &ipv4Address.s_addr, 4);
 
 		char buffer[INET6_ADDRSTRLEN];
 		inet_ntop(AF_INET6, &ipv6MappedAddress, buffer, INET6_ADDRSTRLEN);

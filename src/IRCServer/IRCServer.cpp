@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/07 08:41:44 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:21:38 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,11 @@ int IRCServer::pollingRoutine() {
 		for (nfds_t i = 0; i < p_fd_count; i++) {
 			if (p_pfds[i].revents & (POLLIN | POLLOUT | POLLNVAL | POLLERR | POLLHUP)) {
 				if (p_pfds[i].revents & POLLIN) {
-					if (i == 0)
+					if (i == 0) {
 						acceptClient();
-					else
+					} else {
 						receiveMsg(p_users.findUserBySocket(p_pfds[i].fd), i);
+					}
 				} else if (p_pfds[i].revents & POLLOUT) {
 					checkSendBuffer(p_users.findUserBySocket(p_pfds[i].fd));
 					checkRecvBuffer(p_users.findUserBySocket(p_pfds[i].fd), i);

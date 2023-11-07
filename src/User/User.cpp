@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/06 07:52:59 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:18:20 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 User::User(int const socket_fd, char const * ipaddress, std::string host) : p_socket_fd(socket_fd){
 
-	memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
+	std::memcpy(p_ipaddress, ipaddress, INET6_ADDRSTRLEN);
 	p_host = host;
 
 	p_mode = 0;
@@ -46,13 +46,13 @@ User& User::operator=(User const& rhs)
 		p_realname = rhs.p_realname;
 		p_mode = rhs.p_mode;
 		p_socket_fd = rhs.p_socket_fd;
-		memcpy(p_ipaddress,rhs.p_ipaddress, INET6_ADDRSTRLEN);
+		std::memcpy(p_ipaddress,rhs.p_ipaddress, INET6_ADDRSTRLEN);
 	}
 	return *this;
 }
 
 void	User::setIP(char const * ip){
-	memcpy(p_ipaddress, ip, INET6_ADDRSTRLEN);
+	std::memcpy(p_ipaddress, ip, INET6_ADDRSTRLEN);
 }
 
 void	User::setSocket(int socketfd){
