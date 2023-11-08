@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/08 10:24:51 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:18:49 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void IRCServer::initServer() {
 	<< " /  ************  \\                     /  ************  \\" << "\n"
 	<< "--------------------                   -------------------- \033[0m" << std::endl;
 	std::cout << "Running..."<< std::endl;
+	std::cout << "Connect with Irssi: /connect 127.0.0.1 " << p_port << " " << p_password << std::endl;
+	std::cout << "    or with Netcat: nc 127.0.0.1 " << p_port << std::endl;
 	return ;
 }
 

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pong.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:43:30 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 11:16:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:15:26 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Commands.hpp"
 
 int cmd_pong(IRCServer& server, User& user, Message& message){
-	user.send(":127.0.0.1 PONG 127.0.0.1 :" + user.getUserName() + "\r\n");
+	user.send(":PawsitiveIRC PONG PawsitiveIRC :PawsitiveIRC\r\n");
 	(void)server;
 	(void)message;
 	return 0;

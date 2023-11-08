@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 14:47:52 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 08:09:49 by djagusch         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:57:48 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@
 # define RPL_WHOISSERVER(servername)(":" + servername + " 312 " + nick + " " + server + ":" + serverinfo + "\r\n") //312
 # define RPL_WHOISOPERATOR(servername, nick)(":" + servername + " 313 " + nick + " :is an IRC operator\r\n") //313
 # define RPL_WHOWASUSER(servername)(":" + servername + " 314 " +  nick +  + " " + user + " " + host + " * :" + realname + "\r\n") //314 ??????
-# define RPL_ENDOFWHO(servername, nick, channel)(":" + servername + " 315 " + nick + " " + channel + " :End of WHO list\r\n") //315
-# define RPL_ENDOFWHO2(servername, nick)(":" + servername + " 315 " + nick + " :End of WHO list\r\n") //315
+# define RPL_ENDOFWHO(servername, nick, channel)(":" + servername + " 315 " + nick + " " + channel + " :End of /WHO list\r\n") //315
+# define RPL_ENDOFWHO2(servername, nick)(":" + servername + " 315 " + nick + " :End of /WHO list\r\n") //315
 # define RPL_WHOISIDLE(servername)(":" + servername + " 317 " + nick + " " + integer + " :seconds idle\r\n") //317
-# define RPL_ENDOFWHOIS(servername, nick)(":" + servername + " 318 " + nick + " :End of WHOIS list\r\n") //318
+# define RPL_ENDOFWHOIS(servername, nick)(":" + servername + " 318 " + nick + " :End of /WHOIS list\r\n") //318
 # define RPL_WHOISCHANNELS(servername)(":" + servername + " 319 \r\n") //319 ?????
 # define RPL_LIST(servername, channel, n_visible, topic)(":" + servername + " 322 " + channel + " " + n_visible + " :" + topic + "\r\n") //322
 # define RPL_LISTEND(servername)(":" + servername + " 323 :End of LIST\r\n") //323
@@ -91,8 +91,8 @@
 # define RPL_ENDOFLINKS(servername, mask)(":" + servername + " 365 " +  mask + " :End of LINKS list\r\n") //365
 # define RPL_ENDOFNAMES(servername, user, channel)(":" + servername + " 366 " + user + " " + channel + " :End of /NAMES list\r\n") //366
 # define RPL_BANLIST(servername, channel, banmask)(":" + servername + " 367 " + channel +  + " " + banmask + "\r\n") //367
-# define RPL_ENDOFBANLIST(servername, user, channel)(":" + servername + " 368 " + user + " " + channel + " :End of channel banlist\r\n") //368
-# define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of WHOWAS\r\n") //369
+# define RPL_ENDOFBANLIST(servername, user, channel)(":" + servername + " 368 " + user + " " + channel + " :End of Channel Banlist\r\n") //368
+# define RPL_ENDOFWHOWAS(servername)(":" + servername + " 369 " + nick + " :End of /WHOWAS\r\n") //369
 # define RPL_INFO(servername, string)(":" + servername + " 371 :" + string + "\r\n") //371
 # define RPL_MOTD(servername, text)(":" + servername + " 372 :- " + text + "\r\n") //372
 # define RPL_ENDOFINFO(servername)(":" + servername + " 374 :End of INFO list\r\n") //374

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/08 10:16:51 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:06:10 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int IRCServer::acceptClient()
 
 			p_users.push_back(new User(new_fd, s, this->getName()));
 			p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
-			std::cout << "\033[1;32m" << "New connection! p_fd_count: " << p_fd_count << " p_users.size(): " << p_users.size() << "\033[0m" << std::endl;
+			std::cout << "\033[1;32m" << "New connection! p_fd_count: " << p_fd_count << " p_users.size(): " << p_users.size() << " new_fd: " << new_fd << "\033[0m" << std::endl;
 		}
 	}
 	return (0);

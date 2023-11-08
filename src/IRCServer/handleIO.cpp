@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/08 10:34:30 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:34:03 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ int IRCServer::checkSendBuffer(User* user) {
 		}
 		ssize_t n_sent = 0;
 		if ((n_sent = send(user->getSocket(),  &(toSendC[0]), 
-			static_cast<size_t>(toSendLen), MSG_DONTWAIT) ) <= 0)
+			static_cast<size_t>(toSendLen), MSG_DONTWAIT) ) <= 0) {
 			std::cout << BRIGHT_COLOR_RED << "Sending failed!" << COLOR_END << std::endl;
 			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);
+		}
 		if (n_sent > 0 && n_sent < toSendLen) {
 			std::cout << BRIGHT_COLOR_RED << "Pushing unsent part back to buffer..." << COLOR_END << std::endl;
 			toSend.erase(0, static_cast<size_t>(n_sent));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chan_cmd_mode.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:51 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 12:17:45 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:33:55 by tuukka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int chan_cmd_mode(IRCServer& server, User& user, Message& message){
 
 	if (!checkChanmodePerms(server, user, message, chan, params))
 		return 1;
-
+	if (params.size() == 2 && params[1] == "b") {
+		user.send(RPL_ENDOFBANLIST(server.getName(), user.getNick(), chan->getName()));
+		return 0;
+	}
 	size_t forbidden;
 	for (size_t i = 1; i < params.size(); i++){
 		if (params[i][0] == '+' || params[i][0] == '-')
