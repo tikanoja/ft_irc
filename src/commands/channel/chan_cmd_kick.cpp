@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 09:35:41 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/07 11:15:47 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:16:00 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int chan_cmd_kick(IRCServer& server, User& user, Message& message){
 		chan->reopChannel(server.getName());
 		if (chan->getMembers()->size() == 0) {
 				server.log("Deleted " + chan->getName(), __FILE__, __LINE__);
+				std::cout << COLOR_YELLOW << "Deleting channel " << chan->getName();
 				server.getChannels().deleteChannel(chan);
+				std::cout << ". Active channels on server: " << server.getChannels().size() << COLOR_END << std::endl;
 		}
 	}
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 14:04:02 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:34:30 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	if (buf[0] == '\n')
 		return 0;
 	user->getRecvBuffer().addToBuffer(buf);
+	std::cout << BRIGHT_COLOR_WHITE << "Received<< " << buf << COLOR_END;
+	std::cout << BRIGHT_COLOR_BLACK << " //from ";
+	if (!(user->getMode() & IRCServer::registered))
+		std::cout << "an unregistered user" << COLOR_END << std::endl;
+	else
+		std::cout << user->getNick() << COLOR_END << std::endl;
 	return (0);
 }
 
@@ -42,10 +48,9 @@ int IRCServer::checkRecvBuffer(User* user, nfds_t i) {
 }
 
 int IRCServer::checkSendBuffer(User* user) {
-	
 	if (user->getSendBuffer().emptyCheck() == 0) {
 		return 0;
-	} 
+	}
 	if (user->getSendBuffer().emptyCheck() == 1) {
 		bool tooLong = false;
 		std::string toSend = user->getSendBuffer().extractBuffer();
@@ -54,22 +59,32 @@ int IRCServer::checkSendBuffer(User* user) {
 			toSendLen = 512;
 			tooLong = true;
 		}
-		char* toSendC = new char[static_cast<size_t>(toSendLen)];
+		char* toSendC = new char[static_cast<size_t>(toSendLen) + 1];
 		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen));
 		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
 			toSendC[i] = toSend[i];
+		toSendC[toSendLen] = '\0';
 		if (tooLong == true) {
-			toSendC[510] = '\r';
-			toSendC[511] = '\n';
+			toSendC[509] = '\r';
+			toSendC[510] = '\n';
+			toSendC[511] = '\0';
 		}
 		ssize_t n_sent = 0;
 		if ((n_sent = send(user->getSocket(),  &(toSendC[0]), 
 			static_cast<size_t>(toSendLen), MSG_DONTWAIT) ) <= 0)
+			std::cout << BRIGHT_COLOR_RED << "Sending failed!" << COLOR_END << std::endl;
 			p_logger->log("Failed to send to " + user->getNick(), __FILE__, __LINE__);
 		if (n_sent > 0 && n_sent < toSendLen) {
+			std::cout << BRIGHT_COLOR_RED << "Pushing unsent part back to buffer..." << COLOR_END << std::endl;
 			toSend.erase(0, static_cast<size_t>(n_sent));
 			user->getSendBuffer().replaceUnsent(toSend);
 		}
+		std::cout << COLOR_WHITE << "Sent>>>>>> " << toSendC << COLOR_END;
+		std::cout << BRIGHT_COLOR_BLACK << " //to ";
+		if (!(user->getMode() & IRCServer::registered))
+			std::cout << "an unregistered user" << COLOR_END << std::endl;
+		else
+			std::cout << user->getNick() << COLOR_END << std::endl;
 		delete[] toSendC;
 	}
 	return 0;

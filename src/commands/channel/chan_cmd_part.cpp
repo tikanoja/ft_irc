@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:41:01 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 11:15:34 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:16:10 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int chan_cmd_part(IRCServer& server, User& user, Message& message){
 				partFrom->removeFromChops(user);
 				partFrom->reopChannel(server.getName());
 				if (partFrom->getMembers()->size() == 0) {
+					std::cout << COLOR_YELLOW << "Deleting channel " << partFrom->getName();
 					server.getChannels().deleteChannel(partFrom);
+					std::cout << ". Active channels on server: " << server.getChannels().size() << COLOR_END << std::endl;
 				}
 				user_found = 1;
 				break ;

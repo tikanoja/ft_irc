@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 10:05:15 by ttikanoj          #+#    #+#             */
-/*   Updated: 2023/11/07 13:02:10 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:16:28 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ int cmd_quit(IRCServer& server, User& user, Message& message){
 				(*it)->broadcastToChannel(" :" + message.getTrailing() + "\r\n", &user);
 		}
 		if ((*it)->getMembers()->size() == 0) {
+			std::cout << COLOR_YELLOW << "Deleting channel " << (*it)->getName();
 			delete (*it);
 			std::vector<Channel*>::iterator itBackup = server.getChannels().erase(it);
 			it = itBackup;
+			std::cout << ". Active channels on server: " << server.getChannels().size() << COLOR_END << std::endl;
 		}
 		else {
 			it++;

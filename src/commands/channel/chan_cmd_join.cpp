@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:40:42 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/07 11:15:52 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:15:49 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int chan_cmd_join(IRCServer& server, User& user, Message& message){
 				continue ;
 			}
 			toJoin = server.getChannels().createChannel(chan);
+			std::cout << BRIGHT_COLOR_YELLOW << "Created new channel " << toJoin->getName() << ". Active channels on server: " << server.getChannels().size() << COLOR_END << std::endl;
 			toJoin->getMembers()->push_back(&user);
 			toJoin->getChops()->push_back(&user);
 			if (params.size() > 1){
@@ -130,7 +131,9 @@ static void removeUserFromAllChannels(IRCServer& server, User& user, Message& me
 		(*it)->removeFromChops(user);
 		(*it)->reopChannel(server.getName());
 		if ((*it)->getMembers()->size() == 0) {
+			std::cout << COLOR_YELLOW << "Deleting channel " << (*it)->getName();
 			server.getChannels().deleteChannel((*it));
+			std::cout << ". Active channels on server: " << server.getChannels().size() << COLOR_END << std::endl;
 		}
 	}
 }

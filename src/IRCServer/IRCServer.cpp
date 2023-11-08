@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/07 13:21:38 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:24:51 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ std::string const & IRCServer::getCmodes(void) const{
 void signalHandler(int signum) {
 	
 	if (signum == SIGINT) {
-		std::cout << std::endl << "Server quit." << std::endl;
+		std::cout << std::endl << "Server quit." << BRIGHT_COLOR_RED << " <3" << COLOR_END << std::endl;
 		exit(0);
 	}
 }
