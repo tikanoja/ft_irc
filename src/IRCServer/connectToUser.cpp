@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/08 13:06:10 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/09 06:27:16 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,12 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index)
 	}
 	close(p_pfds[fd_index].fd);
 	User *userToRemove = p_users.findUserBySocket(p_pfds[fd_index].fd);
-	std::cout << COLOR_GREEN << "Deleting user " << userToRemove->getNick();
 	cleanupChannels(*this, userToRemove);
+	std::cout << COLOR_GREEN << "Deleting ";
+	if (!(userToRemove->getMode() & IRCServer::registered))
+		std::cout << "an unregistered user";
+	else
+		std::cout << "user " << userToRemove->getNick();
 	if (userToRemove)
 		delete userToRemove;
 	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());

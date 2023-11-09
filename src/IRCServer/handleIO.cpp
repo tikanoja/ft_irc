@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/08 12:34:03 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/09 07:46:03 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	ssize_t numbytes;
 	numbytes = recv(p_pfds[i].fd, buf, MAXDATASIZE - 1, MSG_DONTWAIT);
 	if (numbytes <= 0) {
+		std::cout << COLOR_GREEN << "Connection dropped by ";
+		if (!(user->getMode() & IRCServer::registered))
+			std::cout << "an unregistered user" << COLOR_END << std::endl;
+		else
+			std::cout << user->getNick() << COLOR_END << std::endl;
 		dropConnection(numbytes, i);
 		return (-1);
 	}

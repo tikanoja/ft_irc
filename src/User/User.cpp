@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:33:50 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/07 11:18:20 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/09 07:46:13 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,12 @@ void	User::setRegistrationFlag(int i, IRCServer& server)
 		p_nickFlag = true;
 	else if (i == 2)
 		p_userFlag = true;
-	else if (i == 3)
+	else if (i == 3) {
+		if (p_passFlag == true)
+			return ;
 		p_passFlag = true;
+		this->send(":PawsitiveIRC NOTICE * :Password accepted! Please proceed with NICK and USER commands.\r\n");
+	}
 
 	if (p_welcomeFlag == false && p_nickFlag == true && p_userFlag == true && p_passFlag == true) {
 		p_welcomeFlag = true;

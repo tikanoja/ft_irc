@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:12:09 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/08 08:47:42 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/09 07:28:07 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@
 # ifndef UNAMELEN
 #  define UNAMELEN 10
 # endif
-
 
 #define COLOR_END "\033[0m"
 #define COLOR_BLACK "\033[0;30m"
