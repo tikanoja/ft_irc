@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   connectToUser.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/14 10:48:48 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:30:20 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void IRCServer::delUser(User &user)
 	{
 		if (user.getSocket() == p_users[i]->getSocket())
 		{
-			std::cout << COLOR_GREEN << "Deleting user " << user.getNick();
+			std::cout << COLOR_GREEN << "Deleting user " << user.getNick() << std::endl;
 			delete p_users[i];
 			p_users.erase(p_users.begin() + static_cast<ssize_t>(i));
 			std::cout << "Active connections: " << p_users.size() << COLOR_END << std::endl;

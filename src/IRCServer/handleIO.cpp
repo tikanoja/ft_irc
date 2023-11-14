@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleIO.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: djagusch <djagusch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/14 10:56:22 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:14:58 by djagusch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int IRCServer::receiveMsg(User* user, nfds_t i) {
 	if (buf[0] == '\n')
 		return 0;
 	user->getRecvBuffer().addToBuffer(buf);
-	std::cout << BRIGHT_COLOR_WHITE << "Received<< " << buf << COLOR_END;
-	std::cout << BRIGHT_COLOR_BLACK << " //from ";
-	if (!(user->getMode() & IRCServer::registered))
-		std::cout << "an unregistered user" << COLOR_END << std::endl;
-	else
-		std::cout << user->getNick() << COLOR_END << std::endl;
+	std::cout << BRIGHT_COLOR_MAGENTA << "Received<< " << buf << COLOR_END;
+	// std::cout << BRIGHT_COLOR_BLACK << " //from ";
+	// if (!(user->getMode() & IRCServer::registered))
+	// 	std::cout << "an unregistered user" << COLOR_END << std::endl;
+	// else
+	// 	std::cout << user->getNick() << COLOR_END << std::endl;
 	return (0);
 }
 
@@ -86,11 +86,11 @@ int IRCServer::checkSendBuffer(User* user) {
 			user->getSendBuffer().replaceUnsent(toSend);
 		}
 		std::cout << COLOR_WHITE << "Sent>>>>>> " << toSendC << COLOR_END;
-		std::cout << BRIGHT_COLOR_BLACK << " //to ";
-		if (!(user->getMode() & IRCServer::registered))
-			std::cout << "an unregistered user" << COLOR_END << std::endl;
-		else
-			std::cout << user->getNick() << COLOR_END << std::endl;
+		// std::cout << BRIGHT_COLOR_BLACK << " //to ";
+		// if (!(user->getMode() & IRCServer::registered))
+		// 	std::cout << "an unregistered user" << COLOR_END << std::endl;
+		// else
+		// 	std::cout << user->getNick() << COLOR_END << std::endl;
 		delete[] toSendC;
 	}
 	return 0;
