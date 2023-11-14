@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:39:39 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/09 07:46:03 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:56:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ int IRCServer::checkSendBuffer(User* user) {
 			toSendLen = 512;
 			tooLong = true;
 		}
-		char* toSendC = new char[static_cast<size_t>(toSendLen) + 1];
+		char* toSendC = new char[static_cast<size_t>(toSendLen) + 2];
 		std::memset(toSendC, '\0', static_cast<size_t>(toSendLen));
 		for (size_t i = 0; i < static_cast<size_t>(toSendLen); i++)
 			toSendC[i] = toSend[i];
 		toSendC[toSendLen] = '\0';
 		if (tooLong == true) {
-			toSendC[509] = '\r';
-			toSendC[510] = '\n';
-			toSendC[511] = '\0';
+			toSendC[510] = '\r';
+			toSendC[511] = '\n';
+			toSendC[512] = '\0';
 		}
 		ssize_t n_sent = 0;
 		if ((n_sent = send(user->getSocket(),  &(toSendC[0]), 

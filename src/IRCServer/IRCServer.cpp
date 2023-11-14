@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tuukka <tuukka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 23:21:45 by tuukka            #+#    #+#             */
-/*   Updated: 2023/11/08 13:18:49 by tuukka           ###   ########.fr       */
+/*   Updated: 2023/11/14 10:49:50 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void IRCServer::initServer() {
 	setGlobals() ;
 	initCommands();
 	initOperators();
-	std::cout << "\033[0;32mPawsitiveIRC server is starting"<< std::endl;
+	std::cout << BRIGHT_COLOR_GREEN << "PawsitiveIRC server is starting"<< std::endl;
 	std::cout << "   _______________                       _______________" << "\n"
 	<< "  |  ___________  |     .-.     .-.     |  ___________  |" << "\n"
 	<< "  | |           | |    .****. .****.    | |           | |" << "\n"
@@ -106,10 +106,10 @@ void IRCServer::initServer() {
 	<< "    _|__|/ \\|_|_.............*........... _|__|/ \\|_|_" << "\n"
 	<< "   / ********** \\                         / ********** \\" << "\n"
 	<< " /  ************  \\                     /  ************  \\" << "\n"
-	<< "--------------------                   -------------------- \033[0m" << std::endl;
+	<< "--------------------                   -------------------- " << COLOR_END << std::endl;
 	std::cout << "Running..."<< std::endl;
-	std::cout << "Connect with Irssi: /connect 127.0.0.1 " << p_port << " " << p_password << std::endl;
-	std::cout << "    or with Netcat: nc 127.0.0.1 " << p_port << std::endl;
+	std::cout << "Connect with Irssi:\t/connect 127.0.0.1 " << p_port << " " << p_password << std::endl;
+	std::cout << "or with Netcat:\t\tnc 127.0.0.1 " << p_port << std::endl;
 	return ;
 }
 

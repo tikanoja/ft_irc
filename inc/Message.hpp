@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:40:09 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/03 16:33:13 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:51:22 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ class Message
 		std::string							combineParams();
 		const char*							toString();
 		
-		User*						p_recipient;	//changed & to * to compile // MOVE BACK TO PRIVATE! NEEDED FOR TESTING IN PUBLIC
-		User*						p_sender;		//changed & to * to compile //MOVE BACK TO PRIVATE! NEEDED FOR TESTING IN PUBLIC
+		User*						p_recipient;
+		User*						p_sender;	
 		
 	private:
 		std::string					p_command;

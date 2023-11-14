@@ -6,7 +6,7 @@
 /*   By: ttikanoj <ttikanoj@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:16 by djagusch          #+#    #+#             */
-/*   Updated: 2023/11/09 06:27:16 by ttikanoj         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:48:48 by ttikanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int IRCServer::acceptClient()
 
 			p_users.push_back(new User(new_fd, s, this->getName()));
 			p_logger->log("New client accepted from " + static_cast<std::string>(s), __FILE__, __LINE__);
-			std::cout << "\033[1;32m" << "New connection! p_fd_count: " << p_fd_count << " p_users.size(): " << p_users.size() << " new_fd: " << new_fd << "\033[0m" << std::endl;
+			std::cout << BRIGHT_COLOR_GREEN << "New connection! Active connections: " << p_users.size() << COLOR_END << std::endl;
 		}
 	}
 	return (0);
@@ -175,7 +175,7 @@ void IRCServer::dropConnection(ssize_t numbytes, nfds_t fd_index)
 	p_users.erase(std::remove(p_users.begin(), p_users.end(), userToRemove), p_users.end());
 	p_pfds.erase(p_pfds.begin() + fd_index);
 	p_fd_count--;
-	std::cout << ". p_fd_count: " << p_fd_count << " p_users.size(): " << p_users.size() << COLOR_END << std::endl;
+	std::cout << "Active connections: " << p_users.size() << COLOR_END << std::endl;
 	return;
 }
 
@@ -189,7 +189,7 @@ void IRCServer::delUser(User &user)
 			std::cout << COLOR_GREEN << "Deleting user " << user.getNick();
 			delete p_users[i];
 			p_users.erase(p_users.begin() + static_cast<ssize_t>(i));
-			std::cout << ". p_fd_count: " << p_fd_count << " p_users.size(): " << p_users.size() << COLOR_END << std::endl;
+			std::cout << "Active connections: " << p_users.size() << COLOR_END << std::endl;
 			break;
 		}
 	}
